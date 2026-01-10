@@ -17,14 +17,14 @@ export default function Header() {
             width={110}
             height={32}
             className="h-8 w-auto cursor-pointer"
-            onClick={() => router.push('/candidate-profile')}
+            onClick={() => router.push('/candidate-dashboard')}
           />
         </div>
 
         {/* Navigation */}
         <nav className="flex items-center gap-6 text-sm font-medium">
           <button 
-            onClick={() => router.push('/candidate-profile')}
+            onClick={() => router.push('/candidate-dashboard')}
             className="relative text-slate-900"
           >
             Dashboard

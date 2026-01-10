@@ -6,25 +6,11 @@ import { useRouter } from "next/navigation";
 export default function CompletionProfilePage() {
   const router = useRouter();
 
-  const steps = [
-    { number: 1, label: "Personal Details", active: false },
-    { number: 2, label: "Educational Details", active: false },
-    { number: 3, label: "Work Experience", active: false },
-    { number: 4, label: "Manage Your Skills", active: false },
-    { number: 5, label: "Career Preferences", active: false },
-    { number: 6, label: "Salary Expectation", active: false },
-    { number: 7, label: "Work Locations & Eligibility", active: false },
-    { number: 8, label: "Profile Completion Summary", active: true },
-  ];
-
-  const activeStepNumber = steps.find((s) => s.active)?.number || 8;
-
   return (
     <div
       className="min-h-screen"
       style={{
-        background:
-          "radial-gradient(ellipse 800px 600px at bottom left, #bae6fd 0%, #dbeafe 30%, transparent 70%), radial-gradient(ellipse 800px 600px at 80% 60%, #fed7aa 0%, #fde2e4 30%, transparent 70%), white",
+        backgroundColor: "#E5E7EA",
       }}
     >
       {/* Header */}
@@ -59,94 +45,6 @@ export default function CompletionProfilePage() {
           </div>
         </div>
       </header>
-
-      {/* Progress Steps */}
-      <div
-        className="relative px-6"
-        style={{ backgroundColor: "transparent", zIndex: 50, paddingTop: "2px", paddingBottom: "12px" }}
-      >
-        <div className="relative mx-auto flex max-w-7xl items-start justify-between">
-          {steps.map((step) => {
-            const isCompleted = step.number < activeStepNumber;
-            return (
-              <div key={step.number} className="relative z-10 flex flex-col items-center" style={{ flex: 1 }}>
-                <div
-                  className={`relative flex items-center justify-center rounded-full border-2 text-sm font-semibold ${
-                    step.active
-                      ? "text-white border-transparent"
-                      : isCompleted
-                      ? "text-white border-transparent cursor-pointer"
-                      : "h-12 w-12 border-slate-300 bg-white text-slate-400"
-                  }`}
-                  style={
-                    step.active
-                      ? {
-                          height: "80px",
-                          width: "80px",
-                          backgroundImage: "url('/ornage_stage.png')",
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          backgroundRepeat: "no-repeat",
-                        }
-                      : isCompleted
-                      ? {
-                          height: "80px",
-                          width: "80px",
-                          backgroundImage: "url('/blue_2.png')",
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          backgroundRepeat: "no-repeat",
-                        }
-                      : {
-                          marginTop: "16px",
-                        }
-                  }
-                  onClick={
-                    isCompleted && step.number === 1
-                      ? () => router.push("/personal-details")
-                      : isCompleted && step.number === 2
-                      ? () => router.push("/edu-details")
-                      : isCompleted && step.number === 3
-                      ? () => router.push("/work-exp")
-                      : isCompleted && step.number === 4
-                      ? () => router.push("/skills")
-                      : isCompleted && step.number === 5
-                      ? () => router.push("/career-preferences")
-                      : isCompleted && step.number === 6
-                      ? () => router.push("/salary-expectation")
-                      : undefined
-                  }
-                >
-                  {step.number}
-                </div>
-                <p
-                  className={`mt-2 text-xs ${
-                    step.active || isCompleted ? "font-semibold text-slate-900" : "text-slate-500"
-                  } ${isCompleted ? "cursor-pointer hover:text-sky-600" : ""}`}
-                  style={{ maxWidth: "120px", textAlign: "center", lineHeight: "1.3" }}
-                  onClick={
-                    isCompleted && step.number === 1
-                      ? () => router.push("/personal-details")
-                      : isCompleted && step.number === 2
-                      ? () => router.push("/edu-details")
-                      : isCompleted && step.number === 3
-                      ? () => router.push("/work-exp")
-                      : isCompleted && step.number === 4
-                      ? () => router.push("/skills")
-                      : isCompleted && step.number === 5
-                      ? () => router.push("/career-preferences")
-                      : isCompleted && step.number === 6
-                      ? () => router.push("/salary-expectation")
-                      : undefined
-                  }
-                >
-                  {step.label}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
 
       {/* Main Content */}
       <main className="mx-auto max-w-4xl px-6" style={{ paddingTop: "0px", paddingBottom: "32px" }}>
@@ -295,7 +193,7 @@ export default function CompletionProfilePage() {
             <div className="mt-4 flex justify-center">
               <button
                 type="button"
-                onClick={() => router.push("/candidate-profile")}
+                onClick={() => router.push("/candidate-dashboard")}
                 className="inline-flex items-center justify-center rounded-full bg-sky-600 px-5 py-2 text-sm font-semibold text-white hover:bg-sky-700"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >

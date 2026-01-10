@@ -20,3 +20,8 @@ export default function EditText({ placeholder = "", value = "", onChange, class
 }
 
 
+
+
+
+
+

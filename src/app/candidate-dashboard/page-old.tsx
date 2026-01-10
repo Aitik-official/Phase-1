@@ -4,22 +4,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export default function CandidateProfilePage() {
+export default function CandidateDashboardPage() {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
 
-  // Order matches the visual clockwise order from top: Green, Purple, Red, Blue, Teal, Yellow
-  // Yellow segment weight significantly increased for visibility (reduced from green and other colors)
+  // Application status matching the image: Applied (12), Under Review (8), Shortlisted (5), Interview (3), Final Decision (8)
   const applicationStatus = [
-    { label: "Applied", value: 6, color: "#22C55E" }, // Green - reduced from 7 to 6
-    { label: "Final Decision", value: 8, color: "#6366F1" }, // Purple - reduced from 9 to 8
-    { label: "Interview", value: 3, color: "#F97373" }, // Red - unchanged
-    { label: "Assessment", value: 3, color: "#0EA5E9" }, // Blue - reduced from 4 to 3
-    { label: "Shortlisted", value: 6, color: "#14B8A6" }, // Teal - reduced from 7 to 6
-    { label: "Under Review", value: 10, color: "#FACC15" }, // Yellow - significantly increased from 6 to 10 for visibility
+    { label: "Applied", value: 12, color: "#22C55E" }, // Green
+    { label: "Under Review", value: 8, color: "#FACC15" }, // Yellow
+    { label: "Shortlisted", value: 5, color: "#EC4899" }, // Pink
+    { label: "Interview", value: 3, color: "#6366F1" }, // Purple
+    { label: "Final Decision", value: 8, color: "#0EA5E9" }, // Blue
   ];
 
   const totalApplications = applicationStatus.reduce((sum, item) => sum + item.value, 0);
@@ -101,7 +99,7 @@ export default function CandidateProfilePage() {
     <div
       className="min-h-screen"
       style={{
-        background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)",
+        backgroundColor: "#E5E7EA",
       }}
     >
       {/* Header */}
@@ -132,6 +130,22 @@ export default function CandidateProfilePage() {
 
           {/* User actions */}
           <div className="flex items-center gap-4">
+            <button className="relative rounded-full bg-slate-100 p-2 text-slate-500 hover:bg-slate-200">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m15.364 6.364l-4.243-4.243m-4.242 0l-4.243 4.243m8.485 0l-4.243-4.243m-4.242 0l-4.243 4.243"></path>
+              </svg>
+            </button>
             <div className="relative">
               <button
                 onClick={() => setIsNotificationsModalOpen(!isNotificationsModalOpen)}

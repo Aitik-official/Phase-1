@@ -43,3 +43,8 @@ export default function SearchView({ placeholder = "Search...", value = "", onSu
 }
 
 
+
+
+
+
+

@@ -23,14 +23,14 @@ export default function Home() {
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
           <div className="flex items-center gap-2">
-            <Image
+        <Image
               src="/SAASA%20Logo.png"
               alt="SAASA B2E logo"
               width={110}
               height={32}
               className="h-8 w-auto"
-              priority
-            />
+          priority
+        />
           </div>
           <nav className="flex flex-wrap items-center gap-6 text-sm font-medium text-slate-600">
             <a className="hover:text-slate-900" href="#jobseeker">
@@ -209,8 +209,8 @@ export default function Home() {
                 Our cutting-edge AI transforms every stage of your recruitment
                 journey, from intelligent matching to automated feedback, ensuring
                 optimal results and efficiency.
-              </p>
-            </div>
+          </p>
+        </div>
             <div className="grid gap-3 text-sm text-slate-700">
               {[
                 "AI CV Analyzer: Optimize resumes for success",
@@ -282,7 +282,7 @@ export default function Home() {
                 {/* Right Card - Smaller, Partially Visible */}
                 <div className="absolute right-0 z-10 w-56 rounded-2xl shadow-xl">
                   <div className="relative overflow-hidden rounded-2xl bg-white">
-                    <Image
+            <Image
                       src="/cv_1.jpg"
                       alt="CV Example 2"
                       width={224}
@@ -470,8 +470,8 @@ export default function Home() {
               </a>
               <a className="text-slate-600 hover:text-slate-900" href="#linkedin">
                 LinkedIn
-              </a>
-            </div>
+          </a>
+        </div>
           </div>
           <div className="mt-6 flex items-center justify-end gap-2 px-5 text-xs text-slate-500">
             <span>🌐</span>
