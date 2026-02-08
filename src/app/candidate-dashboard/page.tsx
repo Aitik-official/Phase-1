@@ -127,7 +127,7 @@ export default function CandidateDashboardPage() {
             <button className="text-slate-600 hover:text-slate-900">Jobs</button>
             <button className="text-slate-600 hover:text-slate-900">Courses</button>
             <button className="text-slate-600 hover:text-slate-900">Applications</button>
-            <button className="text-slate-600 hover:text-slate-900">Profile</button>
+            <button className="text-slate-600 hover:text-slate-900">Profiled</button>
           </nav>
 
           {/* User actions */}
