@@ -13,7 +13,7 @@ export default function Button({ text, onClick, className = "", children }: Butt
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-lg font-medium transition-colors ${className}`}
+      className={`px-4 py-2 rounded-lg font-medium transition-colors text-gray-700 ${className}`}
     >
       {children || text}
     </button>

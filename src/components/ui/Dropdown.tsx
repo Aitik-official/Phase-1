@@ -29,7 +29,7 @@ export default function Dropdown({ placeholder = "Select...", options = [], clas
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex items-center justify-between"
       >
-        <span className={selectedValue ? "text-gray-900" : "text-gray-500"}>
+        <span className={selectedValue ? "text-gray-900" : "text-gray-600"}>
           {selectedValue ? options.find(opt => opt.value === selectedValue)?.label : placeholder}
         </span>
         <svg
@@ -53,9 +53,8 @@ export default function Dropdown({ placeholder = "Select...", options = [], clas
                 key={option.value}
                 type="button"
                 onClick={() => handleSelect(option)}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${
-                  selectedValue === option.value ? 'bg-blue-50 text-blue-600' : 'text-gray-900'
-                }`}
+                className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${selectedValue === option.value ? 'bg-blue-50 text-blue-600' : 'text-gray-900'
+                  }`}
               >
                 {option.label}
               </button>
