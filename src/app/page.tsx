@@ -64,7 +64,7 @@ export default function Home() {
             {/* Left Side - Text Content */}
             <div className="flex flex-col justify-center gap-6 text-left">
               <div className="flex flex-col gap-2 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">
-                <span>Are you here find a job or hire talent ?????</span>
+                <span>Are you here find a job or hire talent ?</span>
               </div>
               <p className="text-base text-slate-600">
                 SAASA B2E connects jobseekers with their dream roles and empowers
@@ -76,8 +76,8 @@ export default function Home() {
                 <div className="flex gap-3">
                   <button
                     className={`flex-1 rounded-md border px-4 py-3 text-sm font-semibold shadow-sm transition ${role === "candidate"
-                        ? "border-sky-500 bg-sky-500 text-white hover:bg-sky-600"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                      ? "border-sky-500 bg-sky-500 text-white hover:bg-sky-600"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                       }`}
                     aria-pressed={role === "candidate"}
                     onClick={() => setRole("candidate")}
@@ -86,8 +86,8 @@ export default function Home() {
                   </button>
                   <button
                     className={`flex-1 rounded-md border px-4 py-3 text-sm font-semibold shadow-sm transition ${role === "recruiter"
-                        ? "border-sky-500 bg-sky-500 text-white hover:bg-sky-600"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                      ? "border-sky-500 bg-sky-500 text-white hover:bg-sky-600"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                       }`}
                     aria-pressed={role === "recruiter"}
                     onClick={() => setRole("recruiter")}
