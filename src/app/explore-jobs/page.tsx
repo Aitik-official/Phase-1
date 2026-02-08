@@ -217,8 +217,8 @@ const DashboardPage = () => {
       key={job.id}
       onClick={() => handleJobClick(job)}
       className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md mb-3 ${job.isHighlighted
-        ? 'border-blue-500 bg-blue-100/70 backdrop-blur-md shadow-sm'
-        : 'border-white/20 bg-white/70 backdrop-blur-md'
+        ? 'border-blue-500 bg-blue-100/25 backdrop-blur-lg shadow-sm'
+        : 'border-white/20 bg-white/20 backdrop-blur-lg'
         } ${selectedJob?.id === job.id ? 'ring-2 ring-blue-500' : ''}`}
     >
       <div className="flex items-start gap-4 mb-3">
@@ -335,12 +335,12 @@ const DashboardPage = () => {
             {/* Left Sidebar - Job Listings */}
             <div className="w-full" style={{ maxWidth: "580px", width: "100%", marginLeft: "-40px", marginRight: "10px", paddingLeft: "40px" }}>
               <div
-                className="border border-white/30 p-4 backdrop-blur-lg"
+                className="border border-white/30 p-4 backdrop-blur-xl"
                 style={{
                   width: "374px",
                   minHeight: "1331px",
                   borderRadius: "10px",
-                  backgroundColor: "rgba(255, 255, 255, 0.7)",
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
                   opacity: 1,
                   boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.07)"
                 }}
