@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -10,27 +10,27 @@ export default function Home() {
   const stats =
     role === "candidate"
       ? [
-          { label: "Satisfied users globally", value: "75K+" },
-          { label: "Beneficial User Cashback", value: "92%" },
-        ]
+        { label: "Satisfied users globally", value: "75K+" },
+        { label: "Beneficial User Cashback", value: "92%" },
+      ]
       : [
-          { label: "Trusted recruiters", value: "18K+" },
-          { label: "Avg. qualified matches", value: "94%" },
-        ];
+        { label: "Trusted recruiters", value: "18K+" },
+        { label: "Avg. qualified matches", value: "94%" },
+      ];
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
       <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-4">
           <div className="flex items-center gap-2">
-        <Image
+            <Image
               src="/SAASA%20Logo.png"
               alt="SAASA B2E logo"
               width={110}
               height={32}
               className="h-8 w-auto"
-          priority
-        />
+              priority
+            />
           </div>
           <nav className="flex flex-wrap items-center gap-6 text-sm font-medium text-slate-600">
             <a className="hover:text-slate-900" href="#jobseeker">
@@ -64,8 +64,7 @@ export default function Home() {
             {/* Left Side - Text Content */}
             <div className="flex flex-col justify-center gap-6 text-left">
               <div className="flex flex-col gap-2 text-4xl font-bold leading-tight text-slate-900 md:text-5xl">
-                <span>Are you here to find</span>
-                <span>a job or hire talent?</span>
+                <span>Are you here find a job or hire talent ?????</span>
               </div>
               <p className="text-base text-slate-600">
                 SAASA B2E connects jobseekers with their dream roles and empowers
@@ -76,22 +75,20 @@ export default function Home() {
                 <p>I am a...</p>
                 <div className="flex gap-3">
                   <button
-                    className={`flex-1 rounded-md border px-4 py-3 text-sm font-semibold shadow-sm transition ${
-                      role === "candidate"
+                    className={`flex-1 rounded-md border px-4 py-3 text-sm font-semibold shadow-sm transition ${role === "candidate"
                         ? "border-sky-500 bg-sky-500 text-white hover:bg-sky-600"
                         : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-                    }`}
+                      }`}
                     aria-pressed={role === "candidate"}
                     onClick={() => setRole("candidate")}
                   >
                     Candidate
                   </button>
                   <button
-                    className={`flex-1 rounded-md border px-4 py-3 text-sm font-semibold shadow-sm transition ${
-                      role === "recruiter"
+                    className={`flex-1 rounded-md border px-4 py-3 text-sm font-semibold shadow-sm transition ${role === "recruiter"
                         ? "border-sky-500 bg-sky-500 text-white hover:bg-sky-600"
                         : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-                    }`}
+                      }`}
                     aria-pressed={role === "recruiter"}
                     onClick={() => setRole("recruiter")}
                   >
@@ -209,8 +206,8 @@ export default function Home() {
                 Our cutting-edge AI transforms every stage of your recruitment
                 journey, from intelligent matching to automated feedback, ensuring
                 optimal results and efficiency.
-          </p>
-        </div>
+              </p>
+            </div>
             <div className="grid gap-3 text-sm text-slate-700">
               {[
                 "AI CV Analyzer: Optimize resumes for success",
@@ -282,7 +279,7 @@ export default function Home() {
                 {/* Right Card - Smaller, Partially Visible */}
                 <div className="absolute right-0 z-10 w-56 rounded-2xl shadow-xl">
                   <div className="relative overflow-hidden rounded-2xl bg-white">
-            <Image
+                    <Image
                       src="/cv_1.jpg"
                       alt="CV Example 2"
                       width={224}
@@ -470,8 +467,8 @@ export default function Home() {
               </a>
               <a className="text-slate-600 hover:text-slate-900" href="#linkedin">
                 LinkedIn
-          </a>
-        </div>
+              </a>
+            </div>
           </div>
           <div className="mt-6 flex items-center justify-end gap-2 px-5 text-xs text-slate-500">
             <span>🌐</span>
