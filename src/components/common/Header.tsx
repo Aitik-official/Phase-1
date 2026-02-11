@@ -95,7 +95,7 @@ export default function Header() {
         {/* Right side icons - Settings, Notifications, Profile */}
         <div className="flex items-center gap-3">
           {/* Settings Icon */}
-          <button
+          <button 
             type="button"
             className="p-2 text-slate-600 hover:text-slate-800 transition-colors"
           >
@@ -117,7 +117,7 @@ export default function Header() {
           
           {/* Notifications Icon with Modal */}
           <div className="relative notification-button">
-            <button
+          <button 
               type="button"
               onClick={() => {
                 setIsNotificationsModalOpen(!isNotificationsModalOpen);
@@ -125,8 +125,8 @@ export default function Header() {
               }}
               className="relative p-2 text-slate-600 hover:text-slate-800 transition-colors"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
               viewBox="0 0 24 24"

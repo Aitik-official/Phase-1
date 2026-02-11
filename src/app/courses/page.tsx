@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import Image from 'next/image';
@@ -17,6 +18,7 @@ interface Course {
 }
 
 export default function CoursesPage() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [skillLevel, setSkillLevel] = useState('all');
   const [provider, setProvider] = useState('all');
@@ -136,7 +138,7 @@ export default function CoursesPage() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #fff5e6 0%, #f0f8ff 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(210deg, rgba(255, 171, 98, 0.40) 1.61%, #FFF 32.61%, rgba(40, 168, 223, 0.25) 87.92%), #FFF' }}>
       <Header />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
@@ -169,30 +171,66 @@ export default function CoursesPage() {
 
         {/* Search and Filter Section */}
         <div className="mb-8 flex flex-col lg:flex-row gap-6">
-          {/* Search Bar and Filters */}
-          <div className="flex-1">
-            <div className="bg-white rounded-xl p-4 shadow-md flex flex-col sm:flex-row gap-4 items-center">
-              {/* Search Input */}
-              <div className="flex-1 w-full">
-                <input
-                  type="text"
-                  placeholder="Q Search courses..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          {/* Search Bar and Filters Container */}
+          <div
+            className="p-5 flex flex-col gap-4"
+            style={{
+              width: '861px',
+              height: '187px',
+              borderRadius: '14px',
+              border: '0 solid #000',
+              background: '#FFF',
+              boxShadow: '0 0 2px 0 rgba(23, 26, 31, 0.12), 0 0 0 0 rgba(0, 0, 0, 0.00)',
+            }}
+          >
+            {/* Search Input */}
+            <div className="relative w-full">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#9CA3AF"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Search courses..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '14px',
+                }}
+              />
+            </div>
+
+            {/* Filters Row */}
+            <div className="flex gap-4">
+              {/* Skill Level */}
+              <div className="flex flex-col gap-1.5 flex-1 relative">
+                <label
                   style={{
                     fontFamily: 'Inter, sans-serif',
-                    fontSize: '14px',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    color: '#374151',
                   }}
-                />
-              </div>
-
-              {/* Filters */}
-              <div className="flex flex-wrap gap-3">
+                >
+                  Skill Level
+                </label>
                 <select
                   value={skillLevel}
                   onChange={(e) => setSkillLevel(e.target.value)}
-                  className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-2.5 pr-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
@@ -203,11 +241,29 @@ export default function CoursesPage() {
                   <option value="intermediate">Intermediate</option>
                   <option value="advanced">Advanced</option>
                 </select>
+                <div className="pointer-events-none absolute right-3 top-9 flex items-center">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
 
+              {/* Provider */}
+              <div className="flex flex-col gap-1.5 flex-1 relative">
+                <label
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    color: '#374151',
+                  }}
+                >
+                  Provider
+                </label>
                 <select
                   value={provider}
                   onChange={(e) => setProvider(e.target.value)}
-                  className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-2.5 pr-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
@@ -218,11 +274,29 @@ export default function CoursesPage() {
                   <option value="udemy">Udemy</option>
                   <option value="coursera">Coursera</option>
                 </select>
+                <div className="pointer-events-none absolute right-3 top-9 flex items-center">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
 
+              {/* Price */}
+              <div className="flex flex-col gap-1.5 flex-1 relative">
+                <label
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    color: '#374151',
+                  }}
+                >
+                  Price
+                </label>
                 <select
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
-                  className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-2.5 pr-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
@@ -232,11 +306,29 @@ export default function CoursesPage() {
                   <option value="free">Free</option>
                   <option value="paid">Paid</option>
                 </select>
+                <div className="pointer-events-none absolute right-3 top-9 flex items-center">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
 
+              {/* Duration */}
+              <div className="flex flex-col gap-1.5 flex-1 relative">
+                <label
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    color: '#374151',
+                  }}
+                >
+                  Duration
+                </label>
                 <select
                   value={duration}
                   onChange={(e) => setDuration(e.target.value)}
-                  className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-2.5 pr-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
@@ -247,11 +339,29 @@ export default function CoursesPage() {
                   <option value="medium">5-8 weeks</option>
                   <option value="long">9+ weeks</option>
                 </select>
+                <div className="pointer-events-none absolute right-3 top-9 flex items-center">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
 
+              {/* Sort By */}
+              <div className="flex flex-col gap-1.5 flex-1 relative">
+                <label
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    color: '#374151',
+                  }}
+                >
+                  Sort By
+                </label>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full px-3 py-2.5 pr-8 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
@@ -262,6 +372,11 @@ export default function CoursesPage() {
                   <option value="duration">Duration</option>
                   <option value="newest">Newest</option>
                 </select>
+                <div className="pointer-events-none absolute right-3 top-9 flex items-center">
+                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -305,14 +420,22 @@ export default function CoursesPage() {
         </div>
 
         {/* Course Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="flex flex-wrap gap-6 mb-8 justify-center lg:justify-start">
           {courses.map((course) => (
             <div
               key={course.id}
-              className="bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="overflow-hidden transition-all duration-300 flex flex-col"
+              style={{
+                borderRadius: '14px',
+                border: '2px solid #1C86C8',
+                background: '#FFF',
+                boxShadow: '0 0 2px 0 rgba(23, 26, 31, 0.12), 0 0 0 0 rgba(0, 0, 0, 0.00)',
+                width: '271px',
+                height: '524px',
+              }}
             >
               {/* Course Image */}
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <div className="w-full h-40 bg-gray-200 flex items-center justify-center flex-shrink-0">
                 {course.image ? (
                   <Image
                     src={course.image}
@@ -341,7 +464,7 @@ export default function CoursesPage() {
               </div>
 
               {/* Course Content */}
-              <div className="p-5">
+              <div className="p-5 flex flex-col flex-1" style={{ minHeight: 0 }}>
                 {/* Provider and AI Recommended */}
                 <div className="flex items-center justify-between mb-2">
                   <span
@@ -409,12 +532,15 @@ export default function CoursesPage() {
 
                 {/* Description */}
                 <p
+                  className="flex-1"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
                     color: '#6B7280',
                     lineHeight: '1.5',
                     marginBottom: '16px',
+                    maxHeight: '63px',
+                    overflow: 'hidden',
                   }}
                 >
                   {course.description}
@@ -422,6 +548,7 @@ export default function CoursesPage() {
 
                 {/* View Details Button */}
                 <button
+                  onClick={() => router.push(`/courses/${course.id}`)}
                   className="w-full px-4 py-2.5 rounded-lg font-medium transition-colors"
                   style={{
                     fontFamily: 'Inter, sans-serif',
