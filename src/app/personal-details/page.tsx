@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Header from "../../components/common/Header";
 
 export default function PersonalDetailsPage() {
   const router = useRouter();
@@ -706,43 +707,7 @@ export default function PersonalDetailsPage() {
       }}
     >
       {/* Header */}
-      <header className="border-b border-slate-200 bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <Image
-              src="/SAASA%20Logo.png"
-              alt="SAASA B2E"
-              width={110}
-              height={32}
-              className="h-8 w-auto"
-            />
-            <p className="ml-2 text-xs text-sky-600">SUSTAINABLE, WISE AND SUCCESSFUL APPS</p>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex items-center gap-6">
-            <a href="#" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              Upload CV
-            </a>
-            <a href="#" className="relative text-sm font-medium text-sky-600">
-              Profile
-              <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-sky-600" />
-            </a>
-            <a href="#" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              Complete
-            </a>
-          </nav>
-
-          {/* Right side */}
-          <div className="flex items-center gap-4">
-            <a href="#" className="text-sm font-semibold text-sky-600 hover:text-sky-700">
-              Help
-            </a>
-            <div className="h-8 w-8 rounded-full bg-slate-300" />
-          </div>
-        </div>
-      </header>
+      <Header />
 
 
       {/* Main Content */}
