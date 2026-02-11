@@ -24,9 +24,9 @@ export default function Header() {
   ];
 
   return (
-    <header className="border-b border-slate-200 bg-white px-6 py-4">
+    <header className="bg-transparent px-6 py-4">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        {/* Logo */}
+        {/* Logo on the left */}
         <div className="flex items-center gap-2">
           <Image
             src="/SAASA%20Logo.png"
@@ -38,8 +38,14 @@ export default function Header() {
           />
         </div>
 
-        {/* Navigation */}
-        <nav className="flex items-center gap-6 text-sm font-medium">
+        {/* Navigation Container - Centered rounded pill with cream/peach background */}
+        <nav 
+          className="flex items-center gap-2 px-6 py-2.5 rounded-full"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(255, 250, 240, 0.98) 0%, rgba(255, 245, 230, 1) 50%, rgba(255, 250, 240, 0.98) 100%)',
+            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+          }}
+        >
           {navItems.map((item) => {
             const active = isActive(item.path);
             return (
@@ -47,31 +53,53 @@ export default function Header() {
                 key={item.path}
                 type="button"
                 onClick={() => router.push(item.path)}
-                className={`relative cursor-pointer transition-colors ${
+                className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                   active
-                    ? 'text-slate-900'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-slate-800 text-white shadow-md'
+                    : 'text-slate-600 hover:text-slate-800 bg-transparent'
                 }`}
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                }}
               >
                 {item.label}
-                {active && (
-                  <span className="absolute -bottom-1 left-0 right-0 mx-auto h-1 w-10 rounded-full bg-sky-500" />
-                )}
               </button>
             );
           })}
         </nav>
 
-        {/* User actions */}
-        <div className="flex items-center gap-4">
+        {/* Right side icons - Settings, Notifications, Profile */}
+        <div className="flex items-center gap-3">
+          {/* Settings Icon */}
           <button
             type="button"
-            className="relative rounded-full bg-slate-100 p-2 text-slate-500 hover:bg-slate-200 transition-colors"
+            className="p-2 text-slate-600 hover:text-slate-800 transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m15.364 6.364l-4.243-4.243m-4.242 0l-4.243 4.243m8.485 0l-4.243-4.243m-4.242 0l-4.243 4.243" />
+            </svg>
+          </button>
+          
+          {/* Notifications Icon */}
+          <button
+            type="button"
+            className="relative p-2 text-slate-600 hover:text-slate-800 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -83,6 +111,8 @@ export default function Header() {
               <path d="M13.73 21a2 2 0 0 1-3.46 0" />
             </svg>
           </button>
+          
+          {/* Profile Icon */}
           <div className="h-8 w-8 overflow-hidden rounded-full bg-slate-300 cursor-pointer">
             <Image
               src="/cv_main.jpg"
