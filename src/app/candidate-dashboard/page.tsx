@@ -100,7 +100,7 @@ export default function CandidateDashboardPage() {
     <div
       className="min-h-screen"
       style={{
-        background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)",
+        background: "linear-gradient(to bottom, #fff5e6 0%, #f0f8ff 100%)",
       }}
     >
       {/* Header */}
@@ -119,12 +119,13 @@ export default function CandidateDashboardPage() {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-full w-64 bg-white shadow-2xl transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 h-full w-64 backdrop-blur-xl bg-white/90 shadow-2xl transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         onClick={(e) => e.stopPropagation()}
         style={{
           fontFamily: "Inter, sans-serif",
           zIndex: 9999,
+          borderRight: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
         <div className="flex flex-col h-full pt-8">
@@ -428,54 +429,118 @@ export default function CandidateDashboardPage() {
       {/* Main Content */}
       <main className="mx-auto max-width[1200px] px-6 py-8">
         <div className="mx-auto max-w-7xl">
-          {/* Welcome & quick actions */}
-          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-            <div className="flex items-center gap-4">
-              {/* Hamburger Button */}
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="flex items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ color: "#111827" }}
-                >
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-              </button>
-              <div>
-                <h1
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "24px",
-                    fontWeight: 600,
-                    color: "#111827",
-                  }}
-                >
-                  Welcome, Sachin Dubey!
-                </h1>
-                <p
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    color: "#6B7280",
-                    marginTop: "4px",
-                  }}
-                >
-                  Your AI-powered job search dashboard. Last updated today.
-                </p>
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <h1
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "36px",
+                fontWeight: 700,
+                color: "#111827",
+                marginBottom: "8px",
+                letterSpacing: "-0.5px",
+              }}
+            >
+              Welcome Sachin !
+            </h1>
+            <p
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "15px",
+                color: "#6B7280",
+                marginBottom: "24px",
+                fontWeight: 400,
+              }}
+            >
+              Your AI-powered job search dashboard. Last updated today.
+            </p>
+
+            {/* Quick Action Icons and Key Metrics Cards - Same Row */}
+            <div className="flex items-center justify-between mb-8">
+              {/* Quick Action Icons - Left Side */}
+              <div className="flex items-center gap-4">
+                {/* Search Icon */}
+                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                  </svg>
+                </div>
+                {/* Edit Icon */}
+                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                </div>
+                {/* Grid Icon */}
+                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                </div>
+                {/* Graduation Cap Icon */}
+                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Key Metrics Cards - Right Side */}
+              <div className="flex items-center gap-6">
+                {/* Active Applications Card */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#FEF3E2" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "32px", fontWeight: 700, color: "#374151", margin: 0, lineHeight: "1.2" }}>36</p>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#374151", margin: 0, marginTop: "4px" }}>Active Applications</p>
+                  </div>
+                </div>
+
+                {/* Interviews Card */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#FEF3E2" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "32px", fontWeight: 700, color: "#374151", margin: 0, lineHeight: "1.2" }}>3</p>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#374151", margin: 0, marginTop: "4px" }}>Interviews</p>
+                  </div>
+                </div>
+
+                {/* Saved Jobs Card */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#FEF3E2" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 7h16"></path>
+                      <path d="M4 12h16"></path>
+                      <path d="M4 17h16"></path>
+                      <rect x="2" y="3" width="20" height="18" rx="2" fill="none"></rect>
+                      <rect x="6" y="6" width="3" height="3" fill="#4B5563" opacity="0.3"></rect>
+                      <rect x="11" y="6" width="3" height="3" fill="#4B5563" opacity="0.3"></rect>
+                      <rect x="6" y="11" width="3" height="3" fill="#4B5563" opacity="0.3"></rect>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "32px", fontWeight: 700, color: "#374151", margin: 0, lineHeight: "1.2" }}>52</p>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#374151", margin: 0, marginTop: "4px" }}>Saved Jobs</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -485,12 +550,12 @@ export default function CandidateDashboardPage() {
             {/* Left Column: Profile Card */}
             <div className="flex-shrink-0">
               <div
-                className="bg-white rounded-lg overflow-hidden"
+                className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   width: "244px",
                   height: "357px",
-                  borderRadius: "24px",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(23, 26, 31, 0.3), 0px 0px 0px rgba(0, 0, 0, 0)",
+                  borderRadius: "20px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   position: "relative",
                 }}
               >
@@ -546,17 +611,18 @@ export default function CandidateDashboardPage() {
                   </div>
                   {/* View Button - Bottom Right */}
                   <button
-                    className="absolute bottom-4 right-4 px-3 py-1.5 rounded-md text-sm font-medium"
+                    className="absolute bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 backdrop-blur-md"
                     style={{
-                      backgroundColor: "#F3F4F6",
+                      background: "rgba(255, 255, 255, 0.9)",
                       color: "#111827",
                       fontFamily: "Inter, sans-serif",
                       zIndex: 10,
-                      borderRadius: "6px",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                     }}
                     onClick={() => router.push("/personal-details")}
                   >
-                    view
+                    View Profile
                   </button>
                 </div>
               </div>
@@ -565,23 +631,21 @@ export default function CandidateDashboardPage() {
             {/* Middle Column: Application Status */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "512px",
                   height: "357px",
-                  borderRadius: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.6)",
-                  border: "1px solid rgba(158, 157, 157, 0.8)",
-                  boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0)",
-                  padding: "20px",
+                  borderRadius: "20px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                  padding: "24px",
                   position: "relative",
                 }}
               >
                 <h2
-                  className="mb-3"
+                  className="mb-4"
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     fontWeight: 600,
                     color: "#111827",
                   }}
@@ -782,15 +846,13 @@ export default function CandidateDashboardPage() {
             {/* Right Column: Notifications */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "230px",
                   height: "361px",
-                  borderRadius: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.5)",
-                  border: "1px solid rgba(158, 157, 157, 0.6)",
-                  boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                  padding: "20px",
+                  borderRadius: "20px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                  padding: "24px",
                 }}
               >
                 <h2
@@ -807,26 +869,27 @@ export default function CandidateDashboardPage() {
                 <div className="flex flex-col" style={{ gap: "8px" }}>
                   {/* Notification Item 1 */}
                   <div
-                    className="flex flex-col"
+                    className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
                     style={{
                       width: "205px",
                       height: "77px",
-                      borderRadius: "0px",
-                      padding: "8px",
+                      borderRadius: "12px",
+                      padding: "12px",
                     }}
                   >
                     {/* Top Row: New Tag and Timestamp */}
                     <div className="flex items-start justify-between mb-2">
                       {/* Left: New Tag */}
                       <span
-                        className="px-2 py-1 rounded-full"
+                        className="px-2.5 py-1 rounded-full"
                         style={{
-                          backgroundColor: "#4B5563",
+                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                           color: "#FFFFFF",
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 500,
+                          fontSize: "11px",
+                          fontWeight: 600,
                           borderRadius: "12px",
+                          boxShadow: "0 2px 8px rgba(102, 126, 234, 0.4)",
                         }}
                       >
                         New
@@ -846,11 +909,12 @@ export default function CandidateDashboardPage() {
                     <div className="flex items-start gap-2">
                       {/* Icon */}
                       <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
                         style={{
-                          width: "32px",
-                          height: "32px",
-                          backgroundColor: "#FCE7F3",
+                          width: "36px",
+                          height: "36px",
+                          background: "linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)",
+                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)",
                         }}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -875,26 +939,27 @@ export default function CandidateDashboardPage() {
 
                   {/* Notification Item 2 */}
                   <div
-                    className="flex flex-col"
+                    className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
                     style={{
                       width: "205px",
                       height: "77px",
-                      borderRadius: "0px",
-                      padding: "8px",
+                      borderRadius: "12px",
+                      padding: "12px",
                     }}
                   >
                     {/* Top Row: New Tag and Timestamp */}
                     <div className="flex items-start justify-between mb-2">
                       {/* Left: New Tag */}
                       <span
-                        className="px-2 py-1 rounded-full"
+                        className="px-2.5 py-1 rounded-full"
                         style={{
-                          backgroundColor: "#4B5563",
+                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                           color: "#FFFFFF",
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 500,
+                          fontSize: "11px",
+                          fontWeight: 600,
                           borderRadius: "12px",
+                          boxShadow: "0 2px 8px rgba(102, 126, 234, 0.4)",
                         }}
                       >
                         New
@@ -914,11 +979,12 @@ export default function CandidateDashboardPage() {
                     <div className="flex items-start gap-2">
                       {/* Icon */}
                       <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
                         style={{
-                          width: "32px",
-                          height: "32px",
-                          backgroundColor: "#FCE7F3",
+                          width: "36px",
+                          height: "36px",
+                          background: "linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)",
+                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)",
                         }}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -943,26 +1009,27 @@ export default function CandidateDashboardPage() {
 
                   {/* Notification Item 3 */}
                   <div
-                    className="flex flex-col"
+                    className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
                     style={{
                       width: "205px",
                       height: "77px",
-                      borderRadius: "0px",
-                      padding: "8px",
+                      borderRadius: "12px",
+                      padding: "12px",
                     }}
                   >
                     {/* Top Row: New Tag and Timestamp */}
                     <div className="flex items-start justify-between mb-2">
                       {/* Left: New Tag */}
                       <span
-                        className="px-2 py-1 rounded-full"
+                        className="px-2.5 py-1 rounded-full"
                         style={{
-                          backgroundColor: "#4B5563",
+                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                           color: "#FFFFFF",
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 500,
+                          fontSize: "11px",
+                          fontWeight: 600,
                           borderRadius: "12px",
+                          boxShadow: "0 2px 8px rgba(102, 126, 234, 0.4)",
                         }}
                       >
                         New
@@ -982,11 +1049,12 @@ export default function CandidateDashboardPage() {
                     <div className="flex items-start gap-2">
                       {/* Icon */}
                       <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
                         style={{
-                          width: "32px",
-                          height: "32px",
-                          backgroundColor: "#FCE7F3",
+                          width: "36px",
+                          height: "36px",
+                          background: "linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)",
+                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)",
                         }}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1018,16 +1086,13 @@ export default function CandidateDashboardPage() {
             {/* Left: Application Tasks Card */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-slate-800 transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "778px",
                   height: "197px",
-                  borderRadius: "17px",
-                  backgroundColor: "#2D2D2D",
-                  border: "1px solid rgba(188, 181, 181, 1)",
-                  borderStyle: "solid",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                  padding: "20px",
+                  borderRadius: "20px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+                  padding: "24px",
                   position: "relative",
                 }}
               >
@@ -1326,15 +1391,12 @@ export default function CandidateDashboardPage() {
             {/* Right: CV Score Tracker Card */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "236px",
                   height: "196px",
-                  borderRadius: "17.96px",
-                  backgroundColor: "rgba(255, 255, 255, 1)",
-                  border: "1px solid rgba(158, 157, 157, 0.8)",
-                  borderStyle: "solid",
-                  boxShadow: "0px 0.75px 2.24px 0px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "20px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   padding: "20px",
                   position: "relative",
                 }}
@@ -1418,15 +1480,12 @@ export default function CandidateDashboardPage() {
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left: Job Matches Card */}
             <div
-              className="flex flex-col"
+              className="flex flex-col bg-white transition-all duration-300 hover:scale-[1.01]"
               style={{
                 width: "700px",
                 height: "580px",
-                borderRadius: "17px",
-                backgroundColor: "rgba(255, 255, 255, 1)",
-                opacity: "100%",
-                border: "1px solid rgba(158, 157, 157, 0.8)",
-                boxShadow: "0px 3.05px 3.05px rgba(0, 0, 0, 0.25)",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                 padding: "24px",
               }}
             >
@@ -1957,21 +2016,18 @@ export default function CandidateDashboardPage() {
             </div >
 
             {/* Right: Recommended Courses Card */}
-            < div
-              className="flex flex-col"
+            <div
+              className="flex flex-col bg-white transition-all duration-300 hover:scale-[1.01]"
               style={{
                 width: "320px",
                 height: "580px",
-                borderRadius: "17px",
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
-                border: "1px solid rgba(158, 157, 157, 0.8)",
-                boxShadow: "0px 3.05px 3.05px rgba(0, 0, 0, 0.25)",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                 padding: "24px",
-              }
-              }
+              }}
             >
               {/* Header */}
-              < div className="mb-4" >
+              <div className="mb-4">
                 <h2
                   style={{
                     fontFamily: "Inter, sans-serif",
@@ -1982,11 +2038,11 @@ export default function CandidateDashboardPage() {
                 >
                   Recommended Courses
                 </h2>
-              </div >
+              </div>
               {/* Course List */}
-              < div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
+              <div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
                 {/* Course 1 */}
-                < div
+                <div
                   className="flex flex-col rounded-lg overflow-hidden"
                   style={{
                     backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -1994,7 +2050,7 @@ export default function CandidateDashboardPage() {
                   }}
                 >
                   {/* Code Snippet */}
-                  < div
+                  <div
                     className="px-4 py-3"
                     style={{
                       backgroundColor: "#1E293B",
@@ -2057,7 +2113,7 @@ export default function CandidateDashboardPage() {
                   }}
                 >
                   {/* Code Snippet */}
-                  < div
+                  <div
                     className="px-4 py-3"
                     style={{
                       backgroundColor: "#1E293B",
