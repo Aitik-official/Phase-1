@@ -1083,392 +1083,224 @@ export default function CandidateDashboardPage() {
 
           {/* Second Row: Application Tasks and CV Score Tracker */}
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
-            {/* Left: Application Tasks Card */}
+            {/* Left: Hiring Signals Card */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0 bg-slate-800 transition-all duration-300 hover:scale-[1.01]"
+                className="flex-shrink-0 bg-[#333333] transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "778px",
-                  height: "197px",
-                  borderRadius: "20px",
+                  width: "926px",
+                  height: "229px",
+                  borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
                   padding: "24px",
                   position: "relative",
+                  color: "#FFFFFF",
                 }}
               >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <h2
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h2
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "20px",
+                        fontWeight: 400,
+                        marginBottom: "4px",
+                      }}
+                    >
+                      Hiring Signals for You
+                    </h2>
+                    <p
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "13px",
+                        color: "#9CA3AF",
+                      }}
+                    >
+                      AI insights based on current job market & your profile
+                    </p>
+                  </div>
+                  <button
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors"
                     style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    Application Tasks
-                  </h2>
-                  <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "14px",
+                      fontSize: "12px",
                       fontWeight: 500,
                       color: "#FFFFFF",
                     }}
                   >
-                    2/4
-                  </span>
+                    View Job Trends
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
                 </div>
-                {/* Tasks List - Horizontal */}
-                <div className="flex items-start" style={{ gap: "12px" }}>
-                  {/* Task 1: Onboarding */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="6" width="18" height="12" rx="2" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <circle cx="9" cy="12" r="2" fill="#FFFFFF" />
-                      </svg>
-                    </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Onboarding
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 08:30
-                      </span>
-                    </div>
-                    {/* Status - Yellow checkmark - properly sized circle with non-compressed checkmark */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        backgroundColor: "#FACC15",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-                        <path d="M20 6L9 17L4 12" stroke="#111827" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+
+                {/* Grid Content */}
+                <div className="grid grid-cols-[1.2fr_1fr_1.5fr_1fr] gap-4">
+                  {/* Roles in Demand */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>ROLES IN DEMAND</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-[13px] font-medium">
+                        Frontend Developer
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                          <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                      </div>
+                      <div className="flex items-center gap-2 text-[13px] font-medium">
+                        React Engineer
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                          <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                      </div>
+                      <div className="flex items-center gap-2 text-[13px] font-medium">
+                        UI Engineer
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Task 2: Skills Matching */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <circle cx="9" cy="7" r="4" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                      </svg>
-                    </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Skills Matching
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 10:00
-                      </span>
-                    </div>
-                    {/* Status - Yellow checkmark - properly sized circle with non-compressed checkmark */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        backgroundColor: "#FACC15",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-                        <path d="M20 6L9 17L4 12" stroke="#111827" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                  {/* Top Locations */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>TOP LOCATIONS</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-[13px] text-gray-300">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Remote
+                      </div>
+                      <div className="flex items-center gap-2 text-[13px] text-gray-300">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Bangalore
+                      </div>
+                      <div className="flex items-center gap-2 text-[13px] text-gray-300">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Berlin
+                      </div>
                     </div>
                   </div>
 
-                  {/* Task 3: Project Update */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <polyline points="14 2 14 8 20 8" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <line x1="12" y1="18" x2="12" y2="12" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
-                        <polyline points="9 15 12 12 15 15" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      </svg>
+                  {/* Skills */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>SKILLS INCREASING INTERVIEW CHANCES</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["React Hooks", "System Design", "AWS Basics"].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2 py-1 rounded-full bg-[#4B4B4B] text-[11px] font-medium text-gray-200 text-center"
+                          style={{ fontFamily: "Inter, sans-serif" }}
+                        >
+                          {skill}
+                        </span>
+                      ))}
                     </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Project Update
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 14:00
-                      </span>
-                    </div>
-                    {/* Status - Gray filled circle */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "18px",
-                        height: "18px",
-                        backgroundColor: "#6B7280",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    ></div>
                   </div>
 
-                  {/* Task 4: HR policy */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                      </svg>
+                  {/* Market Fit */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "10px", letterSpacing: "0.05em" }}>YOUR MARKET FIT</h3>
+                    <div className="flex flex-col">
+                      <span style={{ fontSize: "32px", fontWeight: 400, color: "#F97316", lineHeight: "1" }}>78%</span>
+                      <span style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "8px", marginBottom: "12px" }}>match with current openings</span>
+                      <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#F97316] rounded-full" style={{ width: "78%" }}></div>
+                      </div>
                     </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        HR policy
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 15:00
-                      </span>
-                    </div>
-                    {/* Status - Hollow gray circle */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "18px",
-                        height: "18px",
-                        border: "2px solid #9CA3AF",
-                        backgroundColor: "transparent",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    ></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right: CV Score Tracker Card */}
+            {/* Right: CV Score Card */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
+                className="flex-shrink-0 bg-[#FFF9F2] transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "236px",
-                  height: "196px",
-                  borderRadius: "20px",
+                  width: "408px",
+                  height: "229px",
+                  borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
-                  padding: "20px",
+                  padding: "32px 24px",
+                  display: "flex",
+                  flexDirection: "column",
                   position: "relative",
+                  justifyContent: "space-between",
                 }}
               >
                 {/* Header */}
-                <div className="flex items-center justify-between" style={{ marginBottom: "16px" }}>
+                <div className="flex items-start justify-between">
                   <h2
                     style={{
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: 600,
+                      fontSize: "24px",
+                      fontWeight: 300,
                       color: "#111827",
                     }}
                   >
-                    CV Score Tracker
+                    CV Score
                   </h2>
-                  {/* Action Icon - Arrow pointing out of square */}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ cursor: "pointer", flexShrink: 0 }}>
-                    <rect x="3" y="3" width="14" height="14" rx="1.5" stroke="#6B7280" strokeWidth="1.5" fill="none" />
-                    <path d="M7 3h6v6" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    <line x1="13" y1="3" x2="21" y2="11" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="17" y1="3" x2="21" y2="3" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="21" y1="3" x2="21" y2="7" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+                  <span
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "42px",
+                      fontWeight: 300,
+                      color: "#111827",
+                    }}
+                  >
+                    82%
+                  </span>
                 </div>
-                {/* CV Score Visualization */}
-                <div className="flex items-center justify-center">
-                  <div className="relative" style={{ width: "120px", height: "120px" }}>
-                    {/* Dotted Circle Outline */}
-                    <svg viewBox="0 0 100 100" className="w-full h-full" style={{ transform: "rotate(-90deg)" }}>
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="45"
-                        fill="none"
-                        stroke="#E5E7EB"
-                        strokeWidth="4"
-                        strokeDasharray="4 4"
-                      />
-                      {/* Yellow Segments */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="45"
-                        fill="none"
-                        stroke="#FACC15"
-                        strokeWidth="4"
-                        strokeDasharray={`${(72 / 100) * 282.74} 282.74`}
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    {/* Center Text */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "32px",
-                          fontWeight: 700,
-                          color: "#111827",
-                        }}
-                      >
-                        72
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        CV Score
-                      </span>
+
+                {/* Segmented Capsule Graph */}
+                <div className="relative">
+                  {/* Labels row - moved further up and ensured visibility */}
+                  <div className="flex w-full mb-3" style={{ paddingLeft: "10px" }}>
+                    <div style={{ width: "40%" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#9CA3AF", fontWeight: 400 }}>Skills</span>
+                    </div>
+                    <div style={{ width: "35%", paddingLeft: "8px" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#9CA3AF", fontWeight: 400 }}>Exp</span>
+                    </div>
+                    <div style={{ width: "25%", paddingLeft: "8px" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#9CA3AF", fontWeight: 400 }}>Edu</span>
+                    </div>
+                  </div>
+                  {/* Capsule row */}
+                  <div className="flex w-full h-[54px] rounded-full overflow-hidden shadow-inner">
+                    {/* Skills Segment */}
+                    <div
+                      className="h-full flex items-center justify-center bg-[#FFD65C]"
+                      style={{ width: "40%" }}
+                    >
+                      <span className="text-[14px] text-[#111827] font-medium" style={{ fontFamily: "Inter, sans-serif" }}>High</span>
+                    </div>
+                    {/* Exp Segment */}
+                    <div
+                      className="h-full flex items-center justify-center bg-[#232931]"
+                      style={{ width: "35%", borderLeft: "2px solid #FFF9F2", borderRight: "2px solid #FFF9F2" }}
+                    >
+                      <span className="text-[14px] text-white font-medium" style={{ fontFamily: "Inter, sans-serif" }}>Good</span>
+                    </div>
+                    {/* Edu Segment */}
+                    <div
+                      className="h-full flex items-center justify-center bg-[#A4ADB8]"
+                      style={{ width: "25%" }}
+                    >
+                      <span className="text-[14px] text-white font-medium" style={{ fontFamily: "Inter, sans-serif" }}>Avg</span>
                     </div>
                   </div>
                 </div>
@@ -1482,20 +1314,20 @@ export default function CandidateDashboardPage() {
             <div
               className="flex flex-col bg-white transition-all duration-300 hover:scale-[1.01]"
               style={{
-                width: "700px",
-                height: "580px",
-                borderRadius: "20px",
+                width: "939px",
+                height: "526px",
+                borderRadius: "6px",
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
-                padding: "24px",
+                padding: "32px",
               }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-8">
                 <h2
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "20px",
-                    fontWeight: 600,
+                    fontSize: "24px",
+                    fontWeight: 400,
                     color: "#111827",
                   }}
                 >
@@ -1516,504 +1348,136 @@ export default function CandidateDashboardPage() {
                   View All Jobs
                 </button>
               </div>
+
               {/* Job List */}
               <div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
-                {/* Job 1: Frontend Developer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
+                {[
+                  {
+                    title: "Frontend Developer",
+                    company: "Tech Solutions Inc.",
+                    location: "New York, USA",
+                    skills: ["React", "TypeScript", "UI/UX"],
+                    match: "92% Match",
+                  },
+                  {
+                    title: "Backend Engineer",
+                    company: "Global Innovations",
+                    location: "San Francisco, USA",
+                    skills: ["Nodejs", "Python", "AWS"],
+                    match: "88% Match",
+                  },
+                  {
+                    title: "Data Analyst",
+                    company: "Analytics Corp.",
+                    location: "Boston, USA",
+                    skills: ["SQL", "Python", "Tableau"],
+                    match: "85% Match",
+                  },
+                  {
+                    title: "Product Designer",
+                    company: "Creative Studio",
+                    location: "London, UK",
+                    skills: ["Figma", "UI/UX", "User Research"],
+                    match: "90% Match",
+                  },
+                ].map((job, index) => (
                   <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
+                    key={index}
+                    className="flex items-center gap-6"
                     style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
+                      width: "100%",
+                      height: "85px",
+                      flexShrink: 0,
+                      padding: "0 20px",
+                      border: "1px solid #C1C1C1",
                       borderRadius: "8px",
+                      backgroundColor: "#FFFFFF",
                     }}
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
+                    {/* Icon */}
+                    <div className="flex-shrink-0">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="5" width="16" height="4" rx="1" stroke="black" strokeWidth="2" />
+                        <rect x="4" y="10" width="16" height="4" rx="1" stroke="black" strokeWidth="2" />
+                        <rect x="4" y="15" width="16" height="4" rx="1" stroke="black" strokeWidth="2" />
+                        <circle cx="18" cy="7" r="0.5" fill="black" />
+                        <circle cx="18" cy="12" r="0.5" fill="black" />
+                        <circle cx="18" cy="17" r="0.5" fill="black" />
+                      </svg>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
                       <h3
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
+                          fontSize: "16px",
+                          fontWeight: 500,
                           color: "#111827",
+                          marginBottom: "2px",
                         }}
                       >
-                        Frontend Developer
+                        {job.title}
                       </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Tech Solutions Inc. New York, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "TypeScript", "UI/UX"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      92% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-
-                {/* Job 2: Backend Engineer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#D1FAE5",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#10B981" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#10B981" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
+                      <p
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
+                          fontSize: "12px",
                           color: "#111827",
+                          marginBottom: "8px",
                         }}
                       >
-                        Backend Engineer
-                      </h3>
-
+                        {job.company} • {job.location}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {job.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="px-3 py-1 rounded-full"
+                            style={{
+                              fontSize: "10px",
+                              backgroundColor: "#E5E7EB",
+                              color: "#6B7280",
+                              fontFamily: "Inter, sans-serif",
+                            }}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Global Innovations San Francisco, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["Node.js", "Python", "AWS"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      88% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
 
-                {/* Job 3: Data Analyst */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
+                    {/* Right Column */}
+                    <div className="flex flex-col items-end gap-1">
+                      <span
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#3B82F6",
                         }}
                       >
-                        Data Analyst
-                      </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Analytics Corp. Boston, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["SQL", "Python", "Tableau"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      85% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-
-                {/* Job 4: Full Stack Developer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
+                        {job.match}
+                      </span>
+                      <button
+                        className="px-6 py-2 rounded-lg font-medium"
                         style={{
+                          backgroundColor: "#F97316",
+                          color: "#FFFFFF",
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
+                          fontSize: "12px",
+                          border: "none",
+                          cursor: "pointer",
+                          borderRadius: "8px",
                         }}
                       >
-                        Full Stack Developer
-                      </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Digital Innovations Inc. Seattle, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "Node.js", "MongoDB"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                        View Details
+                      </button>
                     </div>
                   </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      90% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-
-                {/* Job 5: UI/UX Designer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
-                        }}
-                      >
-                        UI/UX Designer
-                      </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Creative Studio LLC. Los Angeles, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["Figma", "Sketch", "Adobe XD"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      87% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div >
+            </div>
 
             {/* Right: Recommended Courses Card */}
             <div
