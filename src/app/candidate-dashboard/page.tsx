@@ -431,29 +431,29 @@ export default function CandidateDashboardPage() {
         <div className="mx-auto max-w-7xl">
           {/* Welcome Section */}
           <div className="mb-8">
-                <h1
-                  style={{
-                    fontFamily: "Inter, sans-serif",
+            <h1
+              style={{
+                fontFamily: "Inter, sans-serif",
                 fontSize: "36px",
                 fontWeight: 700,
-                    color: "#111827",
+                color: "#111827",
                 marginBottom: "8px",
                 letterSpacing: "-0.5px",
-                  }}
-                >
-              Welcome Sachin !
-                </h1>
-                <p
-                  style={{
-                    fontFamily: "Inter, sans-serif",
+              }}
+            >
+              Welcome Sachinnnnn !
+            </h1>
+            <p
+              style={{
+                fontFamily: "Inter, sans-serif",
                 fontSize: "15px",
-                    color: "#6B7280",
+                color: "#6B7280",
                 marginBottom: "24px",
                 fontWeight: 400,
-                  }}
-                >
-                  Your AI-powered job search dashboard. Last updated today.
-                </p>
+              }}
+            >
+              Your AI-powered job search dashboard. Last updated today.
+            </p>
 
             {/* Quick Action Icons and Key Metrics Cards - Same Row */}
             <div className="flex items-center justify-between mb-8">
@@ -465,7 +465,7 @@ export default function CandidateDashboardPage() {
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.35-4.35"></path>
                   </svg>
-              </div>
+                </div>
                 {/* Edit Icon */}
                 <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
