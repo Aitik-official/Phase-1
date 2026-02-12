@@ -298,7 +298,7 @@ export default function ProfilePage() {
                     fill="none"
                     strokeDasharray={`${85 * 2.83} 283`}
                     strokeLinecap="round"
-                    className="rotate-[-90deg] origin-center"
+                    className="-rotate-90 origin-center"
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
