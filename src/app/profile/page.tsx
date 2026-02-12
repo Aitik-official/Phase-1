@@ -492,12 +492,24 @@ export default function ProfilePage() {
                         </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Reason for Gap</label>
-                          <p className="text-base text-gray-900">{gapExplanationData.reason}</p>
+                          <p className="text-base text-gray-900">{gapExplanationData.reasonForGap}</p>
                         </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Duration</label>
-                          <p className="text-base text-gray-900">{gapExplanationData.duration}</p>
+                          <p className="text-base text-gray-900">{gapExplanationData.gapDuration}</p>
                         </div>
+                        {gapExplanationData.selectedSkills && gapExplanationData.selectedSkills.length > 0 && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Skills Continued</label>
+                            <p className="text-base text-gray-900">{gapExplanationData.selectedSkills.join(', ')}</p>
+                          </div>
+                        )}
+                        {gapExplanationData.coursesText && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Courses/Trainings</label>
+                            <p className="text-base text-gray-900">{gapExplanationData.coursesText}</p>
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <p className="text-base text-gray-500">No gap explanation added yet.</p>
