@@ -10,7 +10,6 @@ import SummaryModal from '../../components/modals/SummaryModal';
 import GapExplanationModal, { GapExplanationData } from '../../components/modals/GapExplanationModal';
 import WorkExperienceModal, { WorkExperienceData } from '../../components/modals/WorkExperienceModal';
 import InternshipModal, { InternshipData } from '../../components/modals/InternshipModal';
-import ProfileSectionCard from '../../components/profile/ProfileSectionCard';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -20,14 +19,52 @@ export default function ProfilePage() {
   const [isWorkExperienceModalOpen, setIsWorkExperienceModalOpen] = useState(false);
   const [isInternshipModalOpen, setIsInternshipModalOpen] = useState(false);
   
+  // Sidebar expansion state
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
+    'PERSONAL DETAILS': true, // Default to expanded
+    'WORK HISTORY': true,
+    'EDUCATION': true,
+    'SKILLS': true,
+    'PROJECTS': true,
+    'CERTIFICATIONS': true,
+    'PREFERENCES': true,
+    'GLOBAL ELIGIBILITY': true,
+    'RESUME': true,
+  });
+  
+  // Selected sidebar item state
+  const [selectedItem, setSelectedItem] = useState<{ category: string; itemName: string } | null>({
+    category: 'PERSONAL DETAILS',
+    itemName: 'Basic Information'
+  });
+  
   // Summary form state
   const [summaryText, setSummaryText] = useState('Experienced software engineer with a strong background in full-stack development and cloud technologies. Proven ability to lead projects, mentor junior developers, and deliver high-quality solutions on time. Passionate about creating scalable and user-centric applications, with a keen interest in AI/ML integration for improved user experiences. Seeking a challenging role to leverage technical expertise and contribute to innovative product development.');
   
   // Data storage for modals
-  const [basicInfoData, setBasicInfoData] = useState<BasicInfoData | undefined>();
+  const [basicInfoData, setBasicInfoData] = useState<BasicInfoData | undefined>({
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'john.doe@example.com',
+    phone: '123-456-7890',
+    phoneCode: '+1 (USA)',
+    dob: 'July 20th, 1990',
+    city: 'New York',
+    gender: 'Male',
+    country: 'United States',
+    employment: 'Employed',
+    notice: '60 days'
+  });
   const [gapExplanationData, setGapExplanationData] = useState<GapExplanationData | undefined>();
   const [workExperienceData, setWorkExperienceData] = useState<WorkExperienceData | undefined>();
   const [internshipData, setInternshipData] = useState<InternshipData | undefined>();
+
+  const toggleSection = (category: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
 
   // Create profile sections with data
   const profileSections = [
@@ -151,6 +188,26 @@ export default function ProfilePage() {
     } else if (category === 'WORK HISTORY' && itemName === 'Work Experience') {
       setIsWorkExperienceModalOpen(true);
     } else if (category === 'WORK HISTORY' && itemName === 'Internships') {
+      setIsInternshipModalOpen(true);
+    }
+  };
+
+  const handleAddClick = (category: string, itemName: string) => {
+    // Set data to undefined to show empty fields
+    if (category === 'PERSONAL DETAILS' && itemName === 'Basic Information') {
+      setBasicInfoData(undefined);
+      setIsBasicInfoModalOpen(true);
+    } else if (category === 'PERSONAL DETAILS' && itemName === 'Summary') {
+      setSummaryText('');
+      setIsSummaryModalOpen(true);
+    } else if (category === 'PERSONAL DETAILS' && itemName === 'Gap Explanation') {
+      setGapExplanationData(undefined);
+      setIsGapExplanationModalOpen(true);
+    } else if (category === 'WORK HISTORY' && itemName === 'Work Experience') {
+      setWorkExperienceData(undefined);
+      setIsWorkExperienceModalOpen(true);
+    } else if (category === 'WORK HISTORY' && itemName === 'Internships') {
+      setInternshipData(undefined);
       setIsInternshipModalOpen(true);
     }
   };
@@ -287,42 +344,247 @@ export default function ProfilePage() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
               <nav className="space-y-6">
-                {profileSections.map((section, sectionIndex) => (
-                  <div key={sectionIndex}>
-                    <h4 className="font-bold text-gray-900 mb-2 text-sm">{section.category}</h4>
-                    <ul className="space-y-1">
-                      {section.items.map((item, itemIndex) => (
-                        <li key={itemIndex}>
-                          <button
-                            className={`w-full text-left px-2 py-1.5 text-sm rounded-md hover:bg-gray-50 ${
-                              sectionIndex === 0 && itemIndex === 0 ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
-                            }`}
+                {profileSections.map((section, sectionIndex) => {
+                  const isExpanded = expandedSections[section.category] ?? true;
+                  return (
+                    <div key={sectionIndex}>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-bold text-gray-900 text-sm">{section.category}</h4>
+                        <button
+                          onClick={() => toggleSection(section.category)}
+                          className="p-1 text-gray-400 hover:text-gray-600 transition-transform"
+                          style={{
+                            transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                            transition: 'transform 0.2s ease-in-out'
+                          }}
+                        >
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           >
-                            {item.name}
-                            {itemIndex < section.items.length - 1 && (
-                              <span className="float-right text-gray-400">→</span>
-                            )}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+                      </div>
+                      {isExpanded && (
+                        <ul className="space-y-1">
+                          {section.items.map((item, itemIndex) => {
+                            const isSelected = selectedItem?.category === section.category && selectedItem?.itemName === item.name;
+                            return (
+                              <li key={itemIndex}>
+                                <button
+                                  onClick={() => setSelectedItem({ category: section.category, itemName: item.name })}
+                                  className={`w-full text-left px-2 py-1.5 text-sm rounded-md hover:bg-gray-50 flex items-center justify-between ${
+                                    isSelected ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                                  }`}
+                                >
+                                  <span>{item.name}</span>
+                                  <span className="text-gray-400">→</span>
+                                </button>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
               </nav>
             </div>
           </div>
 
           {/* Right Column - Profile Details */}
-          <div className="lg:col-span-2 space-y-6">
-            {profileSections.map((section, sectionIndex) => (
-              <ProfileSectionCard
-                key={sectionIndex}
-                category={section.category}
-                items={section.items}
-                onEditClick={handleEditClick}
-                getStatusColor={getStatusColor}
-              />
-            ))}
+          <div className="lg:col-span-2">
+            {selectedItem && (
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+                {/* Header with Edit and Add buttons */}
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-semibold text-gray-900">{selectedItem.itemName}</h2>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => handleEditClick(selectedItem.category, selectedItem.itemName)}
+                      className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm font-medium hover:bg-gray-50"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleAddClick(selectedItem.category, selectedItem.itemName)}
+                      className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+
+                {/* Content based on selected item */}
+                {selectedItem.itemName === 'Basic Information' && basicInfoData && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">First Name</label>
+                        <p className="text-base text-gray-900">{basicInfoData.firstName}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Email Address</label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-base text-gray-900">{basicInfoData.email}</p>
+                          <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded">Verified</span>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Phone Number</label>
+                        <p className="text-base text-gray-900">{basicInfoData.phoneCode} {basicInfoData.phone}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Date of Birth</label>
+                        <p className="text-base text-gray-900">{basicInfoData.dob}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Current City</label>
+                        <p className="text-base text-gray-900">{basicInfoData.city}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Notice Period</label>
+                        <p className="text-base text-gray-900">{basicInfoData.notice}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Last Name</label>
+                        <p className="text-base text-gray-900">{basicInfoData.lastName}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Gender</label>
+                        <p className="text-base text-gray-900">{basicInfoData.gender}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Current Country</label>
+                        <p className="text-base text-gray-900">{basicInfoData.country}</p>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-500 mb-1 block">Employment Status</label>
+                        <p className="text-base text-gray-900">{basicInfoData.employment}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Summary' && (
+                  <div>
+                    <label className="text-sm font-medium text-gray-500 mb-2 block">Professional Summary</label>
+                    <p className="text-base text-gray-900 whitespace-pre-wrap">{summaryText || 'No summary added yet.'}</p>
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Gap Explanation' && (
+                  <div>
+                    {gapExplanationData ? (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Category</label>
+                          <p className="text-base text-gray-900">{gapExplanationData.gapCategory}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Reason for Gap</label>
+                          <p className="text-base text-gray-900">{gapExplanationData.reasonForGap}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Duration</label>
+                          <p className="text-base text-gray-900">{gapExplanationData.gapDuration}</p>
+                        </div>
+                        {gapExplanationData.selectedSkills && gapExplanationData.selectedSkills.length > 0 && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Skills Continued</label>
+                            <p className="text-base text-gray-900">{gapExplanationData.selectedSkills.join(', ')}</p>
+                          </div>
+                        )}
+                        {gapExplanationData.coursesText && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Courses/Trainings</label>
+                            <p className="text-base text-gray-900">{gapExplanationData.coursesText}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No gap explanation added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Work Experience' && (
+                  <div>
+                    {workExperienceData ? (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Job Title</label>
+                          <p className="text-base text-gray-900">{workExperienceData.jobTitle}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
+                          <p className="text-base text-gray-900">{workExperienceData.companyName}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Employment Type</label>
+                          <p className="text-base text-gray-900">{workExperienceData.employmentType}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
+                          <p className="text-base text-gray-900">
+                            {workExperienceData.startDate} - {workExperienceData.currentlyWorkHere ? 'Present' : workExperienceData.endDate}
+                          </p>
+                        </div>
+                        {workExperienceData.workLocation && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Location</label>
+                            <p className="text-base text-gray-900">{workExperienceData.workLocation}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No work experience added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Internships' && (
+                  <div>
+                    {internshipData ? (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Internship Title</label>
+                          <p className="text-base text-gray-900">{internshipData.internshipTitle}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
+                          <p className="text-base text-gray-900">{internshipData.companyName}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
+                          <p className="text-base text-gray-900">
+                            {internshipData.startDate} - {internshipData.currentlyWorking ? 'Present' : internshipData.endDate}
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No internships added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {/* Default content for other items */}
+                {!['Basic Information', 'Summary', 'Gap Explanation', 'Work Experience', 'Internships'].includes(selectedItem.itemName) && (
+                  <div>
+                    <p className="text-base text-gray-500">Content for {selectedItem.itemName} will be displayed here.</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </main>
