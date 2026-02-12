@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
 interface BasicInfoModalProps {
@@ -31,27 +31,57 @@ export default function BasicInfoModal({
   initialData,
 }: BasicInfoModalProps) {
   const [firstNameFocused, setFirstNameFocused] = useState(false);
-  const [firstNameValue, setFirstNameValue] = useState(initialData?.firstName || 'John');
+  const [firstNameValue, setFirstNameValue] = useState(initialData?.firstName || '');
   const [lastNameFocused, setLastNameFocused] = useState(false);
-  const [lastNameValue, setLastNameValue] = useState(initialData?.lastName || 'Doe');
+  const [lastNameValue, setLastNameValue] = useState(initialData?.lastName || '');
   const [emailFocused, setEmailFocused] = useState(false);
-  const [emailValue, setEmailValue] = useState(initialData?.email || 'john.doe@example.com');
+  const [emailValue, setEmailValue] = useState(initialData?.email || '');
   const [phoneFocused, setPhoneFocused] = useState(false);
-  const [phoneValue, setPhoneValue] = useState(initialData?.phone || '123-456-7890');
+  const [phoneValue, setPhoneValue] = useState(initialData?.phone || '');
   const [phoneCode, setPhoneCode] = useState(initialData?.phoneCode || '+1 (USA)');
   const [dobFocused, setDobFocused] = useState(false);
-  const [dobValue, setDobValue] = useState(initialData?.dob || 'July 20th, 1990');
+  const [dobValue, setDobValue] = useState(initialData?.dob || '');
   const [cityFocused, setCityFocused] = useState(false);
-  const [cityValue, setCityValue] = useState(initialData?.city || 'New York');
+  const [cityValue, setCityValue] = useState(initialData?.city || '');
   const [genderFocused, setGenderFocused] = useState(false);
-  const [genderValue, setGenderValue] = useState(initialData?.gender || 'Male');
+  const [genderValue, setGenderValue] = useState(initialData?.gender || '');
   const [countryFocused, setCountryFocused] = useState(false);
-  const [countryValue, setCountryValue] = useState(initialData?.country || 'United States');
+  const [countryValue, setCountryValue] = useState(initialData?.country || '');
   const [employmentFocused, setEmploymentFocused] = useState(false);
-  const [employmentValue, setEmploymentValue] = useState(initialData?.employment || 'Employed');
+  const [employmentValue, setEmploymentValue] = useState(initialData?.employment || '');
   const [noticeFocused, setNoticeFocused] = useState(false);
-  const [noticeValue, setNoticeValue] = useState(initialData?.notice || '60 days');
+  const [noticeValue, setNoticeValue] = useState(initialData?.notice || '');
   const dateInputRef = useRef<HTMLInputElement>(null);
+
+  // Update values when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setFirstNameValue(initialData.firstName || '');
+      setLastNameValue(initialData.lastName || '');
+      setEmailValue(initialData.email || '');
+      setPhoneValue(initialData.phone || '');
+      setPhoneCode(initialData.phoneCode || '+1 (USA)');
+      setDobValue(initialData.dob || '');
+      setCityValue(initialData.city || '');
+      setGenderValue(initialData.gender || '');
+      setCountryValue(initialData.country || '');
+      setEmploymentValue(initialData.employment || '');
+      setNoticeValue(initialData.notice || '');
+    } else {
+      // Clear all fields for "Add" mode
+      setFirstNameValue('');
+      setLastNameValue('');
+      setEmailValue('');
+      setPhoneValue('');
+      setPhoneCode('+1 (USA)');
+      setDobValue('');
+      setCityValue('');
+      setGenderValue('');
+      setCountryValue('');
+      setEmploymentValue('');
+      setNoticeValue('');
+    }
+  }, [initialData, isOpen]);
 
   const handleSave = () => {
     onSave({
