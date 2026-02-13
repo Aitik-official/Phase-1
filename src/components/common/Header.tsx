@@ -63,7 +63,7 @@ export default function Header() {
         </div>
 
         {/* Navigation Container - Centered rounded pill with cream/peach background */}
-        <nav 
+        <nav
           className="flex items-center gap-2 px-6 py-2.5 rounded-full"
           style={{
             background: 'linear-gradient(to bottom, rgba(255, 250, 240, 0.98) 0%, rgba(255, 245, 230, 1) 50%, rgba(255, 250, 240, 0.98) 100%)',
@@ -73,21 +73,20 @@ export default function Header() {
           {navItems.map((item) => {
             const active = isActive(item.path);
             return (
-          <button 
+              <button
                 key={item.path}
                 type="button"
                 onClick={() => router.push(item.path)}
-                className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
-                  active
-                    ? 'bg-slate-800 text-white shadow-md'
-                    : 'text-slate-600 hover:text-slate-800 bg-transparent'
-                }`}
+                className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${active
+                  ? 'bg-slate-800 text-white shadow-md'
+                  : 'text-slate-600 hover:text-slate-800 bg-transparent'
+                  }`}
                 style={{
                   fontFamily: 'Inter, sans-serif',
                 }}
               >
                 {item.label}
-          </button>
+              </button>
             );
           })}
         </nav>
@@ -95,7 +94,7 @@ export default function Header() {
         {/* Right side icons - Settings, Notifications, Profile */}
         <div className="flex items-center gap-3">
           {/* Settings Icon */}
-          <button 
+          <button
             type="button"
             className="p-2 text-slate-600 hover:text-slate-800 transition-colors"
           >
@@ -114,10 +113,10 @@ export default function Header() {
               <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m15.364 6.364l-4.243-4.243m-4.242 0l-4.243 4.243m8.485 0l-4.243-4.243m-4.242 0l-4.243 4.243" />
             </svg>
           </button>
-          
+
           {/* Notifications Icon with Modal */}
           <div className="relative notification-button">
-          <button 
+            <button
               type="button"
               onClick={() => {
                 setIsNotificationsModalOpen(!isNotificationsModalOpen);
@@ -125,21 +124,21 @@ export default function Header() {
               }}
               className="relative p-2 text-slate-600 hover:text-slate-800 transition-colors"
             >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </svg>
-          </button>
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+            </button>
 
             {/* Notifications Dropdown */}
             {isNotificationsModalOpen && (
@@ -413,7 +412,7 @@ export default function Header() {
               </div>
             )}
           </div>
-          
+
           {/* Profile Icon with Modal */}
           <div className="relative profile-button">
             <button
