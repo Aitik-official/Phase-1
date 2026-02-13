@@ -390,7 +390,7 @@ export default function VisaWorkAuthorizationModal({
                 className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors bg-gray-50"
               >
                 <input
-                  ref={(el) => fileInputRefs.current[sectionId] = el}
+                  ref={(el) => { fileInputRefs.current[sectionId] = el; }}
                   type="file"
                   accept=".pdf,.png,.jpg,.jpeg"
                   onChange={(e) => handleFileInputChange(sectionId, e)}
