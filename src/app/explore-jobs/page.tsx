@@ -7,6 +7,7 @@ import EditText from '../../components/ui/EditText';
 import Dropdown from '../../components/ui/Dropdown';
 import Button from '../../components/ui/Button';
 import Image from 'next/image';
+import ApplicationSuccessModal from '../../components/modals/ApplicationSuccessModal';
 
 interface JobListing {
   id: number
@@ -44,12 +45,13 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true)
   const [viewMode, setViewMode] = useState<'grid' | 'detail'>('grid')
   const [isScreeningModalOpen, setIsScreeningModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
 
   // Screening form states
   const [experienceAnswer, setExperienceAnswer] = useState<string | null>('yes')
   const [nightShiftFocused, setNightShiftFocused] = useState(false)
   const [nightShiftValue, setNightShiftValue] = useState('')
-  const [excelProficiency, setExcelProficiency] = useState(0)
+  const [excelProficiency, setExcelProficiency] = useState(0) // 0 = Beginner, 100 = Expert
   const [joiningAvailability, setJoiningAvailability] = useState<string | null>(null)
 
   // Dropdown options
@@ -312,6 +314,19 @@ const DashboardPage = () => {
       joiningAvailability
     })
     handleCloseModal()
+    setIsSuccessModalOpen(true)
+  }
+
+  const handleCloseSuccessModal = () => {
+    setIsSuccessModalOpen(false)
+  }
+
+  const formatDate = (date: Date): string => {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
   }
 
   const getProficiencyLabel = (value: number) => {
@@ -788,29 +803,165 @@ const DashboardPage = () => {
         </div>
       </main>
 
-      {isScreeningModalOpen && (
+      {isScreeningModalOpen && selectedJob && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCloseModal} />
-          <div className="bg-white rounded-lg shadow-xl overflow-y-auto border border-blue-200 z-10" style={{ width: "600px", maxHeight: "85vh" }} onClick={(e) => e.stopPropagation()}>
+          <div 
+            className="bg-white rounded-lg shadow-xl overflow-y-auto z-10" 
+            style={{ 
+              width: "600px", 
+              maxHeight: "85vh",
+              borderRadius: "10px",
+              boxShadow: "0 0 2px 0 rgba(23, 26, 31, 0.20), 0 0 1px 0 rgba(23, 26, 31, 0.07)"
+            }} 
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
             <div className="px-6 pt-6 pb-4">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Quick Screening Questions</h2>
-              <div className="h-px bg-blue-300 mt-4"></div>
+              <p className="text-base text-gray-700 mb-1">{selectedJob.title} — {selectedJob.company}</p>
+              <p className="text-sm text-gray-600 mb-4">These quick questions help us understand if you are a good fit for the role.</p>
+              <div className="h-px bg-blue-300"></div>
             </div>
+
+            {/* Questions */}
             <div className="px-6 py-6 space-y-8">
+              {/* Question 1: Experience */}
               <div>
-                <label className="block text-base font-medium text-gray-900 mb-3">Do you have at least 2 years of experience?</label>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  Do you have at least 2 years of experience for this role?
+                </label>
                 <div className="flex gap-3">
-                  <button onClick={() => setExperienceAnswer('yes')} className={`px-6 py-2.5 rounded-lg border ${experienceAnswer === 'yes' ? 'bg-blue-500 text-white' : 'bg-white'}`}>Yes</button>
-                  <button onClick={() => setExperienceAnswer('no')} className={`px-6 py-2.5 rounded-lg border ${experienceAnswer === 'no' ? 'bg-blue-500 text-white' : 'bg-white'}`}>No</button>
+                  <button 
+                    onClick={() => setExperienceAnswer('yes')} 
+                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${
+                      experienceAnswer === 'yes' 
+                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium' 
+                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                    }`}
+                  >
+                    Yes
+                  </button>
+                  <button 
+                    onClick={() => setExperienceAnswer('no')} 
+                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${
+                      experienceAnswer === 'no' 
+                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium' 
+                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+
+              {/* Question 2: Night Shift */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  Are you willing to work in Night Shift?
+                </label>
+                <div className="relative">
+                  <select
+                    value={nightShiftValue}
+                    onChange={(e) => setNightShiftValue(e.target.value)}
+                    onFocus={() => setNightShiftFocused(true)}
+                    onBlur={() => setNightShiftFocused(false)}
+                    className={`w-full px-4 py-2.5 rounded-lg border-2 appearance-none bg-white text-gray-900 ${
+                      nightShiftFocused ? 'border-blue-500' : 'border-blue-200'
+                    } focus:outline-none focus:ring-2 focus:ring-blue-200`}
+                  >
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="maybe">Maybe</option>
+                  </select>
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Question 3: Excel Proficiency */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  Rate your proficiency in Excel
+                </label>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-gray-600">Beginner</span>
+                    <span className="text-sm text-gray-600">Expert</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={excelProficiency}
+                    onChange={(e) => setExcelProficiency(Number(e.target.value))}
+                    className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    style={{
+                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${excelProficiency}%, #e0e7ff ${excelProficiency}%, #e0e7ff 100%)`
+                    }}
+                  />
+                  <p className="text-sm text-blue-600 font-medium">
+                    Current selection: {excelProficiency < 50 ? 'Beginner' : 'Expert'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Question 4: Joining Availability */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  How soon can you join?
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {['Immediate', '15 Days', '30 Days', '60 Days'].map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setJoiningAvailability(option)}
+                      className={`px-4 py-2.5 rounded-lg border-2 transition-colors ${
+                        joiningAvailability === option
+                          ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                          : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
-            <div className="px-6 py-4 border-t border-gray-200 flex justify-between">
-              <button onClick={handleCloseModal} className="px-4 py-2 text-blue-500 font-medium">Cancel</button>
-              <button onClick={handleSubmitScreening} className="px-6 py-2 bg-orange-500 text-white font-medium rounded-lg">Submit & Continue</button>
+
+            {/* Footer */}
+            <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+              <button 
+                onClick={handleCloseModal} 
+                className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleSubmitScreening} 
+                className="px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors"
+              >
+                Submit & Continue
+              </button>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Application Success Modal */}
+      {selectedJob && (
+        <ApplicationSuccessModal
+          isOpen={isSuccessModalOpen}
+          onClose={handleCloseSuccessModal}
+          jobTitle={selectedJob.title}
+          company={selectedJob.company}
+          appliedDate={formatDate(new Date())}
+          jobId={selectedJob.id}
+        />
       )}
 
       <Footer />

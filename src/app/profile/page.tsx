@@ -456,7 +456,7 @@ export default function ProfilePage() {
           {/* Left Column - Profile Menu */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-              <nav className="space-y-6">
+              <nav className="space-y-6 overflow-y-auto max-h-[calc(100vh-300px)] pr-2 profile-sidebar-scroll">
                 {profileSections.map((section, sectionIndex) => {
                   const isExpanded = expandedSections[section.category] ?? true;
                   return (
