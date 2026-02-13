@@ -18,6 +18,11 @@ import LanguagesModal, { LanguagesData } from '../../components/modals/Languages
 import ProjectModal, { ProjectData } from '../../components/modals/ProjectModal';
 import PortfolioLinksModal, { PortfolioLinksData } from '../../components/modals/PortfolioLinksModal';
 import CertificationModal, { CertificationsData } from '../../components/modals/CertificationModal';
+import AccomplishmentModal, { AccomplishmentsData } from '../../components/modals/AccomplishmentModal';
+import CareerPreferencesModal, { CareerPreferencesData } from '../../components/modals/CareerPreferencesModal';
+import VisaWorkAuthorizationModal, { VisaWorkAuthorizationData } from '../../components/modals/VisaWorkAuthorizationModal';
+import VaccinationModal, { VaccinationData } from '../../components/modals/VaccinationModal';
+import ResumeModal, { ResumeData } from '../../components/modals/ResumeModal';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -34,6 +39,11 @@ export default function ProfilePage() {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isPortfolioLinksModalOpen, setIsPortfolioLinksModalOpen] = useState(false);
   const [isCertificationModalOpen, setIsCertificationModalOpen] = useState(false);
+  const [isAccomplishmentModalOpen, setIsAccomplishmentModalOpen] = useState(false);
+  const [isCareerPreferencesModalOpen, setIsCareerPreferencesModalOpen] = useState(false);
+  const [isVisaWorkAuthorizationModalOpen, setIsVisaWorkAuthorizationModalOpen] = useState(false);
+  const [isVaccinationModalOpen, setIsVaccinationModalOpen] = useState(false);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   
   // Sidebar expansion state
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
@@ -82,6 +92,14 @@ export default function ProfilePage() {
   const [projectData, setProjectData] = useState<ProjectData | undefined>();
   const [portfolioLinksData, setPortfolioLinksData] = useState<PortfolioLinksData | undefined>();
   const [certificationsData, setCertificationsData] = useState<CertificationsData | undefined>();
+  const [accomplishmentsData, setAccomplishmentsData] = useState<AccomplishmentsData | undefined>();
+  const [careerPreferencesData, setCareerPreferencesData] = useState<CareerPreferencesData | undefined>();
+  const [visaWorkAuthorizationData, setVisaWorkAuthorizationData] = useState<VisaWorkAuthorizationData | undefined>();
+  const [vaccinationData, setVaccinationData] = useState<VaccinationData | undefined>();
+  const [resumeData, setResumeData] = useState<ResumeData | undefined>({
+    fileName: 'my_resume_v2.pdf',
+    uploadedDate: new Date().toISOString()
+  });
 
   const toggleSection = (category: string) => {
     setExpandedSections(prev => ({
@@ -185,7 +203,8 @@ export default function ProfilePage() {
     {
       category: 'GLOBAL ELIGIBILITY',
       items: [
-        { name: 'Visa & Work Authorization', status: 'Missing Info', hasInfo: false }
+        { name: 'Visa & Work Authorization', status: 'Missing Info', hasInfo: false },
+        { name: 'Vaccination', status: 'Missing Info', hasInfo: false }
       ]
     },
     {
@@ -229,6 +248,16 @@ export default function ProfilePage() {
       setIsPortfolioLinksModalOpen(true);
     } else if (category === 'CERTIFICATIONS' && itemName === 'Certifications') {
       setIsCertificationModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Accomplishments') {
+      setIsAccomplishmentModalOpen(true);
+    } else if (category === 'PREFERENCES' && itemName === 'Career Preferences') {
+      setIsCareerPreferencesModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Visa & Work Authorization') {
+      setIsVisaWorkAuthorizationModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Vaccination') {
+      setIsVaccinationModalOpen(true);
+    } else if (category === 'RESUME' && itemName === 'Resume') {
+      setIsResumeModalOpen(true);
     }
   };
 
@@ -273,6 +302,20 @@ export default function ProfilePage() {
     } else if (category === 'CERTIFICATIONS' && itemName === 'Certifications') {
       setCertificationsData(undefined);
       setIsCertificationModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Accomplishments') {
+      setAccomplishmentsData(undefined);
+      setIsAccomplishmentModalOpen(true);
+    } else if (category === 'PREFERENCES' && itemName === 'Career Preferences') {
+      setCareerPreferencesData(undefined);
+      setIsCareerPreferencesModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Visa & Work Authorization') {
+      setVisaWorkAuthorizationData(undefined);
+      setIsVisaWorkAuthorizationModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Vaccination') {
+      setVaccinationData(undefined);
+      setIsVaccinationModalOpen(true);
+    } else if (category === 'RESUME' && itemName === 'Resume') {
+      setIsResumeModalOpen(true);
     }
   };
 
@@ -288,7 +331,10 @@ export default function ProfilePage() {
             <p className="text-gray-600">View and update all sections of your SAASA profile.</p>
           </div>
           <div className="flex gap-3">
-            <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <button
+              onClick={() => setIsResumeModalOpen(true)}
+              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
               Edit Resume
             </button>
             <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
@@ -333,7 +379,10 @@ export default function ProfilePage() {
               <span className="text-xs text-blue-600">AI Analyzed</span>
             </div>
             <div className="flex flex-col gap-2">
-              <button className="w-full rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600">
+              <button
+                onClick={() => setIsResumeModalOpen(true)}
+                className="w-full rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600"
+              >
                 Upload/Replace Resume
               </button>
               <button className="w-full text-sm font-medium text-blue-600 hover:text-blue-700">
@@ -1015,6 +1064,56 @@ export default function ProfilePage() {
           setIsCertificationModalOpen(false);
         }}
         initialData={certificationsData}
+      />
+
+      <AccomplishmentModal
+        isOpen={isAccomplishmentModalOpen}
+        onClose={() => setIsAccomplishmentModalOpen(false)}
+        onSave={(data) => {
+          setAccomplishmentsData(data);
+          setIsAccomplishmentModalOpen(false);
+        }}
+        initialData={accomplishmentsData}
+      />
+
+      <CareerPreferencesModal
+        isOpen={isCareerPreferencesModalOpen}
+        onClose={() => setIsCareerPreferencesModalOpen(false)}
+        onSave={(data) => {
+          setCareerPreferencesData(data);
+          setIsCareerPreferencesModalOpen(false);
+        }}
+        initialData={careerPreferencesData}
+      />
+
+      <VisaWorkAuthorizationModal
+        isOpen={isVisaWorkAuthorizationModalOpen}
+        onClose={() => setIsVisaWorkAuthorizationModalOpen(false)}
+        onSave={(data) => {
+          setVisaWorkAuthorizationData(data);
+          setIsVisaWorkAuthorizationModalOpen(false);
+        }}
+        initialData={visaWorkAuthorizationData}
+      />
+
+      <VaccinationModal
+        isOpen={isVaccinationModalOpen}
+        onClose={() => setIsVaccinationModalOpen(false)}
+        onSave={(data) => {
+          setVaccinationData(data);
+          setIsVaccinationModalOpen(false);
+        }}
+        initialData={vaccinationData}
+      />
+
+      <ResumeModal
+        isOpen={isResumeModalOpen}
+        onClose={() => setIsResumeModalOpen(false)}
+        onSave={(data) => {
+          setResumeData(data);
+          setIsResumeModalOpen(false);
+        }}
+        initialData={resumeData}
       />
 
       <Footer />
