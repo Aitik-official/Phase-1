@@ -16,6 +16,8 @@ import CompetitiveExamsModal, { CompetitiveExamsData } from '../../components/mo
 import SkillsModal, { SkillsData } from '../../components/modals/SkillsModal';
 import LanguagesModal, { LanguagesData } from '../../components/modals/LanguagesModal';
 import ProjectModal, { ProjectData } from '../../components/modals/ProjectModal';
+import PortfolioLinksModal, { PortfolioLinksData } from '../../components/modals/PortfolioLinksModal';
+import CertificationModal, { CertificationsData } from '../../components/modals/CertificationModal';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -30,6 +32,8 @@ export default function ProfilePage() {
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
   const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [isPortfolioLinksModalOpen, setIsPortfolioLinksModalOpen] = useState(false);
+  const [isCertificationModalOpen, setIsCertificationModalOpen] = useState(false);
   
   // Sidebar expansion state
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
@@ -76,6 +80,8 @@ export default function ProfilePage() {
   const [skillsData, setSkillsData] = useState<SkillsData | undefined>();
   const [languagesData, setLanguagesData] = useState<LanguagesData | undefined>();
   const [projectData, setProjectData] = useState<ProjectData | undefined>();
+  const [portfolioLinksData, setPortfolioLinksData] = useState<PortfolioLinksData | undefined>();
+  const [certificationsData, setCertificationsData] = useState<CertificationsData | undefined>();
 
   const toggleSection = (category: string) => {
     setExpandedSections(prev => ({
@@ -219,6 +225,10 @@ export default function ProfilePage() {
       setIsLanguagesModalOpen(true);
     } else if (category === 'PROJECTS' && itemName === 'Projects') {
       setIsProjectModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Portfolio Links') {
+      setIsPortfolioLinksModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Certifications') {
+      setIsCertificationModalOpen(true);
     }
   };
 
@@ -257,6 +267,12 @@ export default function ProfilePage() {
     } else if (category === 'PROJECTS' && itemName === 'Projects') {
       setProjectData(undefined);
       setIsProjectModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Portfolio Links') {
+      setPortfolioLinksData(undefined);
+      setIsPortfolioLinksModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Certifications') {
+      setCertificationsData(undefined);
+      setIsCertificationModalOpen(true);
     }
   };
 
@@ -980,6 +996,26 @@ export default function ProfilePage() {
           setIsProjectModalOpen(false);
         }}
         initialData={projectData}
+      />
+
+      <PortfolioLinksModal
+        isOpen={isPortfolioLinksModalOpen}
+        onClose={() => setIsPortfolioLinksModalOpen(false)}
+        onSave={(data) => {
+          setPortfolioLinksData(data);
+          setIsPortfolioLinksModalOpen(false);
+        }}
+        initialData={portfolioLinksData}
+      />
+
+      <CertificationModal
+        isOpen={isCertificationModalOpen}
+        onClose={() => setIsCertificationModalOpen(false)}
+        onSave={(data) => {
+          setCertificationsData(data);
+          setIsCertificationModalOpen(false);
+        }}
+        initialData={certificationsData}
       />
 
       <Footer />
