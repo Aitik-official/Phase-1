@@ -400,7 +400,11 @@ export default function Header() {
                 {/* Footer */}
                 <div className="px-3.5 py-2.5 border-t border-gray-200">
                   <button
-                    className="w-full text-center text-blue-600 hover:text-blue-700"
+                    onClick={() => {
+                      router.push('/notification');
+                      setIsNotificationsModalOpen(false);
+                    }}
+                    className="w-full text-center text-blue-600 hover:text-blue-700 font-medium"
                     style={{
                       fontSize: "11px",
                       fontWeight: 500,
