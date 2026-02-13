@@ -427,7 +427,7 @@ export default function CandidateDashboardPage() {
 
 
       {/* Main Content */}
-      <main className="mx-auto max-width[1200px] px-6 py-8">
+      <main className="mx-auto max-w-[1414px] px-6 py-8">
         <div className="mx-auto max-w-7xl">
           {/* Welcome Section */}
           <div className="mb-8">
@@ -441,7 +441,7 @@ export default function CandidateDashboardPage() {
                 letterSpacing: "-0.5px",
               }}
             >
-              Welcome Sachinnnnn !
+              Welcome Sachin !
             </h1>
             <p
               style={{
@@ -499,6 +499,11 @@ export default function CandidateDashboardPage() {
                       width: "200px",
                       marginLeft: "4px",
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        router.push("/explore-jobs");
+                      }
+                    }}
                   />
                 </div>
 
@@ -554,6 +559,7 @@ export default function CandidateDashboardPage() {
                     e.currentTarget.style.width = "48px";
                     e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
+                  onClick={() => router.push("/applications")}
                 >
                   <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
                     <svg
@@ -593,6 +599,7 @@ export default function CandidateDashboardPage() {
                     e.currentTarget.style.width = "48px";
                     e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
+                  onClick={() => router.push("/courses")}
                 >
                   <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
                     <svg
@@ -675,20 +682,21 @@ export default function CandidateDashboardPage() {
             {/* Left Column: Profile Card */}
             <div className="flex-shrink-0">
               <div
-                className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
+                className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                 style={{
                   width: "356px",
                   height: "377px",
-                  borderRadius: "20px",
+                  borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   position: "relative",
                 }}
+                onClick={() => router.push("/profile")}
               >
                 {/* Profile Picture with Gradient Overlay */}
                 <div className="relative w-full" style={{ height: "377px" }}>
                   <Image
                     src="/Gemini_Generated_Image_xxo7twxxo7twxxo7.png"
-                    alt="Anglina Jolie"
+                    alt="Sachin Dubey"
                     width={356}
                     height={377}
                     className="w-full h-full object-cover"
@@ -712,7 +720,7 @@ export default function CandidateDashboardPage() {
                         marginBottom: "4px",
                       }}
                     >
-                      Anglina Jolie
+                      Sachin Dubey
                     </h3>
                     <p
                       style={{
@@ -738,14 +746,14 @@ export default function CandidateDashboardPage() {
                   <button
                     className="absolute bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 backdrop-blur-md"
                     style={{
-                      background: "rgba(255, 255, 255, 0.9)",
-                      color: "#111827",
+                      background: "#000000",
+                      color: "#FFFFFF",
                       fontFamily: "Inter, sans-serif",
                       zIndex: 10,
                       borderRadius: "10px",
                       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                     }}
-                    onClick={() => router.push("/personal-details")}
+                    onClick={() => router.push("/profile")}
                   >
                     View Profile
                   </button>
@@ -758,13 +766,15 @@ export default function CandidateDashboardPage() {
               <div
                 className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "569px",
+                  width: "580px",
                   height: "378px",
-                  borderRadius: "20px",
+                  borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   padding: "24px",
                   position: "relative",
+                  cursor: "pointer",
                 }}
+                onClick={() => router.push("/applications")}
               >
                 <h2
                   className="mb-4"
@@ -973,12 +983,14 @@ export default function CandidateDashboardPage() {
               <div
                 className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "399px",
+                  width: "430px",
                   height: "378px",
-                  borderRadius: "20px",
+                  borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
-                  padding: "24px",
+                  padding: "20px 24px",
+                  cursor: "pointer",
                 }}
+                onClick={() => router.push("/notification")}
               >
                 <h2
                   className="mb-4"
@@ -991,216 +1003,81 @@ export default function CandidateDashboardPage() {
                 >
                   Notifications
                 </h2>
-                <div className="flex flex-col" style={{ gap: "8px" }}>
-                  {/* Notification Item 1 */}
-                  <div
-                    className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
-                    style={{
-                      width: "100%",
-                      height: "77px",
-                      borderRadius: "12px",
-                      padding: "12px",
-                    }}
-                  >
-                    {/* Top Row: New Tag and Timestamp */}
-                    <div className="flex items-start justify-between mb-2">
-                      {/* Left: New Tag */}
-                      <span
-                        className="px-2.5 py-1 rounded-full"
-                        style={{
-                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                          color: "#FFFFFF",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          borderRadius: "12px",
-                          boxShadow: "0 2px 8px rgba(102, 126, 234, 0.4)",
-                        }}
-                      >
-                        New
-                      </span>
-                      {/* Right: Timestamp */}
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#6B7280",
-                        }}
-                      >
-                        2 min ago
-                      </span>
-                    </div>
-                    {/* Bottom Row: Icon and Text */}
-                    <div className="flex items-start gap-2">
-                      {/* Icon */}
+                <div className="flex flex-col items-center" style={{ gap: "4px" }}>
+                  {[1, 2, 3, 4, 5].map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-center gap-4 transition-all duration-300 hover:bg-gray-50 rounded-lg cursor-pointer mx-auto"
+                      style={{
+                        width: "390px",
+                        height: "56px",
+                        padding: "0 12px",
+                      }}
+                    >
+                      {/* Left: Icon Box */}
                       <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
+                        className="flex-shrink-0 flex items-center justify-center rounded-xl"
                         style={{
-                          width: "36px",
-                          height: "36px",
-                          background: "linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)",
-                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)",
+                          width: "44px",
+                          height: "44px",
+                          backgroundColor: "#EFF6FF", // Light Blue
                         }}
                       >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#EF4444" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M12 3L14.5 9.5L21 12L14.5 14.5L12 21L9.5 14.5L3 12L9.5 9.5L12 3Z"
+                            fill="#EF4444" // Red Star
+                            stroke="#EF4444"
+                            strokeWidth="1"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <circle cx="18" cy="8" r="1.5" stroke="#3B82F6" strokeWidth="1.5" />
+                          <circle cx="6" cy="16" r="1.5" stroke="#3B82F6" strokeWidth="1.5" />
                         </svg>
                       </div>
-                      {/* Text */}
-                      <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#111827",
-                          fontWeight: 400,
-                          lineHeight: "1.4",
-                          margin: 0,
-                        }}
-                      >
-                        New Job Alert: Senior UX Designer at Google
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Notification Item 2 */}
-                  <div
-                    className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
-                    style={{
-                      width: "100%",
-                      height: "77px",
-                      borderRadius: "12px",
-                      padding: "12px",
-                    }}
-                  >
-                    {/* Top Row: New Tag and Timestamp */}
-                    <div className="flex items-start justify-between mb-2">
-                      {/* Left: New Tag */}
-                      <span
-                        className="px-2.5 py-1 rounded-full"
-                        style={{
-                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                          color: "#FFFFFF",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          borderRadius: "12px",
-                          boxShadow: "0 2px 8px rgba(102, 126, 234, 0.4)",
-                        }}
-                      >
-                        New
-                      </span>
-                      {/* Right: Timestamp */}
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#6B7280",
-                        }}
-                      >
-                        2 min ago
-                      </span>
-                    </div>
-                    {/* Bottom Row: Icon and Text */}
-                    <div className="flex items-start gap-2">
-                      {/* Icon */}
-                      <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
-                        style={{
-                          width: "36px",
-                          height: "36px",
-                          background: "linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)",
-                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)",
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#EF4444" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                      {/* Middle: Message */}
+                      <div className="flex-1 min-w-0">
+                        <p
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            color: "#111827",
+                            lineHeight: "1.4",
+                          }}
+                        >
+                          New Job Alert: Senior UX Designer at Google
+                        </p>
                       </div>
-                      {/* Text */}
-                      <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#111827",
-                          fontWeight: 400,
-                          lineHeight: "1.4",
-                          margin: 0,
-                        }}
-                      >
-                        New Job Alert: Senior UX Designer at Google
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Notification Item 3 */}
-                  <div
-                    className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
-                    style={{
-                      width: "100%",
-                      height: "77px",
-                      borderRadius: "12px",
-                      padding: "12px",
-                    }}
-                  >
-                    {/* Top Row: New Tag and Timestamp */}
-                    <div className="flex items-start justify-between mb-2">
-                      {/* Left: New Tag */}
-                      <span
-                        className="px-2.5 py-1 rounded-full"
-                        style={{
-                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                          color: "#FFFFFF",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          borderRadius: "12px",
-                          boxShadow: "0 2px 8px rgba(102, 126, 234, 0.4)",
-                        }}
-                      >
-                        New
-                      </span>
-                      {/* Right: Timestamp */}
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#6B7280",
-                        }}
-                      >
-                        2 min ago
-                      </span>
-                    </div>
-                    {/* Bottom Row: Icon and Text */}
-                    <div className="flex items-start gap-2">
-                      {/* Icon */}
-                      <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full transition-all duration-300"
-                        style={{
-                          width: "36px",
-                          height: "36px",
-                          background: "linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)",
-                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)",
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#EF4444" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                      {/* Right: Status/Time Stack */}
+                      <div className="flex flex-col items-end flex-shrink-0" style={{ gap: "4px" }}>
+                        <span
+                          className="px-3 py-1 rounded-full text-center"
+                          style={{
+                            backgroundColor: "#111827", // Navy
+                            color: "#FFFFFF",
+                            fontSize: "10px",
+                            fontWeight: 600,
+                            minWidth: "44px",
+                          }}
+                        >
+                          New
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "11px",
+                            color: "#6B7280",
+                          }}
+                        >
+                          2 min ago
+                        </span>
                       </div>
-                      {/* Text */}
-                      <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#111827",
-                          fontWeight: 400,
-                          lineHeight: "1.4",
-                          margin: 0,
-                        }}
-                      >
-                        New Job Alert: Senior UX Designer at Google
-                      </p>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1213,7 +1090,7 @@ export default function CandidateDashboardPage() {
               <div
                 className="flex-shrink-0 bg-[#333333] transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "926px",
+                  width: "960px",
                   height: "229px",
                   borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
@@ -1355,7 +1232,7 @@ export default function CandidateDashboardPage() {
               <div
                 className="flex-shrink-0 bg-[#FFF9F2] transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "408px",
+                  width: "430px",
                   height: "229px",
                   borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
@@ -1364,7 +1241,9 @@ export default function CandidateDashboardPage() {
                   flexDirection: "column",
                   position: "relative",
                   justifyContent: "space-between",
+                  cursor: "pointer",
                 }}
+                onClick={() => router.push("/cvscore")}
               >
                 {/* Header */}
                 <div className="flex items-start justify-between">
@@ -1437,9 +1316,9 @@ export default function CandidateDashboardPage() {
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left: Job Matches Card */}
             <div
-              className="flex flex-col bg-white"
+              className="flex-shrink-0 flex flex-col bg-white"
               style={{
-                width: "939px",
+                width: "960px",
                 height: "526px",
                 borderRadius: "6px",
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
@@ -1469,6 +1348,7 @@ export default function CandidateDashboardPage() {
                     cursor: "pointer",
                     padding: "4px 8px",
                   }}
+                  onClick={() => router.push("/explore-jobs")}
                 >
                   View All Jobs
                 </button>
@@ -1595,6 +1475,7 @@ export default function CandidateDashboardPage() {
                           cursor: "pointer",
                           borderRadius: "8px",
                         }}
+                        onClick={() => router.push("/explore-jobs")}
                       >
                         View Details
                       </button>
@@ -1606,9 +1487,9 @@ export default function CandidateDashboardPage() {
 
             {/* Right: Recommended Courses Card */}
             <div
-              className="flex flex-col bg-white"
+              className="flex-shrink-0 flex flex-col bg-white"
               style={{
-                width: "408px",
+                width: "430px",
                 height: "526px",
                 borderRadius: "6px",
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
@@ -1714,6 +1595,7 @@ export default function CandidateDashboardPage() {
                           border: "none",
                           cursor: "pointer",
                         }}
+                        onClick={() => router.push("/courses")}
                       >
                         View Course
                       </button>
