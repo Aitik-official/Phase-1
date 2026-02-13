@@ -10,6 +10,19 @@ import SummaryModal from '../../components/modals/SummaryModal';
 import GapExplanationModal, { GapExplanationData } from '../../components/modals/GapExplanationModal';
 import WorkExperienceModal, { WorkExperienceData } from '../../components/modals/WorkExperienceModal';
 import InternshipModal, { InternshipData } from '../../components/modals/InternshipModal';
+import EducationModal, { EducationData } from '../../components/modals/EducationModal';
+import AcademicAchievementModal, { AcademicAchievementData } from '../../components/modals/AcademicAchievementModal';
+import CompetitiveExamsModal, { CompetitiveExamsData } from '../../components/modals/CompetitiveExamsModal';
+import SkillsModal, { SkillsData } from '../../components/modals/SkillsModal';
+import LanguagesModal, { LanguagesData } from '../../components/modals/LanguagesModal';
+import ProjectModal, { ProjectData } from '../../components/modals/ProjectModal';
+import PortfolioLinksModal, { PortfolioLinksData } from '../../components/modals/PortfolioLinksModal';
+import CertificationModal, { CertificationsData } from '../../components/modals/CertificationModal';
+import AccomplishmentModal, { AccomplishmentsData } from '../../components/modals/AccomplishmentModal';
+import CareerPreferencesModal, { CareerPreferencesData } from '../../components/modals/CareerPreferencesModal';
+import VisaWorkAuthorizationModal, { VisaWorkAuthorizationData } from '../../components/modals/VisaWorkAuthorizationModal';
+import VaccinationModal, { VaccinationData } from '../../components/modals/VaccinationModal';
+import ResumeModal, { ResumeData } from '../../components/modals/ResumeModal';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -18,7 +31,20 @@ export default function ProfilePage() {
   const [isGapExplanationModalOpen, setIsGapExplanationModalOpen] = useState(false);
   const [isWorkExperienceModalOpen, setIsWorkExperienceModalOpen] = useState(false);
   const [isInternshipModalOpen, setIsInternshipModalOpen] = useState(false);
-
+  const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
+  const [isAcademicAchievementModalOpen, setIsAcademicAchievementModalOpen] = useState(false);
+  const [isCompetitiveExamsModalOpen, setIsCompetitiveExamsModalOpen] = useState(false);
+  const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
+  const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [isPortfolioLinksModalOpen, setIsPortfolioLinksModalOpen] = useState(false);
+  const [isCertificationModalOpen, setIsCertificationModalOpen] = useState(false);
+  const [isAccomplishmentModalOpen, setIsAccomplishmentModalOpen] = useState(false);
+  const [isCareerPreferencesModalOpen, setIsCareerPreferencesModalOpen] = useState(false);
+  const [isVisaWorkAuthorizationModalOpen, setIsVisaWorkAuthorizationModalOpen] = useState(false);
+  const [isVaccinationModalOpen, setIsVaccinationModalOpen] = useState(false);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  
   // Sidebar expansion state
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     'PERSONAL DETAILS': true, // Default to expanded
@@ -58,6 +84,22 @@ export default function ProfilePage() {
   const [gapExplanationData, setGapExplanationData] = useState<GapExplanationData | undefined>();
   const [workExperienceData, setWorkExperienceData] = useState<WorkExperienceData | undefined>();
   const [internshipData, setInternshipData] = useState<InternshipData | undefined>();
+  const [educationData, setEducationData] = useState<EducationData | undefined>();
+  const [academicAchievementData, setAcademicAchievementData] = useState<AcademicAchievementData | undefined>();
+  const [competitiveExamsData, setCompetitiveExamsData] = useState<CompetitiveExamsData | undefined>();
+  const [skillsData, setSkillsData] = useState<SkillsData | undefined>();
+  const [languagesData, setLanguagesData] = useState<LanguagesData | undefined>();
+  const [projectData, setProjectData] = useState<ProjectData | undefined>();
+  const [portfolioLinksData, setPortfolioLinksData] = useState<PortfolioLinksData | undefined>();
+  const [certificationsData, setCertificationsData] = useState<CertificationsData | undefined>();
+  const [accomplishmentsData, setAccomplishmentsData] = useState<AccomplishmentsData | undefined>();
+  const [careerPreferencesData, setCareerPreferencesData] = useState<CareerPreferencesData | undefined>();
+  const [visaWorkAuthorizationData, setVisaWorkAuthorizationData] = useState<VisaWorkAuthorizationData | undefined>();
+  const [vaccinationData, setVaccinationData] = useState<VaccinationData | undefined>();
+  const [resumeData, setResumeData] = useState<ResumeData | undefined>({
+    fileName: 'my_resume_v2.pdf',
+    uploadedDate: new Date().toISOString()
+  });
 
   const toggleSection = (category: string) => {
     setExpandedSections(prev => ({
@@ -161,7 +203,8 @@ export default function ProfilePage() {
     {
       category: 'GLOBAL ELIGIBILITY',
       items: [
-        { name: 'Visa & Work Authorization', status: 'Missing Info', hasInfo: false }
+        { name: 'Visa & Work Authorization', status: 'Missing Info', hasInfo: false },
+        { name: 'Vaccination', status: 'Missing Info', hasInfo: false }
       ]
     },
     {
@@ -189,6 +232,32 @@ export default function ProfilePage() {
       setIsWorkExperienceModalOpen(true);
     } else if (category === 'WORK HISTORY' && itemName === 'Internships') {
       setIsInternshipModalOpen(true);
+    } else if (category === 'EDUCATION' && itemName === 'Education') {
+      setIsEducationModalOpen(true);
+    } else if (category === 'EDUCATION' && itemName === 'Academic Achievements') {
+      setIsAcademicAchievementModalOpen(true);
+    } else if (category === 'EDUCATION' && itemName === 'Competitive Exams') {
+      setIsCompetitiveExamsModalOpen(true);
+    } else if (category === 'SKILLS' && itemName === 'Skills') {
+      setIsSkillsModalOpen(true);
+    } else if (category === 'SKILLS' && itemName === 'Languages') {
+      setIsLanguagesModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Projects') {
+      setIsProjectModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Portfolio Links') {
+      setIsPortfolioLinksModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Certifications') {
+      setIsCertificationModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Accomplishments') {
+      setIsAccomplishmentModalOpen(true);
+    } else if (category === 'PREFERENCES' && itemName === 'Career Preferences') {
+      setIsCareerPreferencesModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Visa & Work Authorization') {
+      setIsVisaWorkAuthorizationModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Vaccination') {
+      setIsVaccinationModalOpen(true);
+    } else if (category === 'RESUME' && itemName === 'Resume') {
+      setIsResumeModalOpen(true);
     }
   };
 
@@ -209,6 +278,44 @@ export default function ProfilePage() {
     } else if (category === 'WORK HISTORY' && itemName === 'Internships') {
       setInternshipData(undefined);
       setIsInternshipModalOpen(true);
+    } else if (category === 'EDUCATION' && itemName === 'Education') {
+      setEducationData(undefined);
+      setIsEducationModalOpen(true);
+    } else if (category === 'EDUCATION' && itemName === 'Academic Achievements') {
+      setAcademicAchievementData(undefined);
+      setIsAcademicAchievementModalOpen(true);
+    } else if (category === 'EDUCATION' && itemName === 'Competitive Exams') {
+      setCompetitiveExamsData(undefined);
+      setIsCompetitiveExamsModalOpen(true);
+    } else if (category === 'SKILLS' && itemName === 'Skills') {
+      setSkillsData(undefined);
+      setIsSkillsModalOpen(true);
+    } else if (category === 'SKILLS' && itemName === 'Languages') {
+      setLanguagesData(undefined);
+      setIsLanguagesModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Projects') {
+      setProjectData(undefined);
+      setIsProjectModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Portfolio Links') {
+      setPortfolioLinksData(undefined);
+      setIsPortfolioLinksModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Certifications') {
+      setCertificationsData(undefined);
+      setIsCertificationModalOpen(true);
+    } else if (category === 'CERTIFICATIONS' && itemName === 'Accomplishments') {
+      setAccomplishmentsData(undefined);
+      setIsAccomplishmentModalOpen(true);
+    } else if (category === 'PREFERENCES' && itemName === 'Career Preferences') {
+      setCareerPreferencesData(undefined);
+      setIsCareerPreferencesModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Visa & Work Authorization') {
+      setVisaWorkAuthorizationData(undefined);
+      setIsVisaWorkAuthorizationModalOpen(true);
+    } else if (category === 'GLOBAL ELIGIBILITY' && itemName === 'Vaccination') {
+      setVaccinationData(undefined);
+      setIsVaccinationModalOpen(true);
+    } else if (category === 'RESUME' && itemName === 'Resume') {
+      setIsResumeModalOpen(true);
     }
   };
 
@@ -224,7 +331,10 @@ export default function ProfilePage() {
             <p className="text-gray-600">View and update all sections of your SAASA profile.</p>
           </div>
           <div className="flex gap-3">
-            <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <button
+              onClick={() => setIsResumeModalOpen(true)}
+              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
               Edit Resume
             </button>
             <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
@@ -258,7 +368,7 @@ export default function ProfilePage() {
                     fill="none"
                     strokeDasharray={`${85 * 2.83} 283`}
                     strokeLinecap="round"
-                    className="rotate-[-90deg] origin-center"
+                    className="-rotate-90 origin-center"
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -269,7 +379,10 @@ export default function ProfilePage() {
               <span className="text-xs text-blue-600">AI Analyzed</span>
             </div>
             <div className="flex flex-col gap-2">
-              <button className="w-full rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600">
+              <button
+                onClick={() => setIsResumeModalOpen(true)}
+                className="w-full rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600"
+              >
                 Upload/Replace Resume
               </button>
               <button className="w-full text-sm font-medium text-blue-600 hover:text-blue-700">
@@ -347,7 +460,7 @@ export default function ProfilePage() {
                 {profileSections.map((section, sectionIndex) => {
                   const isExpanded = expandedSections[section.category] ?? true;
                   return (
-                    <div key={sectionIndex}>
+                  <div key={sectionIndex}>
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-bold text-gray-900 text-sm">{section.category}</h4>
                         <button
@@ -373,25 +486,25 @@ export default function ProfilePage() {
                         </button>
                       </div>
                       {isExpanded && (
-                        <ul className="space-y-1">
+                    <ul className="space-y-1">
                           {section.items.map((item, itemIndex) => {
                             const isSelected = selectedItem?.category === section.category && selectedItem?.itemName === item.name;
                             return (
-                              <li key={itemIndex}>
-                                <button
+                        <li key={itemIndex}>
+                          <button
                                   onClick={() => setSelectedItem({ category: section.category, itemName: item.name })}
                                   className={`w-full text-left px-2 py-1.5 text-sm rounded-md hover:bg-gray-50 flex items-center justify-between ${isSelected ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
                                     }`}
                                 >
                                   <span>{item.name}</span>
                                   <span className="text-gray-400">→</span>
-                                </button>
-                              </li>
+                          </button>
+                        </li>
                             );
                           })}
-                        </ul>
+                    </ul>
                       )}
-                    </div>
+                  </div>
                   );
                 })}
               </nav>
@@ -401,7 +514,7 @@ export default function ProfilePage() {
           {/* Right Column - Profile Details */}
           <div className="lg:col-span-2">
             {selectedItem && (
-              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 {/* Header with Edit and Add buttons */}
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-semibold text-gray-900">{selectedItem.itemName}</h2>
@@ -412,14 +525,14 @@ export default function ProfilePage() {
                     >
                       Edit
                     </button>
-                    <button
+                        <button 
                       onClick={() => handleAddClick(selectedItem.category, selectedItem.itemName)}
                       className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600"
                     >
                       Add
-                    </button>
+                        </button>
+                      </div>
                   </div>
-                </div>
 
                 {/* Content based on selected item */}
                 {selectedItem.itemName === 'Basic Information' && basicInfoData && (
@@ -428,18 +541,18 @@ export default function ProfilePage() {
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">First Name</label>
                         <p className="text-base text-gray-900">{basicInfoData.firstName}</p>
-                      </div>
+                </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Email Address</label>
                         <div className="flex items-center gap-2">
                           <p className="text-base text-gray-900">{basicInfoData.email}</p>
                           <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded">Verified</span>
-                        </div>
-                      </div>
+            </div>
+          </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Phone Number</label>
                         <p className="text-base text-gray-900">{basicInfoData.phoneCode} {basicInfoData.phone}</p>
-                      </div>
+        </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Date of Birth</label>
                         <p className="text-base text-gray-900">{basicInfoData.dob}</p>
@@ -478,21 +591,21 @@ export default function ProfilePage() {
                   <div>
                     <label className="text-sm font-medium text-gray-500 mb-2 block">Professional Summary</label>
                     <p className="text-base text-gray-900 whitespace-pre-wrap">{summaryText || 'No summary added yet.'}</p>
-                  </div>
+              </div>
                 )}
 
                 {selectedItem.itemName === 'Gap Explanation' && (
                   <div>
                     {gapExplanationData ? (
-                      <div className="space-y-4">
+                  <div className="space-y-4">
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Category</label>
                           <p className="text-base text-gray-900">{gapExplanationData.gapCategory}</p>
-                        </div>
+                      </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Reason for Gap</label>
                           <p className="text-base text-gray-900">{gapExplanationData.reasonForGap}</p>
-                        </div>
+                    </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Duration</label>
                           <p className="text-base text-gray-900">{gapExplanationData.gapDuration}</p>
@@ -501,13 +614,13 @@ export default function ProfilePage() {
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Skills Continued</label>
                             <p className="text-base text-gray-900">{gapExplanationData.selectedSkills.join(', ')}</p>
-                          </div>
+                      </div>
                         )}
                         {gapExplanationData.coursesText && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Courses/Trainings</label>
                             <p className="text-base text-gray-900">{gapExplanationData.coursesText}</p>
-                          </div>
+                    </div>
                         )}
                       </div>
                     ) : (
@@ -523,7 +636,7 @@ export default function ProfilePage() {
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Job Title</label>
                           <p className="text-base text-gray-900">{workExperienceData.jobTitle}</p>
-                        </div>
+                          </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
                           <p className="text-base text-gray-900">{workExperienceData.companyName}</p>
@@ -537,12 +650,12 @@ export default function ProfilePage() {
                           <p className="text-base text-gray-900">
                             {workExperienceData.startDate} - {workExperienceData.currentlyWorkHere ? 'Present' : workExperienceData.endDate}
                           </p>
-                        </div>
+                      </div>
                         {workExperienceData.workLocation && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Location</label>
                             <p className="text-base text-gray-900">{workExperienceData.workLocation}</p>
-                          </div>
+                    </div>
                         )}
                       </div>
                     ) : (
@@ -562,22 +675,256 @@ export default function ProfilePage() {
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
                           <p className="text-base text-gray-900">{internshipData.companyName}</p>
-                        </div>
+                      </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
                           <p className="text-base text-gray-900">
                             {internshipData.startDate} - {internshipData.currentlyWorking ? 'Present' : internshipData.endDate}
                           </p>
-                        </div>
+                    </div>
                       </div>
                     ) : (
                       <p className="text-base text-gray-500">No internships added yet.</p>
+                    )}
+                    </div>
+                )}
+
+                {selectedItem.itemName === 'Education' && (
+                  <div>
+                    {educationData ? (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Education Level</label>
+                          <p className="text-base text-gray-900">{educationData.educationLevel}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Degree / Program</label>
+                          <p className="text-base text-gray-900">{educationData.degreeProgram}</p>
+                      </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Institution / University</label>
+                          <p className="text-base text-gray-900">{educationData.institutionName}</p>
+                    </div>
+                        {educationData.fieldOfStudy && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Field of Study / Major</label>
+                            <p className="text-base text-gray-900">{educationData.fieldOfStudy}</p>
+                  </div>
+                        )}
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
+                          <p className="text-base text-gray-900">
+                            {educationData.startYear} - {educationData.currentlyStudying ? 'Present' : educationData.endYear}
+                          </p>
+                        </div>
+                        {educationData.grade && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Grade / Percentage / GPA</label>
+                            <p className="text-base text-gray-900">{educationData.grade}</p>
+                          </div>
+                        )}
+                        {educationData.modeOfStudy && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Mode of Study</label>
+                            <p className="text-base text-gray-900">{educationData.modeOfStudy}</p>
+                          </div>
+                        )}
+                        {educationData.courseDuration && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Course Duration</label>
+                            <p className="text-base text-gray-900">{educationData.courseDuration}</p>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No education information added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Academic Achievements' && (
+                  <div>
+                    {academicAchievementData ? (
+                  <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Achievement Title</label>
+                          <p className="text-base text-gray-900">{academicAchievementData.achievementTitle}</p>
+                      </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Awarded By</label>
+                          <p className="text-base text-gray-900">{academicAchievementData.awardedBy}</p>
+                    </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Year Received</label>
+                          <p className="text-base text-gray-900">{academicAchievementData.yearReceived}</p>
+                        </div>
+                        {academicAchievementData.categoryType && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Category / Type</label>
+                            <p className="text-base text-gray-900">{academicAchievementData.categoryType}</p>
+                      </div>
+                        )}
+                        {academicAchievementData.description && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Description</label>
+                            <p className="text-base text-gray-900 whitespace-pre-wrap">{academicAchievementData.description}</p>
+                    </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No academic achievements added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Competitive Exams' && (
+                  <div>
+                    {competitiveExamsData ? (
+                      <div className="space-y-4">
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Exam Name</label>
+                          <p className="text-base text-gray-900">{competitiveExamsData.examName}</p>
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Year Taken</label>
+                          <p className="text-base text-gray-900">{competitiveExamsData.yearTaken}</p>
+                      </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Result Status</label>
+                          <p className="text-base text-gray-900">{competitiveExamsData.resultStatus}</p>
+                    </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-500 mb-1 block">Score / Marks</label>
+                          <p className="text-base text-gray-900">{competitiveExamsData.scoreMarks}</p>
+                        </div>
+                        {competitiveExamsData.scoreType && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Score Type</label>
+                            <p className="text-base text-gray-900">{competitiveExamsData.scoreType}</p>
+                      </div>
+                        )}
+                        {competitiveExamsData.validUntil && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Valid Until</label>
+                            <p className="text-base text-gray-900">{competitiveExamsData.validUntil}</p>
+                    </div>
+                        )}
+                        {competitiveExamsData.additionalNotes && (
+                          <div>
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Additional Notes</label>
+                            <p className="text-base text-gray-900 whitespace-pre-wrap">{competitiveExamsData.additionalNotes}</p>
+                  </div>
+                        )}
+                </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No competitive exam information added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Skills' && (
+                  <div>
+                    {skillsData && skillsData.skills.length > 0 ? (
+                      <div className="space-y-4">
+                        {/* Group skills by category */}
+                        {(['Hard Skills', 'Soft Skills', 'Tools / Technologies'] as const).map((category) => {
+                          const categorySkills = skillsData.skills.filter(skill => skill.category === category);
+                          if (categorySkills.length === 0) return null;
+                          return (
+                            <div key={category}>
+                              <h3 className="text-sm font-semibold text-gray-700 mb-2">{category}</h3>
+                              <div className="flex flex-wrap gap-2">
+                                {categorySkills.map((skill, index) => (
+                                  <div
+                                    key={index}
+                                    className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5"
+                                  >
+                                    <span className="text-sm font-medium text-gray-900">{skill.name}</span>
+                                    <span className="text-xs text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-300">
+                                      {skill.proficiency}
+                                    </span>
+                </div>
+                                ))}
+              </div>
+            </div>
+                          );
+                        })}
+                        {skillsData.additionalNotes && (
+                          <div className="mt-4">
+                            <label className="text-sm font-medium text-gray-500 mb-1 block">Additional Notes</label>
+                            <p className="text-base text-gray-900 whitespace-pre-wrap">{skillsData.additionalNotes}</p>
+          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No skills added yet.</p>
+                    )}
+                  </div>
+                )}
+
+                {selectedItem.itemName === 'Languages' && (
+                  <div>
+                    {languagesData && languagesData.languages.length > 0 ? (
+                      <div className="space-y-4">
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse">
+                            <thead>
+                              <tr className="border-b border-gray-200">
+                                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Language Name</th>
+                                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Proficiency</th>
+                                <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Speak</th>
+                                <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Read</th>
+                                <th className="text-center py-3 px-4 text-sm font-semibold text-gray-700">Write</th>
+                                {languagesData.languages.some(lang => lang.certification) && (
+                                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Certification</th>
+                                )}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {languagesData.languages.map((language, index) => (
+                                <tr key={index} className="border-b border-gray-100">
+                                  <td className="py-3 px-4 text-base text-gray-900">{language.name}</td>
+                                  <td className="py-3 px-4 text-base text-gray-900">{language.proficiency}</td>
+                                  <td className="py-3 px-4 text-center">
+                                    {language.speak ? (
+                                      <span className="text-green-600">✓</span>
+                                    ) : (
+                                      <span className="text-gray-400">—</span>
+                                    )}
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    {language.read ? (
+                                      <span className="text-green-600">✓</span>
+                                    ) : (
+                                      <span className="text-gray-400">—</span>
+                                    )}
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    {language.write ? (
+                                      <span className="text-green-600">✓</span>
+                                    ) : (
+                                      <span className="text-gray-400">—</span>
+                                    )}
+                                  </td>
+                                  {languagesData.languages.some(lang => lang.certification) && (
+                                    <td className="py-3 px-4 text-base text-gray-900">
+                                      {language.certification || '—'}
+                                    </td>
+                                  )}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-base text-gray-500">No languages added yet.</p>
                     )}
                   </div>
                 )}
 
                 {/* Default content for other items */}
-                {!['Basic Information', 'Summary', 'Gap Explanation', 'Work Experience', 'Internships'].includes(selectedItem.itemName) && (
+                {!['Basic Information', 'Summary', 'Gap Explanation', 'Work Experience', 'Internships', 'Education', 'Academic Achievements', 'Competitive Exams', 'Skills', 'Languages'].includes(selectedItem.itemName) && (
                   <div>
                     <p className="text-base text-gray-500">Content for {selectedItem.itemName} will be displayed here.</p>
                   </div>
@@ -637,6 +984,136 @@ export default function ProfilePage() {
           setIsInternshipModalOpen(false);
         }}
         initialData={internshipData}
+      />
+
+      <EducationModal
+        isOpen={isEducationModalOpen}
+        onClose={() => setIsEducationModalOpen(false)}
+        onSave={(data) => {
+          setEducationData(data);
+          setIsEducationModalOpen(false);
+        }}
+        initialData={educationData}
+      />
+
+      <AcademicAchievementModal
+        isOpen={isAcademicAchievementModalOpen}
+        onClose={() => setIsAcademicAchievementModalOpen(false)}
+        onSave={(data) => {
+          setAcademicAchievementData(data);
+          setIsAcademicAchievementModalOpen(false);
+        }}
+        initialData={academicAchievementData}
+      />
+
+      <CompetitiveExamsModal
+        isOpen={isCompetitiveExamsModalOpen}
+        onClose={() => setIsCompetitiveExamsModalOpen(false)}
+        onSave={(data) => {
+          setCompetitiveExamsData(data);
+          setIsCompetitiveExamsModalOpen(false);
+        }}
+        initialData={competitiveExamsData}
+      />
+
+      <SkillsModal
+        isOpen={isSkillsModalOpen}
+        onClose={() => setIsSkillsModalOpen(false)}
+        onSave={(data) => {
+          setSkillsData(data);
+          setIsSkillsModalOpen(false);
+        }}
+        initialData={skillsData}
+      />
+
+      <LanguagesModal
+        isOpen={isLanguagesModalOpen}
+        onClose={() => setIsLanguagesModalOpen(false)}
+        onSave={(data) => {
+          setLanguagesData(data);
+          setIsLanguagesModalOpen(false);
+        }}
+        initialData={languagesData}
+      />
+
+      <ProjectModal
+        isOpen={isProjectModalOpen}
+        onClose={() => setIsProjectModalOpen(false)}
+        onSave={(data) => {
+          setProjectData(data);
+          setIsProjectModalOpen(false);
+        }}
+        initialData={projectData}
+      />
+
+      <PortfolioLinksModal
+        isOpen={isPortfolioLinksModalOpen}
+        onClose={() => setIsPortfolioLinksModalOpen(false)}
+        onSave={(data) => {
+          setPortfolioLinksData(data);
+          setIsPortfolioLinksModalOpen(false);
+        }}
+        initialData={portfolioLinksData}
+      />
+
+      <CertificationModal
+        isOpen={isCertificationModalOpen}
+        onClose={() => setIsCertificationModalOpen(false)}
+        onSave={(data) => {
+          setCertificationsData(data);
+          setIsCertificationModalOpen(false);
+        }}
+        initialData={certificationsData}
+      />
+
+      <AccomplishmentModal
+        isOpen={isAccomplishmentModalOpen}
+        onClose={() => setIsAccomplishmentModalOpen(false)}
+        onSave={(data) => {
+          setAccomplishmentsData(data);
+          setIsAccomplishmentModalOpen(false);
+        }}
+        initialData={accomplishmentsData}
+      />
+
+      <CareerPreferencesModal
+        isOpen={isCareerPreferencesModalOpen}
+        onClose={() => setIsCareerPreferencesModalOpen(false)}
+        onSave={(data) => {
+          setCareerPreferencesData(data);
+          setIsCareerPreferencesModalOpen(false);
+        }}
+        initialData={careerPreferencesData}
+      />
+
+      <VisaWorkAuthorizationModal
+        isOpen={isVisaWorkAuthorizationModalOpen}
+        onClose={() => setIsVisaWorkAuthorizationModalOpen(false)}
+        onSave={(data) => {
+          setVisaWorkAuthorizationData(data);
+          setIsVisaWorkAuthorizationModalOpen(false);
+        }}
+        initialData={visaWorkAuthorizationData}
+      />
+
+      <VaccinationModal
+        isOpen={isVaccinationModalOpen}
+        onClose={() => setIsVaccinationModalOpen(false)}
+        onSave={(data) => {
+          setVaccinationData(data);
+          setIsVaccinationModalOpen(false);
+        }}
+        initialData={vaccinationData}
+      />
+
+      <ResumeModal
+        isOpen={isResumeModalOpen}
+        onClose={() => setIsResumeModalOpen(false)}
+        onSave={(data) => {
+          setResumeData(data);
+          setIsResumeModalOpen(false);
+        }}
+        initialData={resumeData}
       />
 
       <Footer />
