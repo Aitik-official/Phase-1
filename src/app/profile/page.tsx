@@ -15,6 +15,7 @@ import AcademicAchievementModal, { AcademicAchievementData } from '../../compone
 import CompetitiveExamsModal, { CompetitiveExamsData } from '../../components/modals/CompetitiveExamsModal';
 import SkillsModal, { SkillsData } from '../../components/modals/SkillsModal';
 import LanguagesModal, { LanguagesData } from '../../components/modals/LanguagesModal';
+import ProjectModal, { ProjectData } from '../../components/modals/ProjectModal';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function ProfilePage() {
   const [isCompetitiveExamsModalOpen, setIsCompetitiveExamsModalOpen] = useState(false);
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
   const [isLanguagesModalOpen, setIsLanguagesModalOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   
   // Sidebar expansion state
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
@@ -73,6 +75,7 @@ export default function ProfilePage() {
   const [competitiveExamsData, setCompetitiveExamsData] = useState<CompetitiveExamsData | undefined>();
   const [skillsData, setSkillsData] = useState<SkillsData | undefined>();
   const [languagesData, setLanguagesData] = useState<LanguagesData | undefined>();
+  const [projectData, setProjectData] = useState<ProjectData | undefined>();
 
   const toggleSection = (category: string) => {
     setExpandedSections(prev => ({
@@ -214,6 +217,8 @@ export default function ProfilePage() {
       setIsSkillsModalOpen(true);
     } else if (category === 'SKILLS' && itemName === 'Languages') {
       setIsLanguagesModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Projects') {
+      setIsProjectModalOpen(true);
     }
   };
 
@@ -249,6 +254,9 @@ export default function ProfilePage() {
     } else if (category === 'SKILLS' && itemName === 'Languages') {
       setLanguagesData(undefined);
       setIsLanguagesModalOpen(true);
+    } else if (category === 'PROJECTS' && itemName === 'Projects') {
+      setProjectData(undefined);
+      setIsProjectModalOpen(true);
     }
   };
 
@@ -962,6 +970,16 @@ export default function ProfilePage() {
           setIsLanguagesModalOpen(false);
         }}
         initialData={languagesData}
+      />
+
+      <ProjectModal
+        isOpen={isProjectModalOpen}
+        onClose={() => setIsProjectModalOpen(false)}
+        onSave={(data) => {
+          setProjectData(data);
+          setIsProjectModalOpen(false);
+        }}
+        initialData={projectData}
       />
 
       <Footer />
