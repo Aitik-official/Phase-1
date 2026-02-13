@@ -459,35 +459,160 @@ export default function CandidateDashboardPage() {
             <div className="flex items-center justify-between mb-8">
               {/* Quick Action Icons - Left Side */}
               <div className="flex items-center gap-4">
-                {/* Search Icon */}
-                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                  </svg>
+                {/* Search Icon - Expands to Input */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
+                  style={{
+                    backgroundColor: "#1F2937", // Default Slate-800
+                    width: "48px", // Default width (w-12)
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "300px";
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
+                  }}
+                >
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Explore Jobs"
+                    className="bg-transparent border-none outline-none text-black placeholder-gray-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75"
+                    style={{
+                      width: "200px",
+                      marginLeft: "4px",
+                    }}
+                  />
                 </div>
-                {/* Edit Icon */}
-                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                  </svg>
+
+                {/* Edit Icon - AI CV Editor */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
+                  style={{
+                    backgroundColor: "#1F2937",
+                    width: "48px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "180px"; // Adjust width as needed for text
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
+                  }}
+                >
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </div>
+                  <span className="text-black text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 ml-2">
+                    AI CV Editor
+                  </span>
                 </div>
-                {/* Grid Icon */}
-                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="3" width="7" height="7"></rect>
-                    <rect x="14" y="14" width="7" height="7"></rect>
-                    <rect x="3" y="14" width="7" height="7"></rect>
-                  </svg>
+
+                {/* Grid Icon - Application Management */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
+                  style={{
+                    backgroundColor: "#1F2937",
+                    width: "48px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "240px";
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
+                  }}
+                >
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <rect x="3" y="3" width="7" height="7"></rect>
+                      <rect x="14" y="3" width="7" height="7"></rect>
+                      <rect x="14" y="14" width="7" height="7"></rect>
+                      <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                  </div>
+                  <span className="text-black text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 ml-2">
+                    Application Management
+                  </span>
                 </div>
-                {/* Graduation Cap Icon */}
-                <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors shadow-md">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                  </svg>
+
+                {/* Graduation Cap Icon - Skill Enhancement */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
+                  style={{
+                    backgroundColor: "#1F2937",
+                    width: "48px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "200px";
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
+                  }}
+                >
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                  </div>
+                  <span className="text-black text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 ml-2">
+                    Skill Enhancement
+                  </span>
                 </div>
               </div>
 
@@ -552,20 +677,20 @@ export default function CandidateDashboardPage() {
               <div
                 className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
                 style={{
-                  width: "244px",
-                  height: "357px",
+                  width: "356px",
+                  height: "377px",
                   borderRadius: "20px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   position: "relative",
                 }}
               >
                 {/* Profile Picture with Gradient Overlay */}
-                <div className="relative w-full" style={{ height: "357px" }}>
+                <div className="relative w-full" style={{ height: "377px" }}>
                   <Image
                     src="/Gemini_Generated_Image_xxo7twxxo7twxxo7.png"
                     alt="Anglina Jolie"
-                    width={244}
-                    height={357}
+                    width={356}
+                    height={377}
                     className="w-full h-full object-cover"
                   />
                   {/* White Gradient Overlay - Linear gradient: transparent white (0% opacity) at 70% to opaque white (100% opacity) at 100% (bottom 30% has white overlay) */}
@@ -633,8 +758,8 @@ export default function CandidateDashboardPage() {
               <div
                 className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "512px",
-                  height: "357px",
+                  width: "569px",
+                  height: "378px",
                   borderRadius: "20px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   padding: "24px",
@@ -848,8 +973,8 @@ export default function CandidateDashboardPage() {
               <div
                 className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "230px",
-                  height: "361px",
+                  width: "399px",
+                  height: "378px",
                   borderRadius: "20px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   padding: "24px",
@@ -871,7 +996,7 @@ export default function CandidateDashboardPage() {
                   <div
                     className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
                     style={{
-                      width: "205px",
+                      width: "100%",
                       height: "77px",
                       borderRadius: "12px",
                       padding: "12px",
@@ -941,7 +1066,7 @@ export default function CandidateDashboardPage() {
                   <div
                     className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
                     style={{
-                      width: "205px",
+                      width: "100%",
                       height: "77px",
                       borderRadius: "12px",
                       padding: "12px",
@@ -1011,7 +1136,7 @@ export default function CandidateDashboardPage() {
                   <div
                     className="flex flex-col transition-all duration-300 hover:bg-white/50 rounded-xl cursor-pointer"
                     style={{
-                      width: "205px",
+                      width: "100%",
                       height: "77px",
                       borderRadius: "12px",
                       padding: "12px",
@@ -1312,7 +1437,7 @@ export default function CandidateDashboardPage() {
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left: Job Matches Card */}
             <div
-              className="flex flex-col bg-white transition-all duration-300 hover:scale-[1.01]"
+              className="flex flex-col bg-white"
               style={{
                 width: "939px",
                 height: "526px",
@@ -1460,12 +1585,12 @@ export default function CandidateDashboardPage() {
                         {job.match}
                       </span>
                       <button
-                        className="px-6 py-2 rounded-lg font-medium"
+                        className="px-4 py-1.5 rounded-lg font-medium"
                         style={{
                           backgroundColor: "#F97316",
                           color: "#FFFFFF",
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
+                          fontSize: "11px",
                           border: "none",
                           cursor: "pointer",
                           borderRadius: "8px",
@@ -1481,187 +1606,146 @@ export default function CandidateDashboardPage() {
 
             {/* Right: Recommended Courses Card */}
             <div
-              className="flex flex-col bg-white transition-all duration-300 hover:scale-[1.01]"
+              className="flex flex-col bg-white"
               style={{
-                width: "320px",
-                height: "580px",
-                borderRadius: "20px",
+                width: "408px",
+                height: "526px",
+                borderRadius: "6px",
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                 padding: "24px",
               }}
             >
               {/* Header */}
-              <div className="mb-4">
+              <div className="flex justify-between items-center mb-5">
                 <h2
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "20px",
-                    fontWeight: 600,
+                    fontWeight: 500,
                     color: "#111827",
                   }}
                 >
                   Recommended Courses
                 </h2>
               </div>
-              {/* Course List */}
-              <div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
-                {/* Course 1 */}
-                <div
-                  className="flex flex-col rounded-lg overflow-hidden"
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  {/* Code Snippet */}
-                  <div
-                    className="px-4 py-3"
-                    style={{
-                      backgroundColor: "#1E293B",
-                      fontFamily: "Monaco, 'Courier New', monospace",
-                      fontSize: "11px",
-                      color: "#E2E8F0",
-                      lineHeight: "1.5",
-                    }}
-                  >
-                    <div style={{ color: "#60A5FA" }}>function</div>
-                    <div style={{ color: "#FBBF24", marginLeft: "16px" }}>communicate</div>
-                    <div style={{ color: "#E2E8F0", marginLeft: "16px" }}>(</div>
-                    <div style={{ color: "#34D399", marginLeft: "32px" }}>message</div>
-                    <div style={{ color: "#E2E8F0" }}>)</div>
-                  </div >
-                  {/* Course Info */}
-                  < div className="px-4 py-3" >
-                    <h3
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        color: "#111827",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Effective Communication in Tech
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        color: "#6B7280",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      2h 15m
-                    </p>
-                    <button
-                      className="w-full py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#3B82F6",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      View Course
-                    </button>
-                  </div >
-                </div >
 
-                {/* Course 2 */}
-                < div
-                  className="flex flex-col rounded-lg overflow-hidden"
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  {/* Code Snippet */}
+              {/* Course List */}
+              <div className="flex flex-col gap-5" style={{ overflow: "hidden", flex: 1 }}>
+                {[
+                  {
+                    title: "Effective Communication in Tech",
+                    duration: "2h 15m",
+                    code: "ending\",r={state:function(){return n},always:promise)?e.promise().done(n.resolve).fail(n.re dd(function(){n=s},t[1^e][2].disable,t[2][2]. 0,n=h.call(arguments),r=n.length,i=1!==r||e& r),l=Array(r);r>t;t++)n[t]&&b.isFunction(n[t >><table></table><a href='/a'>a</a><in typ TagName(\"input\")[0],r.style.cssText=\"top:1px test(r.getAttribute(\"style\")),hrefNormalized:",
+                  },
+                  {
+                    title: "Advanced React Patterns",
+                    duration: "3h 30m",
+                    code: "const [state, disp] = useRed(red, init); export default function App() { return <div className=\"app-container\"> <Header title=\"Dashboard\" /> <MainLayout> <Sidebar /> <ContentArea /> </MainLayout> </div>; }",
+                  },
+                ].map((course, index) => (
                   <div
-                    className="px-4 py-3"
+                    key={index}
+                    className="flex flex-col rounded-xl overflow-hidden border border-gray-100"
                     style={{
-                      backgroundColor: "#1E293B",
-                      fontFamily: "Monaco, 'Courier New', monospace",
-                      fontSize: "11px",
-                      color: "#E2E8F0",
-                      lineHeight: "1.5",
+                      width: "100%",
+                      height: "204px",
+                      flexShrink: 0,
+                      backgroundColor: "#FFFFFF",
+                      boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.05)",
                     }}
                   >
-                    <div style={{ color: "#60A5FA" }}>const</div>
-                    <div style={{ color: "#FBBF24", marginLeft: "8px" }}>learn</div>
-                    <div style={{ color: "#E2E8F0" }}> = </div>
-                    <div style={{ color: "#34D399" }}>"React"</div>
-                    <div style={{ color: "#E2E8F0" }}>;</div>
-                  </div >
-                  {/* Course Info */}
-                  < div className="px-4 py-3" >
-                    <h3
+                    {/* Banner with Play Icon */}
+                    <div
+                      className="relative h-[100px] w-full flex items-center justify-center overflow-hidden"
                       style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        color: "#111827",
-                        marginBottom: "4px",
+                        backgroundColor: "#1F2937",
                       }}
                     >
-                      Advanced React Patterns
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        color: "#6B7280",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      3h 30m
-                    </p>
-                    <button
-                      className="w-full py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#3B82F6",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      View Course
-                    </button>
-                  </div >
-                </div >
-              </div >
-            </div >
-          </div >
+                      {/* Code Background Overlay */}
+                      <div
+                        className="absolute inset-0 opacity-40 p-2"
+                        style={{
+                          fontFamily: "Monaco, 'Courier New', monospace",
+                          fontSize: "8px",
+                          color: "#E5E7EB",
+                          wordBreak: "break-all",
+                          lineHeight: "1.2",
+                          userSelect: "none",
+                        }}
+                      >
+                        {course.code}
+                      </div>
+                      {/* Play Icon */}
+                      <div className="relative z-10">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 5V19L19 12L8 5Z" fill="white" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Course Info */}
+                    <div className="p-3.5 flex flex-col gap-3">
+                      <div className="flex justify-between items-center">
+                        <h3
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            color: "#111827",
+                          }}
+                        >
+                          {course.title}
+                        </h3>
+                        <span
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "14px",
+                            color: "#111827",
+                          }}
+                        >
+                          {course.duration}
+                        </span>
+                      </div>
+                      <button
+                        className="w-full py-2.5 rounded-lg text-sm font-medium transition-colors"
+                        style={{
+                          backgroundColor: "#38B6FF",
+                          color: "#FFFFFF",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        View Course
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Fourth Row: Other Cards */}
-          < div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
+          <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left Column */}
-            < div className="flex flex-col gap-6" style={{ width: "244px" }}>
+            <div className="flex flex-col gap-6" style={{ width: "244px" }}>
               {/* Additional content can go here */}
-            </div >
+            </div>
 
             {/* Right Column */}
-            < div className="flex flex-col gap-6" >
-
-
-
-            </div >
-          </div >
-
-        </div >
-      </main >
+            <div className="flex flex-col gap-6">
+            </div>
+          </div>
+        </div>
+      </main>
 
       {/* Footer */}
-      < footer className="border-t border-slate-200 bg-white px 6 py-4 text-xs text-slate-500" >
+      <footer className="border-t border-slate-200 bg-white px-6 py-4 text-xs text-slate-500">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 py-4 text-center md:flex-row md:text-left">
           <p>Terms of Use</p>
           <p>Privacy Policy</p>
           <p>Contact Support</p>
         </div>
-      </footer >
-    </div >
+      </footer>
+    </div>
   );
 }
-
-
