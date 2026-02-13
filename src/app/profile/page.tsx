@@ -47,16 +47,16 @@ export default function ProfilePage() {
     'GLOBAL ELIGIBILITY': true,
     'RESUME': true,
   });
-  
+
   // Selected sidebar item state
   const [selectedItem, setSelectedItem] = useState<{ category: string; itemName: string } | null>({
     category: 'PERSONAL DETAILS',
     itemName: 'Basic Information'
   });
-  
+
   // Summary form state
   const [summaryText, setSummaryText] = useState('Experienced software engineer with a strong background in full-stack development and cloud technologies. Proven ability to lead projects, mentor junior developers, and deliver high-quality solutions on time. Passionate about creating scalable and user-centric applications, with a keen interest in AI/ML integration for improved user experiences. Seeking a challenging role to leverage technical expertise and contribute to innovative product development.');
-  
+
   // Data storage for modals
   const [basicInfoData, setBasicInfoData] = useState<BasicInfoData | undefined>({
     firstName: 'John',
@@ -95,9 +95,9 @@ export default function ProfilePage() {
     {
       category: 'PERSONAL DETAILS',
       items: [
-        { 
-          name: 'Basic Information', 
-          status: 'Completed', 
+        {
+          name: 'Basic Information',
+          status: 'Completed',
           hasInfo: true,
           data: basicInfoData || {
             firstName: 'John',
@@ -108,15 +108,15 @@ export default function ProfilePage() {
             country: 'United States'
           }
         },
-        { 
-          name: 'Summary', 
-          status: summaryText ? 'Partially Completed' : 'Missing Info', 
+        {
+          name: 'Summary',
+          status: summaryText ? 'Partially Completed' : 'Missing Info',
           hasInfo: !!summaryText || true, // Always show as hasInfo since we have default text
           data: summaryText || 'No summary added yet.'
         },
-        { 
-          name: 'Gap Explanation', 
-          status: gapExplanationData ? 'Completed' : 'Missing Info', 
+        {
+          name: 'Gap Explanation',
+          status: gapExplanationData ? 'Completed' : 'Missing Info',
           hasInfo: !!gapExplanationData,
           data: gapExplanationData
         }
@@ -125,9 +125,9 @@ export default function ProfilePage() {
     {
       category: 'WORK HISTORY',
       items: [
-        { 
-          name: 'Work Experience', 
-          status: 'Completed', 
+        {
+          name: 'Work Experience',
+          status: 'Completed',
           hasInfo: true,
           data: workExperienceData || {
             jobTitle: 'Software Developer',
@@ -138,9 +138,9 @@ export default function ProfilePage() {
             workLocation: 'San Francisco, USA'
           }
         },
-        { 
-          name: 'Internships', 
-          status: internshipData ? 'Completed' : 'Missing Info', 
+        {
+          name: 'Internships',
+          status: internshipData ? 'Completed' : 'Missing Info',
           hasInfo: !!internshipData,
           data: internshipData
         }
@@ -279,7 +279,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <main className="mx-auto max-w-7xl px-6 py-8">
         {/* Main Title Area */}
         <div className="mb-8 flex items-center justify-between">
@@ -444,9 +444,8 @@ export default function ProfilePage() {
                         <li key={itemIndex}>
                           <button
                                   onClick={() => setSelectedItem({ category: section.category, itemName: item.name })}
-                                  className={`w-full text-left px-2 py-1.5 text-sm rounded-md hover:bg-gray-50 flex items-center justify-between ${
-                                    isSelected ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
-                                  }`}
+                                  className={`w-full text-left px-2 py-1.5 text-sm rounded-md hover:bg-gray-50 flex items-center justify-between ${isSelected ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                                    }`}
                                 >
                                   <span>{item.name}</span>
                                   <span className="text-gray-400">→</span>
