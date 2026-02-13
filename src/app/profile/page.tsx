@@ -324,6 +324,26 @@ export default function ProfilePage() {
       <Header />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
+        {/* Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Back
+        </button>
+
         {/* Main Title Area */}
         <div className="mb-8 flex items-center justify-between">
           <div>

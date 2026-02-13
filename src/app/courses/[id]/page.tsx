@@ -174,6 +174,26 @@ The course also covers AI-driven networking strategies and market analysis, help
       <Header />
 
       <main className="mx-auto max-w-7xl px-8 py-10">
+        {/* Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Back to Courses
+        </button>
+
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Left Column - Main Content */}
           <div className="flex-1 max-w-4xl">
