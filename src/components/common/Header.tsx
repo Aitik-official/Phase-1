@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Header() {
   const router = useRouter();
@@ -39,6 +39,50 @@ export default function Header() {
     return pathname?.startsWith(path);
   };
 
+  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null);
+  const [isInitial, setIsInitial] = useState(true);
+  const itemsRef = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // Load last position from sessionStorage on mount
+  useEffect(() => {
+    const saved = sessionStorage.getItem('navIndicatorStyle');
+    if (saved) {
+      setIndicatorStyle(JSON.parse(saved));
+      setIsInitial(false); // Allow immediate transition from saved position
+    }
+  }, []);
+
+  useEffect(() => {
+    const updateIndicator = () => {
+      const activeIndex = navItems.findIndex(item => isActive(item.path));
+      if (activeIndex !== -1 && itemsRef.current[activeIndex]) {
+        const activeElement = itemsRef.current[activeIndex];
+        if (activeElement) {
+          const newStyle = {
+            left: activeElement.offsetLeft,
+            width: activeElement.offsetWidth,
+          };
+          setIndicatorStyle(newStyle);
+          sessionStorage.setItem('navIndicatorStyle', JSON.stringify(newStyle));
+
+          if (isInitial) {
+            // If we didn't have a saved position, snap first then enable transitions
+            setTimeout(() => setIsInitial(false), 50);
+          }
+        }
+      }
+    };
+
+    updateIndicator();
+    const timer = setTimeout(updateIndicator, 100);
+
+    window.addEventListener('resize', updateIndicator);
+    return () => {
+      window.removeEventListener('resize', updateIndicator);
+      clearTimeout(timer);
+    };
+  }, [pathname]);
+
   const navItems = [
     { label: 'Dashboard', path: '/candidate-dashboard' },
     { label: 'Jobs', path: '/explore-jobs' },
@@ -62,23 +106,37 @@ export default function Header() {
           />
         </div>
 
-        {/* Navigation Container - Centered rounded pill with cream/peach background */}
+        {/* Navigation Container - Centered rounded pill with white background and sliding indicator */}
         <nav
-          className="flex items-center gap-2 px-6 py-2.5 rounded-full"
+          className="relative flex items-center gap-2 px-1.5 py-1.5 rounded-full"
           style={{
-            background: 'linear-gradient(to bottom, rgba(255, 250, 240, 0.98) 0%, rgba(255, 245, 230, 1) 50%, rgba(255, 250, 240, 0.98) 100%)',
+            background: '#FFFFFF',
             boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
           }}
         >
-          {navItems.map((item) => {
+          {/* Sliding Indicator */}
+          {indicatorStyle && navItems.some(item => isActive(item.path)) && (
+            <div
+              className={`absolute bg-slate-800 rounded-xl ${isInitial ? '' : 'transition-all duration-500 ease-in-out'}`}
+              style={{
+                left: `${indicatorStyle.left}px`,
+                width: `${indicatorStyle.width}px`,
+                height: 'calc(100% - 12px)',
+                top: '6px',
+              }}
+            />
+          )}
+
+          {navItems.map((item, index) => {
             const active = isActive(item.path);
             return (
               <button
                 key={item.path}
+                ref={(el) => { itemsRef.current[index] = el; }}
                 type="button"
                 onClick={() => router.push(item.path)}
-                className={`px-5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${active
-                  ? 'bg-slate-800 text-white shadow-md'
+                className={`relative z-10 px-5 py-2 rounded-xl text-sm font-medium transition-colors duration-300 ${active
+                  ? 'text-white'
                   : 'text-slate-600 hover:text-slate-800 bg-transparent'
                   }`}
                 style={{
@@ -400,7 +458,11 @@ export default function Header() {
                 {/* Footer */}
                 <div className="px-3.5 py-2.5 border-t border-gray-200">
                   <button
-                    className="w-full text-center text-blue-600 hover:text-blue-700"
+                    onClick={() => {
+                      router.push('/notification');
+                      setIsNotificationsModalOpen(false);
+                    }}
+                    className="w-full text-center text-blue-600 hover:text-blue-700 font-medium"
                     style={{
                       fontSize: "11px",
                       fontWeight: 500,

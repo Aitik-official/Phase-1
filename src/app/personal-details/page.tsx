@@ -37,11 +37,11 @@ export default function PersonalDetailsPage() {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const dateInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   // Form switching state
   const [activeForm, setActiveForm] = useState<'personal' | 'education' | 'skills' | 'work-exp' | 'salary-exp'>('personal');
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
-  
+
   // Education form state
   interface Education {
     id: number;
@@ -245,10 +245,10 @@ export default function PersonalDetailsPage() {
   };
 
   const fieldStyle = {
-    height: "45px",
+    height: "50px",
     borderRadius: "8px",
-    border: "1px solid #E1E1E1",
-    backgroundColor: "#F4F4F4",
+    border: "1px solid #F3F4F6",
+    backgroundColor: "#F9FAFB",
     width: "calc(100% - 24px)",
     marginLeft: "12px",
     marginRight: "12px",
@@ -262,8 +262,8 @@ export default function PersonalDetailsPage() {
   const labelColor = (focused: boolean, hasValue: boolean) =>
     focused || hasValue
       ? {
-          color: "#239CD2",
-        }
+        color: "#239CD2",
+      }
       : undefined;
 
   // Work Experience form state
@@ -429,7 +429,7 @@ export default function PersonalDetailsPage() {
   ]);
   const [newBenefit, setNewBenefit] = useState("");
   const [showAddBenefit, setShowAddBenefit] = useState(false);
-  
+
   // Preferred Salary states
   const [preferredSalary, setPreferredSalary] = useState("");
   const [preferredSalaryFocused, setPreferredSalaryFocused] = useState(false);
@@ -460,30 +460,30 @@ export default function PersonalDetailsPage() {
   const [preferredWorkMode, setPreferredWorkMode] = useState("");
   const [preferredWorkModeFocused, setPreferredWorkModeFocused] = useState(false);
   const [expectedSelectedBenefits, setExpectedSelectedBenefits] = useState<string[]>([]);
-  
+
   // Chips for Preferred Locations and Roles
   const locationChips = ["New York", "London", "Berlin", "Dubai", "Singapore", "San Francisco", "Toronto", "Sydney"];
   const roleChips = ["Software Developer", "Tech Lead", "UX Designer", "Product Manager", "Data Scientist", "DevOps Engineer", "QA Engineer", "Business Analyst"];
-  
+
   // Locations that require company-sponsored visa
   const locationsRequiringSponsorship = ["New York", "Singapore"];
-  
+
   // Expected Salary states
   const [expectedCurrency, setExpectedCurrency] = useState("");
   const [expectedCurrencyFocused, setExpectedCurrencyFocused] = useState(false);
   const [expectedSalaryType, setExpectedSalaryType] = useState("");
   const [expectedSalaryTypeFocused, setExpectedSalaryTypeFocused] = useState(false);
-  
+
   const currencies = ["USD", "EUR", "GBP", "INR", "CAD", "AUD", "JPY", "CNY"];
   const salaryTypes = ["Annual", "Monthly", "Hourly"];
   const workModes = ["Remote", "Hybrid", "On-site"];
   const visaStatusOptions = ["Citizen", "Permanent Resident", "Work Visa", "Student Visa", "Tourist Visa", "No Visa Required", "Other"];
-  
+
   const salaryFieldStyle = {
     height: "48.19px",
     borderRadius: "5.02px",
-    border: "1px solid #99A1AF",
-    backgroundColor: "#FFFFFF",
+    border: "1px solid #F3F4F6",
+    backgroundColor: "#F9FAFB",
   };
 
   const salaryLabelFloating = (focused: boolean, hasValue: boolean) =>
@@ -494,18 +494,18 @@ export default function PersonalDetailsPage() {
   const salaryLabelColor = (focused: boolean, hasValue: boolean) =>
     focused || hasValue
       ? {
-          color: "#239CD2",
-        }
+        color: "#239CD2",
+      }
       : undefined;
-  
+
   // Toggle functions for Preferred Locations and Roles
   const toggleLocation = (value: string) => {
     setSelectedPreferredLocations((prev) => {
       const isCurrentlySelected = prev.includes(value);
-      const newLocations = isCurrentlySelected 
+      const newLocations = isCurrentlySelected
         ? prev.filter((v) => v !== value)
         : [...prev, value];
-      
+
       // Show visa questions when a new location is added (if not already completed for this location)
       if (!isCurrentlySelected && newLocations.length > 0 && !visaDetailsByLocation[value]) {
         setCurrentLocationForVisa(value);
@@ -525,11 +525,11 @@ export default function PersonalDetailsPage() {
         });
         resetVisaQuestions();
       }
-      
+
       return newLocations;
     });
   };
-  
+
   const removeLocation = (value: string) => {
     setSelectedPreferredLocations((prev) => {
       const newLocations = prev.filter((v) => v !== value);
@@ -545,7 +545,7 @@ export default function PersonalDetailsPage() {
       return newLocations;
     });
   };
-  
+
   const handleLocationEnterKey = (value: string) => {
     if (value.trim() && !selectedPreferredLocations.includes(value.trim())) {
       const newLocations = [value.trim(), ...selectedPreferredLocations];
@@ -564,7 +564,7 @@ export default function PersonalDetailsPage() {
       }
     }
   };
-  
+
   // Get visa summary text for a specific location
   const getVisaSummaryForLocation = (location: string) => {
     const details = visaDetailsByLocation[location];
@@ -584,7 +584,7 @@ export default function PersonalDetailsPage() {
     }
     return "";
   };
-  
+
   const saveVisaDetailsForCurrentLocation = (endDateValue?: string) => {
     if (!currentLocationForVisa) return;
     const finalEndDate = endDateValue !== undefined ? endDateValue : visaEndDate;
@@ -599,7 +599,7 @@ export default function PersonalDetailsPage() {
       },
     }));
   };
-  
+
   const resetVisaQuestions = () => {
     setShowVisaQuestions(false);
     setVisaQuestionStep(0);
@@ -610,7 +610,7 @@ export default function PersonalDetailsPage() {
     setVisaSponsorshipRequired("");
     setCurrentLocationForVisa("");
   };
-  
+
   const handleVisaNext = (hasVisaValue?: string, visaStatusValue?: string, sponsorshipValue?: string) => {
     const currentHasVisa = hasVisaValue !== undefined ? hasVisaValue : hasVisa;
     const currentVisaStatus = visaStatusValue !== undefined ? visaStatusValue : visaStatus;
@@ -652,11 +652,11 @@ export default function PersonalDetailsPage() {
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
-  
+
   const removeRole = (value: string) => {
     setSelectedPreferredRoles((prev) => prev.filter((v) => v !== value));
   };
-  
+
   const handleRoleEnterKey = (value: string) => {
     if (value.trim() && !selectedPreferredRoles.includes(value.trim())) {
       setSelectedPreferredRoles([value.trim(), ...selectedPreferredRoles]);
@@ -703,7 +703,7 @@ export default function PersonalDetailsPage() {
     <div
       className="min-h-screen"
       style={{
-        backgroundColor: "#E5E7EA",
+        background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)",
       }}
     >
       {/* Header */}
@@ -714,7 +714,8 @@ export default function PersonalDetailsPage() {
       <main className="mx-auto px-6 flex justify-center" style={{ paddingTop: "32px", paddingBottom: "32px" }}>
         {/* Form */}
         <form className="mx-auto flex flex-col items-center">
-          <style dangerouslySetInnerHTML={{__html: `
+          <style dangerouslySetInnerHTML={{
+            __html: `
             input[type="radio"][name="gender"] {
               appearance: none;
               -webkit-appearance: none;
@@ -765,7 +766,7 @@ export default function PersonalDetailsPage() {
             className="flex w-full flex-col"
             style={{
               width: "1134px",
-              minHeight: "1105px",
+              minHeight: "720px",
               borderRadius: "10px",
               backgroundColor: "#FFFFFF",
               padding: "30px",
@@ -830,38 +831,48 @@ export default function PersonalDetailsPage() {
                 </div>
                 <nav className="flex w-full flex-col" style={{ gap: "6px" }}>
                   {[
-                    { label: "Personal Information", icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 8C10.2091 8 12 6.20914 12 4C12 1.79086 10.2091 0 8 0C5.79086 0 4 1.79086 4 4C4 6.20914 5.79086 8 8 8Z" fill="currentColor"/>
-                        <path d="M8 10C4.68629 10 2 12.6863 2 16H14C14 12.6863 11.3137 10 8 10Z" fill="currentColor"/>
-                      </svg>
-                    )},
-                    { label: "Educational Details", icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 3C2 2.44772 2.44772 2 3 2H13C13.5523 2 14 2.44772 14 3V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V3Z" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                        <path d="M5 6H11M5 9H11M5 12H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                      </svg>
-                    )},
-                    { label: "Manage Your Skills", icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8 0L10.1631 5.52786L16 6.11146L12 10.4721L12.9443 16L8 13.1115L3.05569 16L4 10.4721L0 6.11146L5.83686 5.52786L8 0Z" fill="currentColor"/>
-                      </svg>
-                    )},
-                    { label: "Work Experience", icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4V12C14 12.5523 13.5523 13 13 13H3C2.44772 13 2 12.5523 2 12V4Z" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                        <path d="M5 6L7 8L11 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    )},
-                    { label: "Career Preferences", icon: (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-                        <circle cx="8" cy="8" r="2" fill="currentColor"/>
-                      </svg>
-                    )},
+                    {
+                      label: "Personal Information", icon: (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 8C10.2091 8 12 6.20914 12 4C12 1.79086 10.2091 0 8 0C5.79086 0 4 1.79086 4 4C4 6.20914 5.79086 8 8 8Z" fill="currentColor" />
+                          <path d="M8 10C4.68629 10 2 12.6863 2 16H14C14 12.6863 11.3137 10 8 10Z" fill="currentColor" />
+                        </svg>
+                      )
+                    },
+                    {
+                      label: "Educational Details", icon: (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 3C2 2.44772 2.44772 2 3 2H13C13.5523 2 14 2.44772 14 3V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V3Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                          <path d="M5 6H11M5 9H11M5 12H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                        </svg>
+                      )
+                    },
+                    {
+                      label: "Manage Your Skills", icon: (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 0L10.1631 5.52786L16 6.11146L12 10.4721L12.9443 16L8 13.1115L3.05569 16L4 10.4721L0 6.11146L5.83686 5.52786L8 0Z" fill="currentColor" />
+                        </svg>
+                      )
+                    },
+                    {
+                      label: "Work Experience", icon: (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 4C2 3.44772 2.44772 3 3 3H13C13.5523 3 14 3.44772 14 4V12C14 12.5523 13.5523 13 13 13H3C2.44772 13 2 12.5523 2 12V4Z" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                          <path d="M5 6L7 8L11 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )
+                    },
+                    {
+                      label: "Career Preferences", icon: (
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                          <circle cx="8" cy="8" r="2" fill="currentColor" />
+                        </svg>
+                      )
+                    },
                   ].map((item, idx) => {
                     const tabKey = idx === 0 ? 'personal' : idx === 1 ? 'education' : idx === 2 ? 'skills' : idx === 3 ? 'work-exp' : item.label.toLowerCase().replace(/\s+/g, '-');
-                    const active = (idx === 0 && activeForm === 'personal') || (idx === 1 && activeForm === 'education') || (idx === 2 && activeForm === 'skills') || (idx === 3 && activeForm === 'work-exp');
+                    const active = (idx === 0 && activeForm === 'personal') || (idx === 1 && activeForm === 'education') || (idx === 2 && activeForm === 'skills') || (idx === 3 && activeForm === 'work-exp') || (idx === 4 && activeForm === 'salary-exp');
                     return (
                       <button
                         key={item.label}
@@ -879,13 +890,15 @@ export default function PersonalDetailsPage() {
                           } else if (idx === 3) {
                             setSlideDirection('right');
                             setTimeout(() => setActiveForm('work-exp'), 50);
+                          } else if (idx === 4) {
+                            setSlideDirection('right');
+                            setTimeout(() => setActiveForm('salary-exp'), 50);
                           }
                         }}
-                        className={`text-left text-sm transition flex items-center gap-2 ${
-                          active
-                            ? "font-semibold"
-                            : "text-slate-600 hover:text-slate-900"
-                        }`}
+                        className={`text-left text-sm transition flex items-center gap-2 ${active
+                          ? "font-semibold"
+                          : "text-slate-600 hover:text-slate-900"
+                          }`}
                         style={{
                           width: "100%",
                           padding: "10px 12px",
@@ -905,15 +918,30 @@ export default function PersonalDetailsPage() {
               </aside>
 
               {/* Main Content */}
-              <section className="flex flex-col" style={{ width: "75%", gap: "26px", paddingTop: "24px", position: "relative", overflow: "hidden" }}>
-                <div className="form-slide-container" style={{ position: 'relative', minHeight: '1200px', overflow: 'visible' }}>
+              <section className="flex flex-col" style={{ width: "75%", gap: "26px", paddingTop: "24px", position: "relative" }}>
+                <div className="form-slide-container" style={{ position: 'relative', height: '600px', overflow: 'hidden' }}>
+                  <style jsx global>{`
+                    .form-slide::-webkit-scrollbar {
+                      width: 6px;
+                    }
+                    .form-slide::-webkit-scrollbar-track {
+                      background: transparent;
+                    }
+                    .form-slide::-webkit-scrollbar-thumb {
+                      background: #E5E7EB;
+                      border-radius: 10px;
+                    }
+                    .form-slide::-webkit-scrollbar-thumb:hover {
+                      background: #D1D5DB;
+                    }
+                  `}</style>
                   {/* Personal Information Form */}
-                  <div 
-                    className={`form-slide ${activeForm === 'personal' 
+                  <div
+                    className={`form-slide ${activeForm === 'personal'
                       ? (slideDirection === 'right' ? 'slide-in-left' : 'slide-in-right')
                       : (slideDirection === 'right' ? 'slide-out-left' : 'slide-out-right')
-                    }`}
-                    style={{ 
+                      }`}
+                    style={{
                       position: 'absolute',
                       width: '100%',
                       display: 'flex',
@@ -921,11 +949,14 @@ export default function PersonalDetailsPage() {
                       gap: '26px',
                       top: 0,
                       left: 0,
+                      maxHeight: '600px',
+                      overflowY: 'auto',
+                      paddingRight: '12px',
                       opacity: activeForm === 'personal' ? 1 : 0,
                       pointerEvents: activeForm === 'personal' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -946,635 +977,611 @@ export default function PersonalDetailsPage() {
                       />
                     </div>
 
-                {/* Name / Email */}
-                <div className="flex w-full" style={{ gap: "24px" }}>
-                  <div className="relative flex-1">
-                    <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
-                      <Image src="/perosn_icon.png" alt="Person" width={16} height={16} className="h-4 w-4" />
-                    </div>
-                    <input
-                      type="text"
-                      value={fullNameValue}
-                      onChange={(e) => setFullNameValue(e.target.value)}
-                      onFocus={() => setFullNameFocused(true)}
-                      onBlur={() => setFullNameFocused(false)}
-                      className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        fullNameFocused || fullNameValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        fullNameFocused || fullNameValue.length > 0
-                          ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={fullNameFocused || fullNameValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Full Name
-                    </label>
-                  </div>
-                  <div className="relative flex-1">
-                    <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
-                      <Image src="/email_icon.png" alt="Email" width={16} height={16} className="h-4 w-4" />
-                    </div>
-                    <input
-                      type="email"
-                      value={emailValue}
-                      onChange={(e) => setEmailValue(e.target.value)}
-                      onFocus={() => setEmailFocused(true)}
-                      onBlur={() => setEmailFocused(false)}
-                      className={`px-4 pb-2 pl-12 pr-28 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        emailFocused || emailValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        emailFocused || emailValue.length > 0
-                          ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={emailFocused || emailValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Email address
-                    </label>
-                    <div className="absolute right-8 top-1/2 -translate-y-1/2 z-10 flex items-center gap-1.5">
-                      <Image src="/green_tick.png" alt="Verified" width={18} height={18} className="h-4.5 w-4.5" />
-                      <span
-                        className="text-sm font-medium"
-                        style={{
-                          color: "#00ab08",
-                        }}
-                      >
-                        Verified
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Phones */}
-                <div className="flex w-full" style={{ gap: "24px" }}>
-                  <div className="relative flex-1">
-                    <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
-                      <Image src="/telephone_icon.png" alt="Telephone" width={16} height={16} className="h-4 w-4" />
-                    </div>
-                    <input
-                      type="tel"
-                      value={phoneValue}
-                      onChange={(e) => setPhoneValue(e.target.value)}
-                      onFocus={() => setPhoneFocused(true)}
-                      onBlur={() => setPhoneFocused(false)}
-                      className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        phoneFocused || phoneValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        phoneFocused || phoneValue.length > 0
-                          ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={phoneFocused || phoneValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Phone Number
-                    </label>
-                  </div>
-                  <div className="relative flex-1">
-                    <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
-                      <Image src="/telephone_icon.png" alt="Telephone" width={16} height={16} className="h-4 w-4" />
-                    </div>
-                    <input
-                      type="tel"
-                      value={alternateNumbers[0]}
-                      onChange={(e) => {
-                        const newNumbers = [...alternateNumbers];
-                        newNumbers[0] = e.target.value;
-                        setAlternateNumbers(newNumbers);
-                      }}
-                      onFocus={() => {
-                        const newFocused = [...alternateNumberFocused];
-                        newFocused[0] = true;
-                        setAlternateNumberFocused(newFocused);
-                      }}
-                      onBlur={() => {
-                        const newFocused = [...alternateNumberFocused];
-                        newFocused[0] = false;
-                        setAlternateNumberFocused(newFocused);
-                      }}
-                      className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        alternateNumberFocused[0] || alternateNumbers[0].length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        alternateNumberFocused[0] || alternateNumbers[0].length > 0
-                          ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        alternateNumberFocused[0] || alternateNumbers[0].length > 0 ? { color: "#239CD2" } : undefined
-                      }
-                    >
-                      Alternate Phone Number (optional)
-                    </label>
-                  </div>
-                </div>
-
-                {/* Profile Photo Upload */}
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    width: "calc(100% - 24px)",
-                    marginLeft: "12px",
-                    marginRight: "12px",
-                    height: "258px",
-                    borderRadius: "8px",
-                    backgroundColor: "#F4F4F4",
-                    border: "1px solid #E1E1E1",
-                    boxShadow: undefined,
-                  }}
-                >
-                  <div className="relative flex flex-col items-center">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          setPhotoFile(file);
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            setPhotoPreview(reader.result as string);
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
-                      className="hidden"
-                    />
-                    <div
-                      className="relative rounded-full border-2 border-gray-300 overflow-hidden"
-                      style={{
-                        width: "94px",
-                        height: "94px",
-                        borderRadius: "47px",
-                      }}
-                    >
-                      {photoPreview ? (
-                        <Image src={photoPreview} alt="Profile Photo" fill className="object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                          <Image src="/image%2064.png" alt="User" width={94} height={94} className="h-full w-full object-cover" />
+                    {/* Name / Email */}
+                    <div className="flex w-full" style={{ gap: "24px" }}>
+                      <div className="relative flex-1">
+                        <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
+                          <Image src="/perosn_icon.png" alt="Person" width={16} height={16} className="h-4 w-4" />
                         </div>
-                      )}
+                        <input
+                          type="text"
+                          value={fullNameValue}
+                          onChange={(e) => setFullNameValue(e.target.value)}
+                          onFocus={() => setFullNameFocused(true)}
+                          onBlur={() => setFullNameFocused(false)}
+                          className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${fullNameFocused || fullNameValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${fullNameFocused || fullNameValue.length > 0
+                            ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={fullNameFocused || fullNameValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Full Name
+                        </label>
+                      </div>
+                      <div className="relative flex-1">
+                        <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
+                          <Image src="/email_icon.png" alt="Email" width={16} height={16} className="h-4 w-4" />
+                        </div>
+                        <input
+                          type="email"
+                          value={emailValue}
+                          onChange={(e) => setEmailValue(e.target.value)}
+                          onFocus={() => setEmailFocused(true)}
+                          onBlur={() => setEmailFocused(false)}
+                          className={`px-4 pb-2 pl-12 pr-28 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${emailFocused || emailValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${emailFocused || emailValue.length > 0
+                            ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={emailFocused || emailValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Email address
+                        </label>
+                        <div className="absolute right-8 top-1/2 -translate-y-1/2 z-10 flex items-center gap-1.5">
+                          <Image src="/green_tick.png" alt="Verified" width={18} height={18} className="h-4.5 w-4.5" />
+                          <span
+                            className="text-sm font-medium"
+                            style={{
+                              color: "#00ab08",
+                            }}
+                          >
+                            Verified
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <p
-                      className="text-center mt-2"
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontWeight: "500",
-                        fontSize: "14px",
-                        lineHeight: "20px",
-                        letterSpacing: "0px",
-                        color: "#5F5F5F",
-                      }}
-                    >
-                      Profile Photo
-                    </p>
-                    <p
-                      className="text-center"
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontWeight: "400",
-                        fontSize: "12px",
-                        lineHeight: "16px",
-                        letterSpacing: "0px",
-                        color: "#5F5F5F",
-                        marginTop: "12px",
-                      }}
-                    >
-                      Upload a new photo (PNG, JPG, up to 5MB)
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="mt-2 flex items-center justify-center gap-2 transition-all duration-200 hover:bg-blue-50 hover:border-blue-300"
-                      style={{
-                        width: "156.42px",
-                        height: "40px",
-                        borderRadius: "6px",
-                        backgroundColor: "#FFFFFF",
-                        border: "1px solid #C1C1C1",
-                        fontFamily: "Inter, sans-serif",
-                        fontWeight: "500",
-                        fontSize: "14px",
-                        lineHeight: "22px",
-                        letterSpacing: "0%",
-                        color: "#0A65CC",
-                      }}
-                    >
-                      <Image src="/cloud-upload.png" alt="Upload" width={18} height={18} />
-                      Upload Photo
-                    </button>
-                  </div>
-                </div>
 
-                {/* Gender */}
-                <div className="flex flex-col" style={{ gap: "12px", marginLeft: "16px" }}>
-                  <span className="text-[13px] text-slate-600 font-medium">Gender</span>
-                  <div className="flex items-center text-sm text-slate-700" style={{ gap: "24px" }}>
-                    <label className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="Male"
-                        defaultChecked
-                        onChange={(e) => setGenderValue(e.target.value)}
-                        className="h-4 w-4 rounded-full"
-                        style={{
-                          appearance: "none",
-                          WebkitAppearance: "none",
-                          MozAppearance: "none",
-                          border: "1px solid #cbd5e1",
-                          backgroundColor: "#FFFFFF",
-                          outline: "none",
-                          boxShadow: "none",
-                          accentColor: "#fbbf24",
-                        }}
-                      />
-                      Male
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="Female"
-                        onChange={(e) => setGenderValue(e.target.value)}
-                        className="h-4 w-4 rounded-full"
-                        style={{
-                          appearance: "none",
-                          WebkitAppearance: "none",
-                          MozAppearance: "none",
-                          border: "1px solid #cbd5e1",
-                          backgroundColor: "#FFFFFF",
-                          outline: "none",
-                          boxShadow: "none",
-                          accentColor: "#fbbf24",
-                        }}
-                      />
-                      Female
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-slate-700 font-medium">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="Other"
-                        onChange={(e) => setGenderValue(e.target.value)}
-                        className="h-4 w-4 rounded-full"
-                        style={{
-                          appearance: "none",
-                          WebkitAppearance: "none",
-                          MozAppearance: "none",
-                          border: "1px solid #cbd5e1",
-                          backgroundColor: "#FFFFFF",
-                          outline: "none",
-                          boxShadow: "none",
-                          accentColor: "#fbbf24",
-                        }}
-                      />
-                      Other
-                    </label>
-                  </div>
-                </div>
+                    {/* Phones */}
+                    <div className="flex w-full" style={{ gap: "24px" }}>
+                      <div className="relative flex-1">
+                        <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
+                          <Image src="/telephone_icon.png" alt="Telephone" width={16} height={16} className="h-4 w-4" />
+                        </div>
+                        <input
+                          type="tel"
+                          value={phoneValue}
+                          onChange={(e) => setPhoneValue(e.target.value)}
+                          onFocus={() => setPhoneFocused(true)}
+                          onBlur={() => setPhoneFocused(false)}
+                          className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${phoneFocused || phoneValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${phoneFocused || phoneValue.length > 0
+                            ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={phoneFocused || phoneValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Phone Number
+                        </label>
+                      </div>
+                      <div className="relative flex-1">
+                        <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
+                          <Image src="/telephone_icon.png" alt="Telephone" width={16} height={16} className="h-4 w-4" />
+                        </div>
+                        <input
+                          type="tel"
+                          value={alternateNumbers[0]}
+                          onChange={(e) => {
+                            const newNumbers = [...alternateNumbers];
+                            newNumbers[0] = e.target.value;
+                            setAlternateNumbers(newNumbers);
+                          }}
+                          onFocus={() => {
+                            const newFocused = [...alternateNumberFocused];
+                            newFocused[0] = true;
+                            setAlternateNumberFocused(newFocused);
+                          }}
+                          onBlur={() => {
+                            const newFocused = [...alternateNumberFocused];
+                            newFocused[0] = false;
+                            setAlternateNumberFocused(newFocused);
+                          }}
+                          className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${alternateNumberFocused[0] || alternateNumbers[0].length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${alternateNumberFocused[0] || alternateNumbers[0].length > 0
+                            ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={
+                            alternateNumberFocused[0] || alternateNumbers[0].length > 0 ? { color: "#239CD2" } : undefined
+                          }
+                        >
+                          Alternate Phone Number (optional)
+                        </label>
+                      </div>
+                    </div>
 
-                {/* Date of Birth / Marital Status */}
-                <div className="flex w-full" style={{ gap: "24px" }}>
-                  <div className="relative flex-1">
+                    {/* Profile Photo Upload */}
                     <div
-                      className="absolute left-5 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
-                      onClick={() => dateInputRef.current?.showPicker()}
-                    >
-                      <Image src="/calendar_icon.png" alt="Calendar" width={16} height={16} className="h-4 w-4" />
-                    </div>
-                    <input
-                      ref={dateInputRef}
-                      type="date"
-                      value={dobValue}
-                      onChange={(e) => setDobValue(e.target.value)}
-                      onFocus={() => setDobFocused(true)}
-                      onBlur={() => setDobFocused(false)}
-                      onClick={() => dateInputRef.current?.showPicker()}
-                      className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        dobFocused || dobValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
+                      className="flex items-center justify-center"
                       style={{
                         width: "calc(100% - 24px)",
                         marginLeft: "12px",
                         marginRight: "12px",
-                        height: "45px",
+                        height: "258px",
                         borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                        color: dobValue ? "#1e293b" : "transparent",
+                        backgroundColor: "#F9FAFB",
+                        border: "1px solid #F3F4F6",
+                        boxShadow: undefined,
                       }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        dobFocused || dobValue.length > 0
+                    >
+                      <div className="relative flex flex-col items-center">
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setPhotoFile(file);
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                setPhotoPreview(reader.result as string);
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className="hidden"
+                        />
+                        <div
+                          className="relative rounded-full border-2 border-gray-300 overflow-hidden"
+                          style={{
+                            width: "94px",
+                            height: "94px",
+                            borderRadius: "47px",
+                          }}
+                        >
+                          {photoPreview ? (
+                            <Image src={photoPreview} alt="Profile Photo" fill className="object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                              <Image src="/image%2064.png" alt="User" width={94} height={94} className="h-full w-full object-cover" />
+                            </div>
+                          )}
+                        </div>
+                        <p
+                          className="text-center mt-2"
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontWeight: "500",
+                            fontSize: "14px",
+                            lineHeight: "20px",
+                            letterSpacing: "0px",
+                            color: "#5F5F5F",
+                          }}
+                        >
+                          Profile Photo
+                        </p>
+                        <p
+                          className="text-center"
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontWeight: "400",
+                            fontSize: "12px",
+                            lineHeight: "16px",
+                            letterSpacing: "0px",
+                            color: "#5F5F5F",
+                            marginTop: "12px",
+                          }}
+                        >
+                          Upload a new photo (PNG, JPG, up to 5MB)
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="mt-2 flex items-center justify-center gap-2 transition-all duration-200 hover:bg-blue-50 hover:border-blue-300"
+                          style={{
+                            width: "156.42px",
+                            height: "50px",
+                            borderRadius: "6px",
+                            backgroundColor: "#FFFFFF",
+                            border: "1px solid #C1C1C1",
+                            fontFamily: "Inter, sans-serif",
+                            fontWeight: "500",
+                            fontSize: "14px",
+                            lineHeight: "22px",
+                            letterSpacing: "0%",
+                            color: "#0A65CC",
+                          }}
+                        >
+                          <Image src="/cloud-upload.png" alt="Upload" width={18} height={18} />
+                          Upload Photo
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Gender */}
+                    <div className="flex flex-col" style={{ gap: "12px", marginLeft: "16px" }}>
+                      <span className="text-[13px] text-slate-600 font-medium">Gender</span>
+                      <div className="flex items-center text-sm text-slate-700" style={{ gap: "24px" }}>
+                        <label className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="Male"
+                            defaultChecked
+                            onChange={(e) => setGenderValue(e.target.value)}
+                            className="h-4 w-4 rounded-full"
+                            style={{
+                              appearance: "none",
+                              WebkitAppearance: "none",
+                              MozAppearance: "none",
+                              border: "1px solid #cbd5e1",
+                              backgroundColor: "#FFFFFF",
+                              outline: "none",
+                              boxShadow: "none",
+                              accentColor: "#fbbf24",
+                            }}
+                          />
+                          Male
+                        </label>
+                        <label className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="Female"
+                            onChange={(e) => setGenderValue(e.target.value)}
+                            className="h-4 w-4 rounded-full"
+                            style={{
+                              appearance: "none",
+                              WebkitAppearance: "none",
+                              MozAppearance: "none",
+                              border: "1px solid #cbd5e1",
+                              backgroundColor: "#FFFFFF",
+                              outline: "none",
+                              boxShadow: "none",
+                              accentColor: "#fbbf24",
+                            }}
+                          />
+                          Female
+                        </label>
+                        <label className="flex items-center gap-2 text-sm text-slate-700 font-medium">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="Other"
+                            onChange={(e) => setGenderValue(e.target.value)}
+                            className="h-4 w-4 rounded-full"
+                            style={{
+                              appearance: "none",
+                              WebkitAppearance: "none",
+                              MozAppearance: "none",
+                              border: "1px solid #cbd5e1",
+                              backgroundColor: "#FFFFFF",
+                              outline: "none",
+                              boxShadow: "none",
+                              accentColor: "#fbbf24",
+                            }}
+                          />
+                          Other
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Date of Birth / Marital Status */}
+                    <div className="flex w-full" style={{ gap: "24px" }}>
+                      <div className="relative flex-1">
+                        <div
+                          className="absolute left-5 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
+                          onClick={() => dateInputRef.current?.showPicker()}
+                        >
+                          <Image src="/calendar_icon.png" alt="Calendar" width={16} height={16} className="h-4 w-4" />
+                        </div>
+                        <input
+                          ref={dateInputRef}
+                          type="date"
+                          value={dobValue}
+                          onChange={(e) => setDobValue(e.target.value)}
+                          onFocus={() => setDobFocused(true)}
+                          onBlur={() => setDobFocused(false)}
+                          onClick={() => dateInputRef.current?.showPicker()}
+                          className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${dobFocused || dobValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                            color: dobValue ? "#1e293b" : "transparent",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${dobFocused || dobValue.length > 0
+                            ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={dobFocused || dobValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Date of Birth
+                        </label>
+                      </div>
+                      <div className="relative flex-1">
+                        <select
+                          value={maritalStatusValue}
+                          onChange={(e) => setMaritalStatusValue(e.target.value)}
+                          onFocus={() => setMaritalStatusFocused(true)}
+                          onBlur={() => setMaritalStatusFocused(false)}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${maritalStatusFocused || maritalStatusValue.length > 0 ? "pt-5" : "py-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                            appearance: "none",
+                            backgroundImage:
+                              maritalStatusValue.length > 0
+                                ? "none"
+                                : "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2399A1AF' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "right 12px center",
+                            paddingRight: "32px",
+                          }}
+                        >
+                          <option value="" disabled hidden></option>
+                          <option value="Single">Single</option>
+                          <option value="Married">Married</option>
+                          <option value="Divorced">Divorced</option>
+                          <option value="Widowed">Widowed</option>
+                        </select>
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${maritalStatusFocused || maritalStatusValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={maritalStatusFocused || maritalStatusValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Marital Status
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Country / City */}
+                    <div className="flex w-full" style={{ gap: "24px" }}>
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={countryValue}
+                          onChange={(e) => setCountryValue(e.target.value)}
+                          onFocus={() => setCountryFocused(true)}
+                          onBlur={() => setCountryFocused(false)}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${countryFocused || countryValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${countryFocused || countryValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={countryFocused || countryValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Country
+                        </label>
+                      </div>
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={cityValue}
+                          onChange={(e) => setCityValue(e.target.value)}
+                          onFocus={() => setCityFocused(true)}
+                          onBlur={() => setCityFocused(false)}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${cityFocused || cityValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                            boxShadow: undefined,
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${cityFocused || cityValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={cityFocused || cityValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          City
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Address */}
+                    <div className="relative w-full">
+                      <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
+                        <Image src="/location_icon.png" alt="Location" width={16} height={16} className="h-4 w-4" />
+                      </div>
+                      <input
+                        type="text"
+                        value={addressValue}
+                        onChange={(e) => setAddressValue(e.target.value)}
+                        onFocus={() => setAddressFocused(true)}
+                        onBlur={() => setAddressFocused(false)}
+                        className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${addressFocused || addressValue.length > 0 ? "pt-5" : "pt-3"
+                          }`}
+                        style={{
+                          width: "calc(100% - 24px)",
+                          marginLeft: "12px",
+                          marginRight: "12px",
+                          height: "67px",
+                          borderRadius: "8px",
+                          border: "1px solid #F3F4F6",
+                          backgroundColor: "#F9FAFB",
+                          boxShadow: undefined,
+                        }}
+                      />
+                      <label
+                        className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${addressFocused || addressValue.length > 0
                           ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
                           : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={dobFocused || dobValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Date of Birth
-                    </label>
-                  </div>
-                  <div className="relative flex-1">
-                    <select
-                      value={maritalStatusValue}
-                      onChange={(e) => setMaritalStatusValue(e.target.value)}
-                      onFocus={() => setMaritalStatusFocused(true)}
-                      onBlur={() => setMaritalStatusFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        maritalStatusFocused || maritalStatusValue.length > 0 ? "pt-5" : "py-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                        appearance: "none",
-                        backgroundImage:
-                          maritalStatusValue.length > 0
-                            ? "none"
-                            : "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2399A1AF' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "right 12px center",
-                        paddingRight: "32px",
-                      }}
-                    >
-                      <option value="" disabled hidden></option>
-                      <option value="Single">Single</option>
-                      <option value="Married">Married</option>
-                      <option value="Divorced">Divorced</option>
-                      <option value="Widowed">Widowed</option>
-                    </select>
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        maritalStatusFocused || maritalStatusValue.length > 0
-                          ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={maritalStatusFocused || maritalStatusValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Marital Status
-                    </label>
-                  </div>
-                </div>
+                          }`}
+                        style={addressFocused || addressValue.length > 0 ? { color: "#239CD2" } : undefined}
+                      >
+                        Address
+                      </label>
+                    </div>
 
-                {/* Country / City */}
-                <div className="flex w-full" style={{ gap: "24px" }}>
-                  <div className="relative flex-1">
-                    <input
-                      type="text"
-                      value={countryValue}
-                      onChange={(e) => setCountryValue(e.target.value)}
-                      onFocus={() => setCountryFocused(true)}
-                      onBlur={() => setCountryFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        countryFocused || countryValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        countryFocused || countryValue.length > 0
-                          ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={countryFocused || countryValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Country
-                    </label>
-                  </div>
-                  <div className="relative flex-1">
-                    <input
-                      type="text"
-                      value={cityValue}
-                      onChange={(e) => setCityValue(e.target.value)}
-                      onFocus={() => setCityFocused(true)}
-                      onBlur={() => setCityFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        cityFocused || cityValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                        boxShadow: undefined,
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        cityFocused || cityValue.length > 0
-                          ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={cityFocused || cityValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      City
-                    </label>
-                  </div>
-                </div>
+                    {/* Nationality / Passport */}
+                    <div className="flex w-full" style={{ gap: "24px" }}>
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={nationalityValue}
+                          onChange={(e) => setNationalityValue(e.target.value)}
+                          onFocus={() => setNationalityFocused(true)}
+                          onBlur={() => setNationalityFocused(false)}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${nationalityFocused || nationalityValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                            boxShadow: undefined,
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${nationalityFocused || nationalityValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={nationalityFocused || nationalityValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Nationality
+                        </label>
+                      </div>
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={passportValue}
+                          onChange={(e) => setPassportValue(e.target.value)}
+                          onFocus={() => setPassportFocused(true)}
+                          onBlur={() => setPassportFocused(false)}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${passportFocused || passportValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                            boxShadow: undefined,
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${passportFocused || passportValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={passportFocused || passportValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Passport Number (Optional)
+                        </label>
+                      </div>
+                    </div>
 
-                {/* Address */}
-                <div className="relative w-full">
-                  <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
-                    <Image src="/location_icon.png" alt="Location" width={16} height={16} className="h-4 w-4" />
-                  </div>
-                  <input
-                    type="text"
-                    value={addressValue}
-                    onChange={(e) => setAddressValue(e.target.value)}
-                    onFocus={() => setAddressFocused(true)}
-                    onBlur={() => setAddressFocused(false)}
-                    className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                      addressFocused || addressValue.length > 0 ? "pt-5" : "pt-3"
-                    }`}
-                    style={{
-                      width: "calc(100% - 24px)",
-                      marginLeft: "12px",
-                      marginRight: "12px",
-                      height: "67px",
-                      borderRadius: "8px",
-                      border: "1px solid #E1E1E1",
-                      backgroundColor: "#F4F4F4",
-                      boxShadow: undefined,
-                    }}
-                  />
-                  <label
-                    className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                      addressFocused || addressValue.length > 0
-                        ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                        : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                    }`}
-                    style={addressFocused || addressValue.length > 0 ? { color: "#239CD2" } : undefined}
-                  >
-                    Address
-                  </label>
-                </div>
-
-                {/* Nationality / Passport */}
-                <div className="flex w-full" style={{ gap: "24px" }}>
-                  <div className="relative flex-1">
-                    <input
-                      type="text"
-                      value={nationalityValue}
-                      onChange={(e) => setNationalityValue(e.target.value)}
-                      onFocus={() => setNationalityFocused(true)}
-                      onBlur={() => setNationalityFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        nationalityFocused || nationalityValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                        boxShadow: undefined,
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        nationalityFocused || nationalityValue.length > 0
+                    {/* LinkedIn */}
+                    <div className="relative w-full">
+                      <input
+                        type="url"
+                        value={linkedinValue}
+                        onChange={(e) => setLinkedinValue(e.target.value)}
+                        onFocus={() => setLinkedinFocused(true)}
+                        onBlur={() => setLinkedinFocused(false)}
+                        className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${linkedinFocused || linkedinValue.length > 0 ? "pt-5" : "pt-3"
+                          }`}
+                        style={{
+                          width: "calc(100% - 24px)",
+                          marginLeft: "12px",
+                          marginRight: "12px",
+                          height: "50px",
+                          borderRadius: "8px",
+                          border: "1px solid #F3F4F6",
+                          backgroundColor: "#F9FAFB",
+                          boxShadow: undefined,
+                        }}
+                      />
+                      <label
+                        className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${linkedinFocused || linkedinValue.length > 0
                           ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
                           : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={nationalityFocused || nationalityValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Nationality
-                    </label>
-                  </div>
-                  <div className="relative flex-1">
-                    <input
-                      type="text"
-                      value={passportValue}
-                      onChange={(e) => setPassportValue(e.target.value)}
-                      onFocus={() => setPassportFocused(true)}
-                      onBlur={() => setPassportFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        passportFocused || passportValue.length > 0 ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "calc(100% - 24px)",
-                        marginLeft: "12px",
-                        marginRight: "12px",
-                        height: "45px",
-                        borderRadius: "8px",
-                        border: "1px solid #E1E1E1",
-                        backgroundColor: "#F4F4F4",
-                        boxShadow: undefined,
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        passportFocused || passportValue.length > 0
-                          ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={passportFocused || passportValue.length > 0 ? { color: "#239CD2" } : undefined}
-                    >
-                      Passport Number (Optional)
-                    </label>
-                  </div>
-                </div>
-
-                {/* LinkedIn */}
-                <div className="relative w-full">
-                  <input
-                    type="url"
-                    value={linkedinValue}
-                    onChange={(e) => setLinkedinValue(e.target.value)}
-                    onFocus={() => setLinkedinFocused(true)}
-                    onBlur={() => setLinkedinFocused(false)}
-                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                      linkedinFocused || linkedinValue.length > 0 ? "pt-5" : "pt-3"
-                    }`}
-                    style={{
-                      width: "calc(100% - 24px)",
-                      marginLeft: "12px",
-                      marginRight: "12px",
-                      height: "40px",
-                      borderRadius: "8px",
-                      border: "1px solid #E1E1E1",
-                      backgroundColor: "#F4F4F4",
-                      boxShadow: undefined,
-                    }}
-                  />
-                  <label
-                    className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                      linkedinFocused || linkedinValue.length > 0
-                        ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                        : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                    }`}
-                    style={linkedinFocused || linkedinValue.length > 0 ? { color: "#239CD2" } : undefined}
-                  >
-                    LinkedIn Profile URL
-                  </label>
-                </div>
+                          }`}
+                        style={linkedinFocused || linkedinValue.length > 0 ? { color: "#239CD2" } : undefined}
+                      >
+                        LinkedIn Profile URL
+                      </label>
+                    </div>
 
                     {/* Actions */}
                     <div className="flex justify-end gap-3" style={{ marginRight: "48px" }}>
@@ -1583,7 +1590,7 @@ export default function PersonalDetailsPage() {
                         className="transition"
                         style={{
                           width: "181.53px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
                           border: "1.5px solid #0A65CC",
@@ -1604,7 +1611,7 @@ export default function PersonalDetailsPage() {
                         className="text-white transition hover:opacity-90"
                         style={{
                           width: "161px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FF8C00",
                           fontFamily: "Inter, sans-serif",
@@ -1621,12 +1628,12 @@ export default function PersonalDetailsPage() {
                   </div>
 
                   {/* Educational Details Form */}
-                  <div 
-                    className={`form-slide ${activeForm === 'education' 
+                  <div
+                    className={`form-slide ${activeForm === 'education'
                       ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
                       : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                    }`}
-                    style={{ 
+                      }`}
+                    style={{
                       position: 'absolute',
                       width: '100%',
                       display: 'flex',
@@ -1634,11 +1641,14 @@ export default function PersonalDetailsPage() {
                       gap: '26px',
                       top: 0,
                       left: 0,
+                      maxHeight: '600px',
+                      overflowY: 'auto',
+                      paddingRight: '12px',
                       opacity: activeForm === 'education' ? 1 : 0,
                       pointerEvents: activeForm === 'education' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -1713,17 +1723,16 @@ export default function PersonalDetailsPage() {
                               }}
                               onFocus={() => setDegreeFocused({ ...degreeFocused, [edu.id]: true })}
                               onBlur={() => setDegreeFocused({ ...degreeFocused, [edu.id]: false })}
-                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree) ? "pt-5" : "pt-3"
-                              }`}
+                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree) ? "pt-5" : "pt-3"
+                                }`}
                               style={{
                                 width: "calc(100% - 24px)",
                                 marginLeft: "12px",
                                 marginRight: "12px",
-                                height: "45px",
+                                height: "50px",
                                 borderRadius: "8px",
-                                border: "1px solid #E1E1E1",
-                                backgroundColor: "#F4F4F4",
+                                border: "1px solid #F3F4F6",
+                                backgroundColor: "#F9FAFB",
                                 appearance: "none",
                                 boxShadow: undefined,
                               }}
@@ -1736,11 +1745,10 @@ export default function PersonalDetailsPage() {
                               ))}
                             </select>
                             <label
-                              className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree)
-                                  ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                  : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                              }`}
+                              className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree)
+                                ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                                : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                                }`}
                               style={
                                 degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree)
                                   ? { color: "#239CD2" }
@@ -1770,17 +1778,16 @@ export default function PersonalDetailsPage() {
                               }}
                               onFocus={() => setInstitutionFocused({ ...institutionFocused, [edu.id]: true })}
                               onBlur={() => setInstitutionFocused({ ...institutionFocused, [edu.id]: false })}
-                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution) ? "pt-5" : "pt-3"
-                              }`}
+                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution) ? "pt-5" : "pt-3"
+                                }`}
                               style={{
                                 width: "calc(100% - 24px)",
                                 marginLeft: "12px",
                                 marginRight: "12px",
-                                height: "45px",
+                                height: "50px",
                                 borderRadius: "8px",
-                                border: "1px solid #E1E1E1",
-                                backgroundColor: "#F4F4F4",
+                                border: "1px solid #F3F4F6",
+                                backgroundColor: "#F9FAFB",
                                 appearance: "none",
                                 boxShadow: undefined,
                               }}
@@ -1793,11 +1800,10 @@ export default function PersonalDetailsPage() {
                               ))}
                             </select>
                             <label
-                              className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution)
-                                  ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                  : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                              }`}
+                              className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution)
+                                ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                                : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                                }`}
                               style={
                                 institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution)
                                   ? { color: "#239CD2" }
@@ -1827,17 +1833,16 @@ export default function PersonalDetailsPage() {
                               }}
                               onFocus={() => setSpecializationFocused({ ...specializationFocused, [edu.id]: true })}
                               onBlur={() => setSpecializationFocused({ ...specializationFocused, [edu.id]: false })}
-                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization) ? "pt-5" : "pt-3"
-                              }`}
+                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization) ? "pt-5" : "pt-3"
+                                }`}
                               style={{
                                 width: "calc(100% - 24px)",
                                 marginLeft: "12px",
                                 marginRight: "12px",
-                                height: "45px",
+                                height: "50px",
                                 borderRadius: "8px",
-                                border: "1px solid #E1E1E1",
-                                backgroundColor: "#F4F4F4",
+                                border: "1px solid #F3F4F6",
+                                backgroundColor: "#F9FAFB",
                                 appearance: "none",
                                 boxShadow: undefined,
                               }}
@@ -1850,11 +1855,10 @@ export default function PersonalDetailsPage() {
                               ))}
                             </select>
                             <label
-                              className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization)
-                                  ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                  : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                              }`}
+                              className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization)
+                                ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                                : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                                }`}
                               style={
                                 specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization)
                                   ? { color: "#239CD2" }
@@ -1896,27 +1900,25 @@ export default function PersonalDetailsPage() {
                                 onFocus={() => setStartYearFocused({ ...startYearFocused, [edu.id]: true })}
                                 onBlur={() => setStartYearFocused({ ...startYearFocused, [edu.id]: false })}
                                 onClick={() => startYearInputRefs.current[edu.id]?.showPicker()}
-                                className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear) ? "pt-5" : "pt-3"
-                                }`}
+                                className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear) ? "pt-5" : "pt-3"
+                                  }`}
                                 style={{
                                   width: "calc(100% - 24px)",
                                   marginLeft: "12px",
                                   marginRight: "12px",
-                                  height: "45px",
+                                  height: "50px",
                                   borderRadius: "8px",
-                                  border: "1px solid #E1E1E1",
-                                  backgroundColor: "#F4F4F4",
+                                  border: "1px solid #F3F4F6",
+                                  backgroundColor: "#F9FAFB",
                                   color: startYearValue[edu.id] || edu.startYear ? "#1e293b" : "transparent",
                                   boxShadow: undefined,
                                 }}
                               />
                               <label
-                                className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                  startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear)
-                                    ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                                    : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                                }`}
+                                className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear)
+                                  ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                                  : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                                  }`}
                                 style={
                                   startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear)
                                     ? { color: "#239CD2" }
@@ -1950,27 +1952,25 @@ export default function PersonalDetailsPage() {
                                 onFocus={() => setEndYearFocused({ ...endYearFocused, [edu.id]: true })}
                                 onBlur={() => setEndYearFocused({ ...endYearFocused, [edu.id]: false })}
                                 onClick={() => endYearInputRefs.current[edu.id]?.showPicker()}
-                                className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear) ? "pt-5" : "pt-3"
-                                }`}
+                                className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear) ? "pt-5" : "pt-3"
+                                  }`}
                                 style={{
                                   width: "calc(100% - 24px)",
                                   marginLeft: "12px",
                                   marginRight: "12px",
-                                  height: "45px",
+                                  height: "50px",
                                   borderRadius: "8px",
-                                  border: "1px solid #E1E1E1",
-                                  backgroundColor: "#F4F4F4",
+                                  border: "1px solid #F3F4F6",
+                                  backgroundColor: "#F9FAFB",
                                   color: endYearValue[edu.id] || edu.endYear ? "#1e293b" : "transparent",
                                   boxShadow: undefined,
                                 }}
                               />
                               <label
-                                className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                  endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear)
-                                    ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                                    : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                                }`}
+                                className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear)
+                                  ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                                  : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                                  }`}
                                 style={
                                   endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear)
                                     ? { color: "#239CD2" }
@@ -2014,7 +2014,7 @@ export default function PersonalDetailsPage() {
                         className="transition"
                         style={{
                           width: "181.53px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
                           border: "1.5px solid #0A65CC",
@@ -2035,7 +2035,7 @@ export default function PersonalDetailsPage() {
                         className="text-white transition hover:opacity-90"
                         style={{
                           width: "161px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FF8C00",
                           fontFamily: "Inter, sans-serif",
@@ -2052,12 +2052,12 @@ export default function PersonalDetailsPage() {
                   </div>
 
                   {/* Skills Form */}
-                  <div 
-                    className={`form-slide ${activeForm === 'skills' 
+                  <div
+                    className={`form-slide ${activeForm === 'skills'
                       ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
                       : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                    }`}
-                    style={{ 
+                      }`}
+                    style={{
                       position: 'absolute',
                       width: '100%',
                       display: 'flex',
@@ -2065,11 +2065,14 @@ export default function PersonalDetailsPage() {
                       gap: '26px',
                       top: 0,
                       left: 0,
+                      maxHeight: '600px',
+                      overflowY: 'auto',
+                      paddingRight: '12px',
                       opacity: activeForm === 'skills' ? 1 : 0,
                       pointerEvents: activeForm === 'skills' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -2102,26 +2105,24 @@ export default function PersonalDetailsPage() {
                             onFocus={() => setSkillInputFocused(true)}
                             onBlur={() => setSkillInputFocused(false)}
                             onKeyPress={handleKeyPress}
-                            className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                              skillInputFocused || skillInput.length > 0 ? "pt-5" : "pt-3"
-                            }`}
+                            className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${skillInputFocused || skillInput.length > 0 ? "pt-5" : "pt-3"
+                              }`}
                             style={{
                               width: "calc(100% - 24px)",
                               marginLeft: "12px",
                               marginRight: "12px",
-                              height: "45px",
+                              height: "50px",
                               borderRadius: "8px",
-                              border: "1px solid #E1E1E1",
-                              backgroundColor: "#F4F4F4",
+                              border: "1px solid #F3F4F6",
+                              backgroundColor: "#F9FAFB",
                               boxShadow: undefined,
                             }}
                           />
                           <label
-                            className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                              skillInputFocused || skillInput.length > 0
-                                ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                            }`}
+                            className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${skillInputFocused || skillInput.length > 0
+                              ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                              : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                              }`}
                             style={
                               skillInputFocused || skillInput.length > 0
                                 ? { color: "#239CD2" }
@@ -2136,7 +2137,7 @@ export default function PersonalDetailsPage() {
                           onClick={addSkill}
                           className="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white transition hover:bg-sky-700 shadow-sm"
                           style={{
-                            height: "45px",
+                            height: "50px",
                             borderRadius: "8px",
                             minWidth: "82px",
                             fontFamily: "Inter, sans-serif",
@@ -2285,7 +2286,7 @@ export default function PersonalDetailsPage() {
                         className="transition"
                         style={{
                           width: "181.53px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
                           border: "1.5px solid #0A65CC",
@@ -2306,7 +2307,7 @@ export default function PersonalDetailsPage() {
                         className="text-white transition hover:opacity-90"
                         style={{
                           width: "161px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FF8C00",
                           fontFamily: "Inter, sans-serif",
@@ -2323,12 +2324,12 @@ export default function PersonalDetailsPage() {
                   </div>
 
                   {/* Work Experience Form */}
-                  <div 
-                    className={`form-slide ${activeForm === 'work-exp' 
+                  <div
+                    className={`form-slide ${activeForm === 'work-exp'
                       ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
                       : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                    }`}
-                    style={{ 
+                      }`}
+                    style={{
                       position: 'absolute',
                       width: '100%',
                       display: 'flex',
@@ -2336,11 +2337,14 @@ export default function PersonalDetailsPage() {
                       gap: '26px',
                       top: 0,
                       left: 0,
+                      maxHeight: '600px',
+                      overflowY: 'auto',
+                      paddingRight: '12px',
                       opacity: activeForm === 'work-exp' ? 1 : 0,
                       pointerEvents: activeForm === 'work-exp' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -2469,17 +2473,16 @@ export default function PersonalDetailsPage() {
                                   }}
                                   onFocus={() => setJobTitleFocused({ ...jobTitleFocused, [exp.id]: true })}
                                   onBlur={() => setJobTitleFocused({ ...jobTitleFocused, [exp.id]: false })}
-                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle) ? "pt-4 pb-1" : "pt-3 pb-1"
-                                  }`}
+                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                    }`}
                                   style={{
                                     width: "calc(100% - 24px)",
                                     marginLeft: "12px",
                                     marginRight: "12px",
-                                    height: "45px",
+                                    height: "50px",
                                     borderRadius: "8px",
-                                    border: "1px solid #E1E1E1",
-                                    backgroundColor: "#F4F4F4",
+                                    border: "1px solid #F3F4F6",
+                                    backgroundColor: "#F9FAFB",
                                     appearance: "none",
                                     boxShadow: undefined,
                                     lineHeight: "1.5",
@@ -2493,11 +2496,10 @@ export default function PersonalDetailsPage() {
                                   ))}
                                 </select>
                                 <label
-                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                    jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle)
-                                      ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                      : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                                  }`}
+                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle)
+                                    ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                                    : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                                    }`}
                                   style={
                                     jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle)
                                       ? { color: "#239CD2" }
@@ -2539,17 +2541,16 @@ export default function PersonalDetailsPage() {
                                   }}
                                   onFocus={() => setCompanyFocused({ ...companyFocused, [exp.id]: true })}
                                   onBlur={() => setCompanyFocused({ ...companyFocused, [exp.id]: false })}
-                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    companyFocused[exp.id] || (companyValue[exp.id] || exp.company) ? "pt-4 pb-1" : "pt-3 pb-1"
-                                  }`}
+                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${companyFocused[exp.id] || (companyValue[exp.id] || exp.company) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                    }`}
                                   style={{
                                     width: "calc(100% - 24px)",
                                     marginLeft: "12px",
                                     marginRight: "12px",
-                                    height: "45px",
+                                    height: "50px",
                                     borderRadius: "8px",
-                                    border: "1px solid #E1E1E1",
-                                    backgroundColor: "#F4F4F4",
+                                    border: "1px solid #F3F4F6",
+                                    backgroundColor: "#F9FAFB",
                                     appearance: "none",
                                     boxShadow: undefined,
                                     lineHeight: "1.5",
@@ -2563,11 +2564,10 @@ export default function PersonalDetailsPage() {
                                   ))}
                                 </select>
                                 <label
-                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                    companyFocused[exp.id] || (companyValue[exp.id] || exp.company)
-                                      ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                      : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                                  }`}
+                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${companyFocused[exp.id] || (companyValue[exp.id] || exp.company)
+                                    ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                                    : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                                    }`}
                                   style={
                                     companyFocused[exp.id] || (companyValue[exp.id] || exp.company)
                                       ? { color: "#239CD2" }
@@ -2609,17 +2609,16 @@ export default function PersonalDetailsPage() {
                                   }}
                                   onFocus={() => setWorkLocationFocused({ ...workLocationFocused, [exp.id]: true })}
                                   onBlur={() => setWorkLocationFocused({ ...workLocationFocused, [exp.id]: false })}
-                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation) ? "pt-4 pb-1" : "pt-3 pb-1"
-                                  }`}
+                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                    }`}
                                   style={{
                                     width: "calc(100% - 24px)",
                                     marginLeft: "12px",
                                     marginRight: "12px",
-                                    height: "45px",
+                                    height: "50px",
                                     borderRadius: "8px",
-                                    border: "1px solid #E1E1E1",
-                                    backgroundColor: "#F4F4F4",
+                                    border: "1px solid #F3F4F6",
+                                    backgroundColor: "#F9FAFB",
                                     appearance: "none",
                                     boxShadow: undefined,
                                     lineHeight: "1.5",
@@ -2633,11 +2632,10 @@ export default function PersonalDetailsPage() {
                                   ))}
                                 </select>
                                 <label
-                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                    workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation)
-                                      ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                                      : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                                  }`}
+                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation)
+                                    ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                                    : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                                    }`}
                                   style={
                                     workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation)
                                       ? { color: "#239CD2" }
@@ -2697,28 +2695,26 @@ export default function PersonalDetailsPage() {
                                     onFocus={() => setStartDateFocused({ ...startDateFocused, [exp.id]: true })}
                                     onBlur={() => setStartDateFocused({ ...startDateFocused, [exp.id]: false })}
                                     onClick={() => startDateInputRefs.current[exp.id]?.showPicker()}
-                                    className={`px-4 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                      startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate) ? "pt-4 pb-1" : "pt-3 pb-1"
-                                    }`}
+                                    className={`px-4 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                      }`}
                                     style={{
                                       width: "calc(100% - 24px)",
                                       marginLeft: "12px",
                                       marginRight: "12px",
-                                      height: "45px",
+                                      height: "50px",
                                       borderRadius: "8px",
-                                      border: "1px solid #E1E1E1",
-                                      backgroundColor: "#F4F4F4",
+                                      border: "1px solid #F3F4F6",
+                                      backgroundColor: "#F9FAFB",
                                       color: startDateValue[exp.id] || exp.startDate ? "#1e293b" : "transparent",
                                       boxShadow: undefined,
                                       lineHeight: "1.5",
                                     }}
                                   />
                                   <label
-                                    className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                      startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate)
-                                        ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                                        : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                                    }`}
+                                    className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate)
+                                      ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                                      : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                                      }`}
                                     style={
                                       startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate)
                                         ? { color: "#239CD2" }
@@ -2759,28 +2755,26 @@ export default function PersonalDetailsPage() {
                                     onBlur={() => setEndDateFocused({ ...endDateFocused, [exp.id]: false })}
                                     onClick={() => endDateInputRefs.current[exp.id]?.showPicker()}
                                     disabled={exp.isCurrent}
-                                    className={`px-4 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                      endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate) ? "pt-4 pb-1" : "pt-3 pb-1"
-                                    } ${exp.isCurrent ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`px-4 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                      } ${exp.isCurrent ? "opacity-50 cursor-not-allowed" : ""}`}
                                     style={{
                                       width: "calc(100% - 24px)",
                                       marginLeft: "12px",
                                       marginRight: "12px",
-                                      height: "45px",
+                                      height: "50px",
                                       borderRadius: "8px",
-                                      border: "1px solid #E1E1E1",
-                                      backgroundColor: "#F4F4F4",
+                                      border: "1px solid #F3F4F6",
+                                      backgroundColor: "#F9FAFB",
                                       color: endDateValue[exp.id] || exp.endDate ? "#1e293b" : "transparent",
                                       boxShadow: undefined,
                                       lineHeight: "1.5",
                                     }}
                                   />
                                   <label
-                                    className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                      endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate)
-                                        ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
-                                        : "left-12 top-1/2 -translate-y-1/2 text-sm"
-                                    }`}
+                                    className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate)
+                                      ? "left-12 -top-2.5 text-xs font-medium bg-white px-1"
+                                      : "left-12 top-1/2 -translate-y-1/2 text-sm"
+                                      }`}
                                     style={
                                       endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate)
                                         ? { color: "#239CD2" }
@@ -2843,17 +2837,16 @@ export default function PersonalDetailsPage() {
                                     marginRight: "12px",
                                     minHeight: "100px",
                                     borderRadius: "8px",
-                                    border: "1px solid #E1E1E1",
-                                    backgroundColor: "#F4F4F4",
+                                    border: "1px solid #F3F4F6",
+                                    backgroundColor: "#F9FAFB",
                                     boxShadow: undefined,
                                   }}
                                 />
                                 <label
-                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                                    responsibilitiesFocused[exp.id] || (responsibilitiesValue[exp.id] || exp.responsibilities)
-                                      ? "left-6 top-1.5 text-xs font-medium bg-white px-1"
-                                      : "left-6 top-4 text-sm"
-                                  }`}
+                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${responsibilitiesFocused[exp.id] || (responsibilitiesValue[exp.id] || exp.responsibilities)
+                                    ? "left-6 top-1.5 text-xs font-medium bg-white px-1"
+                                    : "left-6 top-4 text-sm"
+                                    }`}
                                   style={
                                     responsibilitiesFocused[exp.id] || (responsibilitiesValue[exp.id] || exp.responsibilities)
                                       ? { color: "#239CD2" }
@@ -2903,7 +2896,7 @@ export default function PersonalDetailsPage() {
                         className="transition"
                         style={{
                           width: "181.53px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
                           border: "1.5px solid #0A65CC",
@@ -2924,7 +2917,7 @@ export default function PersonalDetailsPage() {
                         className="text-white transition hover:opacity-90"
                         style={{
                           width: "161px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FF8C00",
                           fontFamily: "Inter, sans-serif",
@@ -2941,12 +2934,12 @@ export default function PersonalDetailsPage() {
                   </div>
 
                   {/* Salary Expectation Form */}
-                  <div 
-                    className={`form-slide ${activeForm === 'salary-exp' 
+                  <div
+                    className={`form-slide ${activeForm === 'salary-exp'
                       ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
                       : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                    }`}
-                    style={{ 
+                      }`}
+                    style={{
                       position: 'absolute',
                       width: '100%',
                       display: 'flex',
@@ -2954,11 +2947,14 @@ export default function PersonalDetailsPage() {
                       gap: '26px',
                       top: 0,
                       left: 0,
+                      maxHeight: '600px',
+                      overflowY: 'auto',
+                      paddingRight: '12px',
                       opacity: activeForm === 'salary-exp' ? 1 : 0,
                       pointerEvents: activeForm === 'salary-exp' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -2995,9 +2991,8 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setCurrentCurrency(e.target.value)}
                                   onFocus={() => setCurrentCurrencyFocused(true)}
                                   onBlur={() => setCurrentCurrencyFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    currentCurrencyFocused || currentCurrency ? "pt-5" : "pt-3"
-                                  }`}
+                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentCurrencyFocused || currentCurrency ? "pt-5" : "pt-3"
+                                    }`}
                                   style={{
                                     width: "100%",
                                     ...salaryFieldStyle,
@@ -3032,9 +3027,8 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setCurrentSalaryType(e.target.value)}
                                   onFocus={() => setCurrentSalaryTypeFocused(true)}
                                   onBlur={() => setCurrentSalaryTypeFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    currentSalaryTypeFocused || currentSalaryType ? "pt-5" : "pt-3"
-                                  }`}
+                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryTypeFocused || currentSalaryType ? "pt-5" : "pt-3"
+                                    }`}
                                   style={{
                                     width: "100%",
                                     ...salaryFieldStyle,
@@ -3071,9 +3065,8 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setCurrentSalary(e.target.value)}
                                 onFocus={() => setCurrentSalaryFocused(true)}
                                 onBlur={() => setCurrentSalaryFocused(false)}
-                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  currentSalaryFocused || currentSalary ? "pt-5" : "pt-3"
-                                }`}
+                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryFocused || currentSalary ? "pt-5" : "pt-3"
+                                  }`}
                                 style={{
                                   width: "100%",
                                   ...salaryFieldStyle,
@@ -3096,9 +3089,8 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setCurrentLocation(e.target.value)}
                                 onFocus={() => setCurrentLocationFocused(true)}
                                 onBlur={() => setCurrentLocationFocused(false)}
-                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  currentLocationFocused || currentLocation ? "pt-5" : "pt-3"
-                                }`}
+                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentLocationFocused || currentLocation ? "pt-5" : "pt-3"
+                                  }`}
                                 style={{
                                   width: "100%",
                                   ...salaryFieldStyle,
@@ -3152,11 +3144,10 @@ export default function PersonalDetailsPage() {
                                     type="text"
                                     value={newBenefit}
                                     onChange={(e) => setNewBenefit(e.target.value)}
-                                    onFocus={() => {}}
-                                    onBlur={() => {}}
-                                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                      newBenefit ? "pt-5" : "pt-3"
-                                    }`}
+                                    onFocus={() => { }}
+                                    onBlur={() => { }}
+                                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
+                                      }`}
                                     style={{
                                       width: "100%",
                                       ...salaryFieldStyle,
@@ -3245,9 +3236,8 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setExpectedCurrency(e.target.value)}
                                   onFocus={() => setExpectedCurrencyFocused(true)}
                                   onBlur={() => setExpectedCurrencyFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    expectedCurrencyFocused || expectedCurrency ? "pt-5" : "pt-3"
-                                  }`}
+                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedCurrencyFocused || expectedCurrency ? "pt-5" : "pt-3"
+                                    }`}
                                   style={{
                                     width: "100%",
                                     ...salaryFieldStyle,
@@ -3282,9 +3272,8 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setExpectedSalaryType(e.target.value)}
                                   onFocus={() => setExpectedSalaryTypeFocused(true)}
                                   onBlur={() => setExpectedSalaryTypeFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    expectedSalaryTypeFocused || expectedSalaryType ? "pt-5" : "pt-3"
-                                  }`}
+                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedSalaryTypeFocused || expectedSalaryType ? "pt-5" : "pt-3"
+                                    }`}
                                   style={{
                                     width: "100%",
                                     ...salaryFieldStyle,
@@ -3321,9 +3310,8 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setPreferredSalary(e.target.value)}
                                 onFocus={() => setPreferredSalaryFocused(true)}
                                 onBlur={() => setPreferredSalaryFocused(false)}
-                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  preferredSalaryFocused || preferredSalary ? "pt-5" : "pt-3"
-                                }`}
+                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredSalaryFocused || preferredSalary ? "pt-5" : "pt-3"
+                                  }`}
                                 style={{
                                   width: "100%",
                                   ...salaryFieldStyle,
@@ -3357,7 +3345,7 @@ export default function PersonalDetailsPage() {
                               visaDetailsByLocation={visaDetailsByLocation}
                               getVisaSummaryForLocation={getVisaSummaryForLocation}
                             />
-                            
+
                             {/* Visa Questions - Rendered directly below locations */}
                             {showVisaQuestions && (
                               <div className="mt-4 space-y-4">
@@ -3378,11 +3366,10 @@ export default function PersonalDetailsPage() {
                                           setVisaSponsorshipRequired("");
                                           handleVisaNext("yes");
                                         }}
-                                        className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                          hasVisa === "yes"
-                                            ? "bg-sky-600 border-sky-600 text-white"
-                                            : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
-                                        }`}
+                                        className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${hasVisa === "yes"
+                                          ? "bg-sky-600 border-sky-600 text-white"
+                                          : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                                          }`}
                                       >
                                         Yes
                                       </button>
@@ -3398,11 +3385,10 @@ export default function PersonalDetailsPage() {
                                           setVisaSponsorshipRequired("");
                                           handleVisaNext("no");
                                         }}
-                                        className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                          hasVisa === "no"
-                                            ? "bg-sky-600 border-sky-600 text-white"
-                                            : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
-                                        }`}
+                                        className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${hasVisa === "no"
+                                          ? "bg-sky-600 border-sky-600 text-white"
+                                          : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                                          }`}
                                       >
                                         No
                                       </button>
@@ -3434,9 +3420,8 @@ export default function PersonalDetailsPage() {
                                         }}
                                         onFocus={() => setVisaStatusFocused(true)}
                                         onBlur={() => setVisaStatusFocused(false)}
-                                        className={`w-full px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                          visaStatusFocused || visaStatus ? "pt-5" : "pt-3"
-                                        }`}
+                                        className={`w-full px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStatusFocused || visaStatus ? "pt-5" : "pt-3"
+                                          }`}
                                         style={{
                                           ...salaryFieldStyle,
                                           appearance: "none",
@@ -3494,9 +3479,8 @@ export default function PersonalDetailsPage() {
                                               });
                                             }
                                           }}
-                                          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                            visaStartDateFocused || visaStartDate ? "pt-5" : "pt-3"
-                                          }`}
+                                          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStartDateFocused || visaStartDate ? "pt-5" : "pt-3"
+                                            }`}
                                           style={salaryFieldStyle}
                                         />
                                         <label
@@ -3528,9 +3512,8 @@ export default function PersonalDetailsPage() {
                                           }}
                                           onFocus={() => setVisaEndDateFocused(true)}
                                           onBlur={() => setVisaEndDateFocused(false)}
-                                          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                            visaEndDateFocused || visaEndDate ? "pt-5" : "pt-3"
-                                          }`}
+                                          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaEndDateFocused || visaEndDate ? "pt-5" : "pt-3"
+                                            }`}
                                           style={salaryFieldStyle}
                                         />
                                         <label
@@ -3570,11 +3553,10 @@ export default function PersonalDetailsPage() {
                                             setVisaSponsorshipRequired("yes");
                                             handleVisaNext(undefined, undefined, "yes");
                                           }}
-                                          className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                            visaSponsorshipRequired === "yes"
-                                              ? "bg-sky-600 border-sky-600 text-white"
-                                              : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
-                                          }`}
+                                          className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${visaSponsorshipRequired === "yes"
+                                            ? "bg-sky-600 border-sky-600 text-white"
+                                            : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                                            }`}
                                         >
                                           Yes
                                         </button>
@@ -3586,11 +3568,10 @@ export default function PersonalDetailsPage() {
                                             setVisaSponsorshipRequired("no");
                                             handleVisaNext(undefined, undefined, "no");
                                           }}
-                                          className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                            visaSponsorshipRequired === "no"
-                                              ? "bg-sky-600 border-sky-600 text-white"
-                                              : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
-                                          }`}
+                                          className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${visaSponsorshipRequired === "no"
+                                            ? "bg-sky-600 border-sky-600 text-white"
+                                            : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                                            }`}
                                         >
                                           No
                                         </button>
@@ -3602,11 +3583,10 @@ export default function PersonalDetailsPage() {
                                             setVisaSponsorshipRequired("not sure");
                                             handleVisaNext(undefined, undefined, "not sure");
                                           }}
-                                          className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                            visaSponsorshipRequired === "not sure"
-                                              ? "bg-sky-600 border-sky-600 text-white"
-                                              : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
-                                          }`}
+                                          className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${visaSponsorshipRequired === "not sure"
+                                            ? "bg-sky-600 border-sky-600 text-white"
+                                            : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                                            }`}
                                         >
                                           Not sure
                                         </button>
@@ -3649,9 +3629,8 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setPreferredWorkMode(e.target.value)}
                                 onFocus={() => setPreferredWorkModeFocused(true)}
                                 onBlur={() => setPreferredWorkModeFocused(false)}
-                                className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  preferredWorkModeFocused || preferredWorkMode ? "pt-5" : "pt-3"
-                                }`}
+                                className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredWorkModeFocused || preferredWorkMode ? "pt-5" : "pt-3"
+                                  }`}
                                 style={{
                                   width: "100%",
                                   ...salaryFieldStyle,
@@ -3718,11 +3697,10 @@ export default function PersonalDetailsPage() {
                                     type="text"
                                     value={newBenefit}
                                     onChange={(e) => setNewBenefit(e.target.value)}
-                                    onFocus={() => {}}
-                                    onBlur={() => {}}
-                                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                      newBenefit ? "pt-5" : "pt-3"
-                                    }`}
+                                    onFocus={() => { }}
+                                    onBlur={() => { }}
+                                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
+                                      }`}
                                     style={{
                                       width: "100%",
                                       ...salaryFieldStyle,
@@ -3806,7 +3784,7 @@ export default function PersonalDetailsPage() {
                         className="transition"
                         style={{
                           width: "181.53px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
                           border: "1.5px solid #0A65CC",
@@ -3827,7 +3805,7 @@ export default function PersonalDetailsPage() {
                         className="text-white transition hover:opacity-90"
                         style={{
                           width: "161px",
-                          height: "40px",
+                          height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FF8C00",
                           fontFamily: "Inter, sans-serif",
@@ -3908,9 +3886,8 @@ function LanguageFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-            focused || value ? "pt-5" : "pt-3"
-          }`}
+          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+            }`}
           style={fieldStyle}
           placeholder=""
         />
@@ -3991,8 +3968,8 @@ function LanguageFieldBlock({
                       color: proficiencies[chip] === level ? "#FFFFFF" : "#6B7280",
                       border: proficiencies[chip] === level ? "1px solid #239CD2" : "1px solid #E5E7EB",
                       fontWeight: proficiencies[chip] === level ? "600" : "500",
-                      boxShadow: proficiencies[chip] === level 
-                        ? "0 2px 4px rgba(35, 156, 210, 0.25)" 
+                      boxShadow: proficiencies[chip] === level
+                        ? "0 2px 4px rgba(35, 156, 210, 0.25)"
                         : "0 1px 2px rgba(0, 0, 0, 0.05)",
                     }}
                     onMouseEnter={(e) => {
@@ -4104,9 +4081,8 @@ function PreferredLocationFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-            focused || value ? "pt-5" : "pt-3"
-          }`}
+          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+            }`}
           style={fieldStyle}
           placeholder=""
         />
@@ -4251,9 +4227,8 @@ function PreferredRoleFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-            focused || value ? "pt-5" : "pt-3"
-          }`}
+          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+            }`}
           style={fieldStyle}
           placeholder=""
         />

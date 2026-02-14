@@ -138,7 +138,7 @@ export default function CoursesPage() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(210deg, rgba(255, 171, 98, 0.40) 1.61%, #FFF 32.61%, rgba(40, 168, 223, 0.25) 87.92%), #FFF' }}>
+    <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)" }}>
       <Header />
 
       <main className="mx-auto max-w-7xl px-6 py-8">

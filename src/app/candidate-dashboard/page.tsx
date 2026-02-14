@@ -100,7 +100,7 @@ export default function CandidateDashboardPage() {
     <div
       className="min-h-screen"
       style={{
-        background: "linear-gradient(to bottom, #fff5e6 0%, #f0f8ff 100%)",
+        background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)",
       }}
     >
       {/* Header */}
@@ -1144,23 +1144,23 @@ export default function CandidateDashboardPage() {
                   <div>
                     <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>ROLES IN DEMAND</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-[13px] font-medium">
-                        Frontend Developer
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <div className="group flex items-center gap-2 text-[13px] font-medium cursor-pointer transition-all duration-300 hover:translate-x-1">
+                        <span className="group-hover:text-orange-400 transition-colors duration-300">Frontend Developer</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
                           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
                           <polyline points="17 6 23 6 23 12"></polyline>
                         </svg>
                       </div>
-                      <div className="flex items-center gap-2 text-[13px] font-medium">
-                        React Engineer
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <div className="group flex items-center gap-2 text-[13px] font-medium cursor-pointer transition-all duration-300 hover:translate-x-1">
+                        <span className="group-hover:text-orange-400 transition-colors duration-300">React Engineer</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
                           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
                           <polyline points="17 6 23 6 23 12"></polyline>
                         </svg>
                       </div>
-                      <div className="flex items-center gap-2 text-[13px] font-medium">
-                        UI Engineer
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <div className="group flex items-center gap-2 text-[13px] font-medium cursor-pointer transition-all duration-300 hover:translate-x-1">
+                        <span className="group-hover:text-gray-200 transition-colors duration-300">UI Engineer</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
                           <line x1="5" y1="12" x2="19" y2="12"></line>
                           <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
@@ -1172,22 +1172,22 @@ export default function CandidateDashboardPage() {
                   <div>
                     <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>TOP LOCATIONS</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-[13px] text-gray-300">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+                      <div className="group flex items-center gap-2 text-[13px] text-gray-300 cursor-pointer transition-all duration-300 group-hover:text-orange-400">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }} className="transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
                           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                           <circle cx="12" cy="10" r="3"></circle>
                         </svg>
                         Remote
                       </div>
-                      <div className="flex items-center gap-2 text-[13px] text-gray-300">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+                      <div className="group flex items-center gap-2 text-[13px] text-gray-300 cursor-pointer transition-all duration-300 group-hover:text-orange-400">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }} className="transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
                           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                           <circle cx="12" cy="10" r="3"></circle>
                         </svg>
                         Bangalore
                       </div>
-                      <div className="flex items-center gap-2 text-[13px] text-gray-300">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+                      <div className="group flex items-center gap-2 text-[13px] text-gray-300 cursor-pointer transition-all duration-300 group-hover:text-orange-400">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }} className="transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
                           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                           <circle cx="12" cy="10" r="3"></circle>
                         </svg>
@@ -1203,7 +1203,7 @@ export default function CandidateDashboardPage() {
                       {["React Hooks", "System Design", "AWS Basics"].map((skill) => (
                         <span
                           key={skill}
-                          className="px-2 py-1 rounded-full bg-[#4B4B4B] text-[11px] font-medium text-gray-200 text-center"
+                          className="px-2 py-1 rounded-full bg-[#4B4B4B] text-[11px] font-medium text-gray-200 text-center cursor-pointer transition-all duration-300 hover:bg-[#F97316] hover:scale-105 hover:text-black active:scale-95 shadow-sm"
                           style={{ fontFamily: "Inter, sans-serif" }}
                         >
                           {skill}
@@ -1213,13 +1213,14 @@ export default function CandidateDashboardPage() {
                   </div>
 
                   {/* Market Fit */}
-                  <div>
+                  <div className="group cursor-pointer">
                     <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "10px", letterSpacing: "0.05em" }}>YOUR MARKET FIT</h3>
                     <div className="flex flex-col">
-                      <span style={{ fontSize: "32px", fontWeight: 400, color: "#F97316", lineHeight: "1" }}>78%</span>
+                      <span className="transition-all duration-500 group-hover:scale-110 origin-left" style={{ fontSize: "32px", fontWeight: 400, color: "#F97316", lineHeight: "1" }}>78%</span>
                       <span style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "8px", marginBottom: "12px" }}>match with current openings</span>
-                      <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-[#F97316] rounded-full" style={{ width: "78%" }}></div>
+                      <div className="relative w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#F97316] rounded-full transition-all duration-700 ease-out group-hover:shadow-[0_0_8px_rgba(249,115,22,0.6)]" style={{ width: "78%" }}></div>
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
                       </div>
                     </div>
                   </div>
@@ -1355,7 +1356,7 @@ export default function CandidateDashboardPage() {
               </div>
 
               {/* Job List */}
-              <div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
+              <div className="flex flex-col gap-4 pt-2 pb-2 px-1" style={{ overflowY: "auto", flex: 1 }}>
                 {[
                   {
                     title: "Frontend Developer",
@@ -1388,36 +1389,45 @@ export default function CandidateDashboardPage() {
                 ].map((job, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-6"
+                    className="group flex items-center gap-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] cursor-pointer overflow-hidden relative"
                     style={{
                       width: "100%",
                       height: "85px",
                       flexShrink: 0,
                       padding: "0 20px",
-                      border: "1px solid #C1C1C1",
+                      border: "1px solid #E5E7EB",
                       borderRadius: "8px",
-                      backgroundColor: "#FFFFFF",
+                      backgroundImage: "linear-gradient(to right, #F0F9FF 50%, #FFFFFF 50%)",
+                      backgroundSize: "200% 100%",
+                      backgroundPosition: "right bottom",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundPosition = "left bottom";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundPosition = "right bottom";
                     }}
                   >
                     {/* Icon */}
-                    <div className="flex-shrink-0">
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="4" y="5" width="16" height="4" rx="1" stroke="black" strokeWidth="2" />
-                        <rect x="4" y="10" width="16" height="4" rx="1" stroke="black" strokeWidth="2" />
-                        <rect x="4" y="15" width="16" height="4" rx="1" stroke="black" strokeWidth="2" />
-                        <circle cx="18" cy="7" r="0.5" fill="black" />
-                        <circle cx="18" cy="12" r="0.5" fill="black" />
-                        <circle cx="18" cy="17" r="0.5" fill="black" />
+                    <div className="flex-shrink-0 transition-colors duration-300">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black group-hover:text-blue-600">
+                        <rect x="4" y="5" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <rect x="4" y="10" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <rect x="4" y="15" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <circle cx="18" cy="7" r="0.5" fill="currentColor" />
+                        <circle cx="18" cy="12" r="0.5" fill="currentColor" />
+                        <circle cx="18" cy="17" r="0.5" fill="currentColor" />
                       </svg>
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 transition-colors duration-300">
                       <h3
+                        className="group-hover:text-blue-900 transition-colors duration-300"
                         style={{
                           fontFamily: "Inter, sans-serif",
                           fontSize: "16px",
-                          fontWeight: 500,
+                          fontWeight: 600,
                           color: "#111827",
                           marginBottom: "2px",
                         }}
@@ -1425,10 +1435,11 @@ export default function CandidateDashboardPage() {
                         {job.title}
                       </h3>
                       <p
+                        className="group-hover:text-blue-700 transition-colors duration-300"
                         style={{
                           fontFamily: "Inter, sans-serif",
                           fontSize: "12px",
-                          color: "#111827",
+                          color: "#4B5563",
                           marginBottom: "8px",
                         }}
                       >
@@ -1438,10 +1449,10 @@ export default function CandidateDashboardPage() {
                         {job.skills.map((skill) => (
                           <span
                             key={skill}
-                            className="px-3 py-1 rounded-full"
+                            className="px-3 py-1 rounded-full transition-all duration-300 group-hover:bg-blue-100 group-hover:text-blue-800"
                             style={{
                               fontSize: "10px",
-                              backgroundColor: "#E5E7EB",
+                              backgroundColor: "#F3F4F6",
                               color: "#6B7280",
                               fontFamily: "Inter, sans-serif",
                             }}
@@ -1453,19 +1464,20 @@ export default function CandidateDashboardPage() {
                     </div>
 
                     {/* Right Column */}
-                    <div className="flex flex-col items-end gap-1">
+                    <div className="flex flex-col items-end gap-1 z-10">
                       <span
+                        className="transition-colors duration-300 group-hover:text-blue-600 font-semibold"
                         style={{
                           fontFamily: "Inter, sans-serif",
                           fontSize: "12px",
-                          fontWeight: 400,
+                          fontWeight: 500,
                           color: "#3B82F6",
                         }}
                       >
                         {job.match}
                       </span>
                       <button
-                        className="px-4 py-1.5 rounded-lg font-medium"
+                        className="px-4 py-1.5 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95"
                         style={{
                           backgroundColor: "#F97316",
                           color: "#FFFFFF",
@@ -1474,8 +1486,12 @@ export default function CandidateDashboardPage() {
                           border: "none",
                           cursor: "pointer",
                           borderRadius: "8px",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
                         }}
-                        onClick={() => router.push("/explore-jobs")}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push("/explore-jobs");
+                        }}
                       >
                         View Details
                       </button>
