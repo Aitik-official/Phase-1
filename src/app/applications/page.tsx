@@ -94,12 +94,12 @@ export default function ApplicationsPage() {
   ];
 
   const filteredApplications = applications.filter(app => {
-    const matchesSearch = searchQuery === '' || 
+    const matchesSearch = searchQuery === '' ||
       app.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
       app.company.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesStatus = statusFilter === 'All' || app.status === statusFilter;
-    
+
     return matchesSearch && matchesStatus;
   });
 
@@ -115,9 +115,9 @@ export default function ApplicationsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)" }}>
       <Header />
-      
+
       <main className="mx-auto max-w-7xl px-6 py-8">
         {/* Page Title */}
         <h1 className="text-3xl font-bold text-gray-900 mb-6">My Applications</h1>

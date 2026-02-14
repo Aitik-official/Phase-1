@@ -361,7 +361,7 @@ const DashboardPage = () => {
         {/* Header: Logo, Date, Bookmark */}
         <div className={`flex justify-between items-start ${isCompact ? 'mb-3' : 'mb-4'}`}>
           <div className={`${isCompact ? 'w-10 h-10' : 'w-12 h-12'} rounded-full overflow-hidden bg-white border border-gray-100 flex items-center justify-center p-1`}>
-            <Image src={job.logo} alt={job.company} width={48} height={48} className="object-contain" />
+            <Image src="/perosn_icon.png" alt={job.company} width={48} height={48} className="object-contain" />
           </div>
           <div className="flex items-center gap-2">
             <span className={`text-xs font-medium ${isActive ? 'text-gray-400' : 'text-gray-500'}`}>{job.postedDate}</span>
@@ -806,14 +806,14 @@ const DashboardPage = () => {
       {isScreeningModalOpen && selectedJob && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCloseModal} />
-          <div 
-            className="bg-white rounded-lg shadow-xl overflow-y-auto z-10" 
-            style={{ 
-              width: "600px", 
+          <div
+            className="bg-white rounded-lg shadow-xl overflow-y-auto z-10"
+            style={{
+              width: "600px",
               maxHeight: "85vh",
               borderRadius: "10px",
               boxShadow: "0 0 2px 0 rgba(23, 26, 31, 0.20), 0 0 1px 0 rgba(23, 26, 31, 0.07)"
-            }} 
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -832,23 +832,21 @@ const DashboardPage = () => {
                   Do you have at least 2 years of experience for this role?
                 </label>
                 <div className="flex gap-3">
-                  <button 
-                    onClick={() => setExperienceAnswer('yes')} 
-                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${
-                      experienceAnswer === 'yes' 
-                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium' 
-                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
-                    }`}
+                  <button
+                    onClick={() => setExperienceAnswer('yes')}
+                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${experienceAnswer === 'yes'
+                      ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                      : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      }`}
                   >
                     Yes
                   </button>
-                  <button 
-                    onClick={() => setExperienceAnswer('no')} 
-                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${
-                      experienceAnswer === 'no' 
-                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium' 
-                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
-                    }`}
+                  <button
+                    onClick={() => setExperienceAnswer('no')}
+                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${experienceAnswer === 'no'
+                      ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                      : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      }`}
                   >
                     No
                   </button>
@@ -866,9 +864,8 @@ const DashboardPage = () => {
                     onChange={(e) => setNightShiftValue(e.target.value)}
                     onFocus={() => setNightShiftFocused(true)}
                     onBlur={() => setNightShiftFocused(false)}
-                    className={`w-full px-4 py-2.5 rounded-lg border-2 appearance-none bg-white text-gray-900 ${
-                      nightShiftFocused ? 'border-blue-500' : 'border-blue-200'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-200`}
+                    className={`w-full px-4 py-2.5 rounded-lg border-2 appearance-none bg-white text-gray-900 ${nightShiftFocused ? 'border-blue-500' : 'border-blue-200'
+                      } focus:outline-none focus:ring-2 focus:ring-blue-200`}
                   >
                     <option value="">Select an option</option>
                     <option value="yes">Yes</option>
@@ -920,11 +917,10 @@ const DashboardPage = () => {
                     <button
                       key={option}
                       onClick={() => setJoiningAvailability(option)}
-                      className={`px-4 py-2.5 rounded-lg border-2 transition-colors ${
-                        joiningAvailability === option
-                          ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
-                          : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
-                      }`}
+                      className={`px-4 py-2.5 rounded-lg border-2 transition-colors ${joiningAvailability === option
+                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                        }`}
                     >
                       {option}
                     </button>
@@ -935,14 +931,14 @@ const DashboardPage = () => {
 
             {/* Footer */}
             <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
-              <button 
-                onClick={handleCloseModal} 
+              <button
+                onClick={handleCloseModal}
                 className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors"
               >
                 Cancel
               </button>
-              <button 
-                onClick={handleSubmitScreening} 
+              <button
+                onClick={handleSubmitScreening}
                 className="px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors"
               >
                 Submit & Continue

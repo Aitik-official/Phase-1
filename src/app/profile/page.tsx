@@ -44,7 +44,7 @@ export default function ProfilePage() {
   const [isVisaWorkAuthorizationModalOpen, setIsVisaWorkAuthorizationModalOpen] = useState(false);
   const [isVaccinationModalOpen, setIsVaccinationModalOpen] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
-  
+
   // Sidebar expansion state
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     'PERSONAL DETAILS': true, // Default to expanded
@@ -320,7 +320,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)" }}>
       <Header />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
@@ -480,7 +480,7 @@ export default function ProfilePage() {
                 {profileSections.map((section, sectionIndex) => {
                   const isExpanded = expandedSections[section.category] ?? true;
                   return (
-                  <div key={sectionIndex}>
+                    <div key={sectionIndex}>
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-bold text-gray-900 text-sm">{section.category}</h4>
                         <button
@@ -506,25 +506,25 @@ export default function ProfilePage() {
                         </button>
                       </div>
                       {isExpanded && (
-                    <ul className="space-y-1">
+                        <ul className="space-y-1">
                           {section.items.map((item, itemIndex) => {
                             const isSelected = selectedItem?.category === section.category && selectedItem?.itemName === item.name;
                             return (
-                        <li key={itemIndex}>
-                          <button
+                              <li key={itemIndex}>
+                                <button
                                   onClick={() => setSelectedItem({ category: section.category, itemName: item.name })}
                                   className={`w-full text-left px-2 py-1.5 text-sm rounded-md hover:bg-gray-50 flex items-center justify-between ${isSelected ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
                                     }`}
                                 >
                                   <span>{item.name}</span>
                                   <span className="text-gray-400">→</span>
-                          </button>
-                        </li>
+                                </button>
+                              </li>
                             );
                           })}
-                    </ul>
+                        </ul>
                       )}
-                  </div>
+                    </div>
                   );
                 })}
               </nav>
@@ -534,7 +534,7 @@ export default function ProfilePage() {
           {/* Right Column - Profile Details */}
           <div className="lg:col-span-2">
             {selectedItem && (
-            <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+              <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
                 {/* Header with Edit and Add buttons */}
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-semibold text-gray-900">{selectedItem.itemName}</h2>
@@ -545,14 +545,14 @@ export default function ProfilePage() {
                     >
                       Edit
                     </button>
-                        <button 
+                    <button
                       onClick={() => handleAddClick(selectedItem.category, selectedItem.itemName)}
                       className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600"
                     >
                       Add
-                        </button>
-                      </div>
+                    </button>
                   </div>
+                </div>
 
                 {/* Content based on selected item */}
                 {selectedItem.itemName === 'Basic Information' && basicInfoData && (
@@ -561,18 +561,18 @@ export default function ProfilePage() {
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">First Name</label>
                         <p className="text-base text-gray-900">{basicInfoData.firstName}</p>
-                </div>
+                      </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Email Address</label>
                         <div className="flex items-center gap-2">
                           <p className="text-base text-gray-900">{basicInfoData.email}</p>
                           <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded">Verified</span>
-            </div>
-          </div>
+                        </div>
+                      </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Phone Number</label>
                         <p className="text-base text-gray-900">{basicInfoData.phoneCode} {basicInfoData.phone}</p>
-        </div>
+                      </div>
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Date of Birth</label>
                         <p className="text-base text-gray-900">{basicInfoData.dob}</p>
@@ -611,21 +611,21 @@ export default function ProfilePage() {
                   <div>
                     <label className="text-sm font-medium text-gray-500 mb-2 block">Professional Summary</label>
                     <p className="text-base text-gray-900 whitespace-pre-wrap">{summaryText || 'No summary added yet.'}</p>
-              </div>
+                  </div>
                 )}
 
                 {selectedItem.itemName === 'Gap Explanation' && (
                   <div>
                     {gapExplanationData ? (
-                  <div className="space-y-4">
+                      <div className="space-y-4">
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Category</label>
                           <p className="text-base text-gray-900">{gapExplanationData.gapCategory}</p>
-                      </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Reason for Gap</label>
                           <p className="text-base text-gray-900">{gapExplanationData.reasonForGap}</p>
-                    </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Gap Duration</label>
                           <p className="text-base text-gray-900">{gapExplanationData.gapDuration}</p>
@@ -634,13 +634,13 @@ export default function ProfilePage() {
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Skills Continued</label>
                             <p className="text-base text-gray-900">{gapExplanationData.selectedSkills.join(', ')}</p>
-                      </div>
+                          </div>
                         )}
                         {gapExplanationData.coursesText && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Courses/Trainings</label>
                             <p className="text-base text-gray-900">{gapExplanationData.coursesText}</p>
-                    </div>
+                          </div>
                         )}
                       </div>
                     ) : (
@@ -656,7 +656,7 @@ export default function ProfilePage() {
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Job Title</label>
                           <p className="text-base text-gray-900">{workExperienceData.jobTitle}</p>
-                          </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
                           <p className="text-base text-gray-900">{workExperienceData.companyName}</p>
@@ -670,12 +670,12 @@ export default function ProfilePage() {
                           <p className="text-base text-gray-900">
                             {workExperienceData.startDate} - {workExperienceData.currentlyWorkHere ? 'Present' : workExperienceData.endDate}
                           </p>
-                      </div>
+                        </div>
                         {workExperienceData.workLocation && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Location</label>
                             <p className="text-base text-gray-900">{workExperienceData.workLocation}</p>
-                    </div>
+                          </div>
                         )}
                       </div>
                     ) : (
@@ -695,18 +695,18 @@ export default function ProfilePage() {
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
                           <p className="text-base text-gray-900">{internshipData.companyName}</p>
-                      </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
                           <p className="text-base text-gray-900">
                             {internshipData.startDate} - {internshipData.currentlyWorking ? 'Present' : internshipData.endDate}
                           </p>
-                    </div>
+                        </div>
                       </div>
                     ) : (
                       <p className="text-base text-gray-500">No internships added yet.</p>
                     )}
-                    </div>
+                  </div>
                 )}
 
                 {selectedItem.itemName === 'Education' && (
@@ -720,16 +720,16 @@ export default function ProfilePage() {
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Degree / Program</label>
                           <p className="text-base text-gray-900">{educationData.degreeProgram}</p>
-                      </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Institution / University</label>
                           <p className="text-base text-gray-900">{educationData.institutionName}</p>
-                    </div>
+                        </div>
                         {educationData.fieldOfStudy && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Field of Study / Major</label>
                             <p className="text-base text-gray-900">{educationData.fieldOfStudy}</p>
-                  </div>
+                          </div>
                         )}
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
@@ -765,15 +765,15 @@ export default function ProfilePage() {
                 {selectedItem.itemName === 'Academic Achievements' && (
                   <div>
                     {academicAchievementData ? (
-                  <div className="space-y-4">
+                      <div className="space-y-4">
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Achievement Title</label>
                           <p className="text-base text-gray-900">{academicAchievementData.achievementTitle}</p>
-                      </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Awarded By</label>
                           <p className="text-base text-gray-900">{academicAchievementData.awardedBy}</p>
-                    </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Year Received</label>
                           <p className="text-base text-gray-900">{academicAchievementData.yearReceived}</p>
@@ -782,13 +782,13 @@ export default function ProfilePage() {
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Category / Type</label>
                             <p className="text-base text-gray-900">{academicAchievementData.categoryType}</p>
-                      </div>
+                          </div>
                         )}
                         {academicAchievementData.description && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Description</label>
                             <p className="text-base text-gray-900 whitespace-pre-wrap">{academicAchievementData.description}</p>
-                    </div>
+                          </div>
                         )}
                       </div>
                     ) : (
@@ -808,11 +808,11 @@ export default function ProfilePage() {
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Year Taken</label>
                           <p className="text-base text-gray-900">{competitiveExamsData.yearTaken}</p>
-                      </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Result Status</label>
                           <p className="text-base text-gray-900">{competitiveExamsData.resultStatus}</p>
-                    </div>
+                        </div>
                         <div>
                           <label className="text-sm font-medium text-gray-500 mb-1 block">Score / Marks</label>
                           <p className="text-base text-gray-900">{competitiveExamsData.scoreMarks}</p>
@@ -821,21 +821,21 @@ export default function ProfilePage() {
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Score Type</label>
                             <p className="text-base text-gray-900">{competitiveExamsData.scoreType}</p>
-                      </div>
+                          </div>
                         )}
                         {competitiveExamsData.validUntil && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Valid Until</label>
                             <p className="text-base text-gray-900">{competitiveExamsData.validUntil}</p>
-                    </div>
+                          </div>
                         )}
                         {competitiveExamsData.additionalNotes && (
                           <div>
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Additional Notes</label>
                             <p className="text-base text-gray-900 whitespace-pre-wrap">{competitiveExamsData.additionalNotes}</p>
-                  </div>
+                          </div>
                         )}
-                </div>
+                      </div>
                     ) : (
                       <p className="text-base text-gray-500">No competitive exam information added yet.</p>
                     )}
@@ -863,17 +863,17 @@ export default function ProfilePage() {
                                     <span className="text-xs text-gray-600 bg-white px-2 py-0.5 rounded border border-gray-300">
                                       {skill.proficiency}
                                     </span>
-                </div>
+                                  </div>
                                 ))}
-              </div>
-            </div>
+                              </div>
+                            </div>
                           );
                         })}
                         {skillsData.additionalNotes && (
                           <div className="mt-4">
                             <label className="text-sm font-medium text-gray-500 mb-1 block">Additional Notes</label>
                             <p className="text-base text-gray-900 whitespace-pre-wrap">{skillsData.additionalNotes}</p>
-          </div>
+                          </div>
                         )}
                       </div>
                     ) : (
