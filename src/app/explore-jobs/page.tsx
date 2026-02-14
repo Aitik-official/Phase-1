@@ -835,8 +835,8 @@ const DashboardPage = () => {
                   <button
                     onClick={() => setExperienceAnswer('yes')}
                     className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${experienceAnswer === 'yes'
-                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
-                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                      : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
                       }`}
                   >
                     Yes
@@ -844,8 +844,8 @@ const DashboardPage = () => {
                   <button
                     onClick={() => setExperienceAnswer('no')}
                     className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${experienceAnswer === 'no'
-                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
-                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                      : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
                       }`}
                   >
                     No
@@ -918,8 +918,8 @@ const DashboardPage = () => {
                       key={option}
                       onClick={() => setJoiningAvailability(option)}
                       className={`px-4 py-2.5 rounded-lg border-2 transition-colors ${joiningAvailability === option
-                          ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
-                          : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
                         }`}
                     >
                       {option}

@@ -15,6 +15,11 @@ interface Course {
   description: string;
   image?: string;
   aiRecommended: boolean;
+  rating?: number;
+  students?: number;
+  skillLevel?: string;
+  certificate?: boolean;
+  language?: string;
 }
 
 export default function CoursesPage() {
@@ -34,7 +39,13 @@ export default function CoursesPage() {
       duration: '4 weeks',
       price: 'Free',
       description: 'Learn the core principles and practices of Agile methodology to efficiently manage projects and deliver value.',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.7,
+      students: 1250,
+      skillLevel: 'Beginner',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 2,
@@ -43,7 +54,13 @@ export default function CoursesPage() {
       duration: '8 weeks',
       price: '$99.99',
       description: 'Master the basics of data science, including Python programming, data manipulation, and analysis techniques.',
+      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.8,
+      students: 3200,
+      skillLevel: 'Intermediate',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 3,
@@ -52,7 +69,13 @@ export default function CoursesPage() {
       duration: '3 weeks',
       price: 'Free',
       description: 'Enhance your verbal and written communication skills for professional success and better team collaboration.',
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.6,
+      students: 890,
+      skillLevel: 'Beginner',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 4,
@@ -61,7 +84,13 @@ export default function CoursesPage() {
       duration: '6 weeks',
       price: '$199.00',
       description: 'Cultivate essential leadership qualities and learn to motivate, inspire, and manage high-performing teams.',
+      image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.9,
+      students: 2100,
+      skillLevel: 'Intermediate',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 5,
@@ -70,7 +99,13 @@ export default function CoursesPage() {
       duration: '6 weeks',
       price: '$149.00',
       description: 'Gain foundational knowledge of cloud computing, focusing on Amazon Web Services (AWS) infrastructure.',
+      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.8,
+      students: 1850,
+      skillLevel: 'Intermediate',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 6,
@@ -79,7 +114,13 @@ export default function CoursesPage() {
       duration: '5 weeks',
       price: '$79.99',
       description: 'Explore the fundamental principles of User Experience (UX) and User Interface (UI) design for intuitive digital products.',
+      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.7,
+      students: 2450,
+      skillLevel: 'Beginner',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 7,
@@ -88,7 +129,13 @@ export default function CoursesPage() {
       duration: '7 weeks',
       price: '$129.00',
       description: 'Understand key cybersecurity concepts, threats, and protective measures to safeguard digital assets and information.',
+      image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.6,
+      students: 1650,
+      skillLevel: 'Beginner',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 8,
@@ -97,7 +144,13 @@ export default function CoursesPage() {
       duration: '4 weeks',
       price: 'Free',
       description: 'Learn the essentials of digital marketing, including SEO, social media, and content strategy for online presence.',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.5,
+      students: 1100,
+      skillLevel: 'Beginner',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 9,
@@ -106,7 +159,13 @@ export default function CoursesPage() {
       duration: '2 weeks',
       price: '$49.99',
       description: 'Develop strategies for budgeting, saving, investing, and managing debt to achieve financial independence.',
+      image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.7,
+      students: 980,
+      skillLevel: 'Beginner',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 10,
@@ -115,7 +174,13 @@ export default function CoursesPage() {
       duration: '10 weeks',
       price: '$179.00',
       description: 'Introduction to machine learning algorithms, neural networks, and practical applications in real-world scenarios.',
+      image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.9,
+      students: 2800,
+      skillLevel: 'Advanced',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 11,
@@ -124,7 +189,13 @@ export default function CoursesPage() {
       duration: '12 weeks',
       price: '$249.00',
       description: 'Master frontend and backend development with modern frameworks and tools to build complete web applications.',
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.8,
+      students: 3500,
+      skillLevel: 'Intermediate',
+      certificate: true,
+      language: 'English',
     },
     {
       id: 12,
@@ -133,7 +204,13 @@ export default function CoursesPage() {
       duration: '6 weeks',
       price: '$89.99',
       description: 'Learn to analyze business data and create compelling visualizations to drive data-driven decision making.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop',
       aiRecommended: true,
+      rating: 4.6,
+      students: 1400,
+      skillLevel: 'Intermediate',
+      certificate: true,
+      language: 'English',
     },
   ];
 
@@ -435,7 +512,7 @@ export default function CoursesPage() {
               }}
             >
               {/* Course Image */}
-              <div className="w-full h-40 bg-gray-200 flex items-center justify-center flex-shrink-0">
+              <div className="w-full h-40 bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 {course.image ? (
                   <Image
                     src={course.image}
@@ -464,7 +541,7 @@ export default function CoursesPage() {
               </div>
 
               {/* Course Content */}
-              <div className="p-5 flex flex-col flex-1" style={{ minHeight: 0 }}>
+              <div className="px-5 pt-5 pb-5 flex flex-col flex-1" style={{ minHeight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 {/* Provider and AI Recommended */}
                 <div className="flex items-center justify-between mb-2">
                   <span
@@ -508,7 +585,7 @@ export default function CoursesPage() {
                 </h3>
 
                 {/* Duration and Price */}
-                <div className="flex items-center gap-4 mb-3">
+                <div className="flex items-center gap-4 mb-2">
                   <span
                     style={{
                       fontFamily: 'Inter, sans-serif',
@@ -530,15 +607,95 @@ export default function CoursesPage() {
                   </span>
                 </div>
 
+                {/* Rating and Students */}
+                {(course.rating || course.students) && (
+                  <div className="flex items-center gap-3 mb-2">
+                    {course.rating && (
+                      <div className="flex items-center gap-1">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="#FBBF24" stroke="none">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg>
+                        <span
+                          style={{
+                            fontFamily: 'Inter, sans-serif',
+                            fontSize: '12px',
+                            color: '#111827',
+                            fontWeight: 600,
+                          }}
+                        >
+                          {course.rating}
+                        </span>
+                      </div>
+                    )}
+                    {course.students && (
+                      <span
+                        style={{
+                          fontFamily: 'Inter, sans-serif',
+                          fontSize: '12px',
+                          color: '#6B7280',
+                        }}
+                      >
+                        ({course.students.toLocaleString()} students)
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {/* Skill Level and Certificate */}
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  {course.skillLevel && (
+                    <span
+                      className="px-2 py-0.5 rounded"
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 500,
+                        color: '#059669',
+                        backgroundColor: '#D1FAE5',
+                      }}
+                    >
+                      {course.skillLevel}
+                    </span>
+                  )}
+                  {course.certificate && (
+                    <span
+                      className="px-2 py-0.5 rounded flex items-center gap-1"
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 500,
+                        color: '#7C3AED',
+                        backgroundColor: '#EDE9FE',
+                      }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                      </svg>
+                      Certificate
+                    </span>
+                  )}
+                  {course.language && (
+                    <span
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '11px',
+                        color: '#6B7280',
+                      }}
+                    >
+                      • {course.language}
+                    </span>
+                  )}
+                </div>
+
                 {/* Description */}
                 <p
-                  className="flex-1"
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
                     color: '#6B7280',
                     lineHeight: '1.5',
-                    marginBottom: '16px',
+                    marginBottom: '12px',
                     maxHeight: '63px',
                     overflow: 'hidden',
                   }}
@@ -555,6 +712,7 @@ export default function CoursesPage() {
                     fontSize: '14px',
                     backgroundColor: '#F97316',
                     color: '#FFFFFF',
+                    marginTop: 'auto',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#EA580C';
