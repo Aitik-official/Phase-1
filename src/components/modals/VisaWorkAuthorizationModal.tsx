@@ -398,7 +398,7 @@ export default function VisaWorkAuthorizationModal({
                   className="hidden"
                 />
                 <svg
-                  className="mx-auto h-12 w-12 text-gray-400 mb-2"
+                  className="mx-auto h-12 w-12 text-[#9095A1] mb-2"
                   stroke="currentColor"
                   fill="none"
                   viewBox="0 0 48 48"
@@ -435,7 +435,7 @@ export default function VisaWorkAuthorizationModal({
                     <div key={doc.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-gray-50">
                       <div className="flex items-center gap-3">
                         <svg
-                          className="w-5 h-5 text-gray-400"
+                          className="w-5 h-5 text-[#9095A1]"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -504,7 +504,7 @@ export default function VisaWorkAuthorizationModal({
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"

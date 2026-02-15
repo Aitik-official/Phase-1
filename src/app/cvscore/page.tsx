@@ -72,7 +72,7 @@ export default function CVScorePage() {
                   {/* Background circle with gradient */}
                   <defs>
                     <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#3B82F6" />
+                      <stop offset="0%" stopColor="#28A8DF" />
                       <stop offset="100%" stopColor="#2563EB" />
                     </linearGradient>
                     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">

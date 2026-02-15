@@ -229,7 +229,7 @@ export default function CertificationModal({
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -411,7 +411,7 @@ export default function CertificationModal({
                     <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
                       Credential URL <span className="text-gray-500 text-xs">(Optional)</span>
                       <svg
-                        className="w-4 h-4 text-gray-400"
+                        className="w-4 h-4 text-[#9095A1]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -420,7 +420,7 @@ export default function CertificationModal({
                       </svg>
                     </label>
                     <div className="relative">
-                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#9095A1]">
                         <svg
                           className="w-5 h-5"
                           fill="none"
@@ -518,7 +518,7 @@ export default function CertificationModal({
                         <div className="flex items-center gap-2 flex-shrink-0 ml-4">
                           <button
                             onClick={() => handleEditCertification(cert)}
-                            className="p-2 text-gray-400 hover:text-blue-600"
+                            className="p-2 text-[#9095A1] hover:text-blue-600"
                             title="Edit"
                           >
                             <svg
@@ -537,7 +537,7 @@ export default function CertificationModal({
                           </button>
                           <button
                             onClick={() => handleDeleteCertification(cert.id)}
-                            className="p-2 text-gray-400 hover:text-red-600"
+                            className="p-2 text-[#9095A1] hover:text-red-600"
                             title="Delete"
                           >
                             <svg

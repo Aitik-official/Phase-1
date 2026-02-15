@@ -189,7 +189,7 @@ export default function ResumeModal({
             <h2 className="text-xl font-semibold text-gray-900">Upload / Update Resume</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -231,7 +231,7 @@ export default function ResumeModal({
                   className="hidden"
                 />
                 <svg
-                  className="mx-auto h-16 w-16 text-gray-400 mb-4"
+                  className="mx-auto h-16 w-16 text-[#9095A1] mb-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -249,7 +249,7 @@ export default function ResumeModal({
                 <p className="text-sm text-gray-500 mb-4">
                   or click to browse your device
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-[#9095A1]">
                   Supported formats: PDF, DOC, DOCX (Max 5 MB)
                 </p>
               </div>
@@ -260,7 +260,7 @@ export default function ResumeModal({
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
                       <svg
-                        className="w-10 h-10 text-gray-400"
+                        className="w-10 h-10 text-[#9095A1]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

@@ -67,7 +67,7 @@ export default function NotificationPage() {
       type: 'course',
       icon: 'book',
       barColor: 'bg-orange-500',
-      barColorValue: '#F97316',
+      barColorValue: '#FC9620',
       title: 'New course "Advanced TypeScript" available!',
       description: 'Enhance your front-end skills with our latest offering.',
       actionButton: 'View Course',
