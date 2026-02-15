@@ -383,7 +383,7 @@ export default function ProfilePage() {
                     cx="50"
                     cy="50"
                     r="45"
-                    stroke="#3b82f6"
+                    stroke="#28A8DF"
                     strokeWidth="8"
                     fill="none"
                     strokeDasharray={`${85 * 2.83} 283`}

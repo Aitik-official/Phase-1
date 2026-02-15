@@ -27,10 +27,10 @@ export default function SearchView({ placeholder = "Search...", value = "", onSu
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder={placeholder}
-          className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
+          className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-[#9095A1]"
         />
         <svg
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#9095A1]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

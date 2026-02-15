@@ -237,7 +237,7 @@ export default function CareerPreferencesModal({
             <h2 className="text-xl font-semibold text-gray-900">Edit Career Preferences</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -277,7 +277,7 @@ export default function CareerPreferencesModal({
                             {title}
                             <button
                               onClick={() => handleRemoveJobTitle(title)}
-                              className="text-gray-400 hover:text-gray-600"
+                              className="text-[#9095A1] hover:text-gray-600"
                             >
                               <svg
                                 width="14"
@@ -408,7 +408,7 @@ export default function CareerPreferencesModal({
                             {location}
                             <button
                               onClick={() => handleRemoveLocation(location)}
-                              className="text-gray-400 hover:text-gray-600"
+                              className="text-[#9095A1] hover:text-gray-600"
                             >
                               <svg
                                 width="14"

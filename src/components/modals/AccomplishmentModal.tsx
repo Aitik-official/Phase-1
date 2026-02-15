@@ -216,7 +216,7 @@ export default function AccomplishmentModal({
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -375,7 +375,7 @@ export default function AccomplishmentModal({
                 ) : (
                   <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
                     <svg
-                      className="w-6 h-6 text-gray-400"
+                      className="w-6 h-6 text-[#9095A1]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -387,7 +387,7 @@ export default function AccomplishmentModal({
                     </span>
                     <button
                       onClick={handleRemoveFile}
-                      className="p-1 text-gray-400 hover:text-red-600"
+                      className="p-1 text-[#9095A1] hover:text-red-600"
                       title="Remove file"
                     >
                       <svg
@@ -459,7 +459,7 @@ export default function AccomplishmentModal({
                         <div className="flex items-center gap-2 flex-shrink-0 ml-4">
                           <button
                             onClick={() => handleEditAccomplishment(acc)}
-                            className="p-2 text-gray-400 hover:text-blue-600"
+                            className="p-2 text-[#9095A1] hover:text-blue-600"
                             title="Edit"
                           >
                             <svg
@@ -478,7 +478,7 @@ export default function AccomplishmentModal({
                           </button>
                           <button
                             onClick={() => handleDeleteAccomplishment(acc.id)}
-                            className="p-2 text-gray-400 hover:text-red-600"
+                            className="p-2 text-[#9095A1] hover:text-red-600"
                             title="Delete"
                           >
                             <svg

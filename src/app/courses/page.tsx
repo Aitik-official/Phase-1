@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '../../components/common/Header';
-import Footer from '../../components/common/Footer';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 import Image from 'next/image';
 
 interface Course {
@@ -268,7 +268,7 @@ export default function CoursesPage() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#9CA3AF"
+                  stroke="#9095A1"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -319,7 +319,7 @@ export default function CoursesPage() {
                   <option value="advanced">Advanced</option>
                 </select>
                 <div className="pointer-events-none absolute right-3 top-9 flex items-center">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-[#9095A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -352,7 +352,7 @@ export default function CoursesPage() {
                   <option value="coursera">Coursera</option>
                 </select>
                 <div className="pointer-events-none absolute right-3 top-9 flex items-center">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-[#9095A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -384,7 +384,7 @@ export default function CoursesPage() {
                   <option value="paid">Paid</option>
                 </select>
                 <div className="pointer-events-none absolute right-3 top-9 flex items-center">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-[#9095A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -417,7 +417,7 @@ export default function CoursesPage() {
                   <option value="long">9+ weeks</option>
                 </select>
                 <div className="pointer-events-none absolute right-3 top-9 flex items-center">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-[#9095A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -450,7 +450,7 @@ export default function CoursesPage() {
                   <option value="newest">Newest</option>
                 </select>
                 <div className="pointer-events-none absolute right-3 top-9 flex items-center">
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-[#9095A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -459,7 +459,7 @@ export default function CoursesPage() {
           </div>
 
           {/* Why these courses? Section */}
-          <div className="lg:w-80">
+          <div className="lg:w-80 lg:-mt-14">
             <div className="bg-white rounded-xl p-6 shadow-md">
               <h3
                 style={{
@@ -501,10 +501,9 @@ export default function CoursesPage() {
           {courses.map((course) => (
             <div
               key={course.id}
-              className="overflow-hidden transition-all duration-300 flex flex-col"
+              className="overflow-hidden transition-all duration-300 flex flex-col border-2 border-gray-200 hover:border-[#28A8DF] group"
               style={{
                 borderRadius: '14px',
-                border: '2px solid #1C86C8',
                 background: '#FFF',
                 boxShadow: '0 0 2px 0 rgba(23, 26, 31, 0.12), 0 0 0 0 rgba(0, 0, 0, 0.00)',
                 width: '271px',
@@ -561,7 +560,7 @@ export default function CoursesPage() {
                         fontFamily: 'Inter, sans-serif',
                         fontSize: '11px',
                         fontWeight: 600,
-                        color: '#3B82F6',
+                        color: '#28A8DF',
                         backgroundColor: '#DBEAFE',
                       }}
                     >
@@ -710,7 +709,7 @@ export default function CoursesPage() {
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '14px',
-                    backgroundColor: '#F97316',
+                    backgroundColor: '#FC9620',
                     color: '#FFFFFF',
                     marginTop: 'auto',
                   }}
@@ -718,7 +717,7 @@ export default function CoursesPage() {
                     e.currentTarget.style.backgroundColor = '#EA580C';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#F97316';
+                    e.currentTarget.style.backgroundColor = '#FC9620';
                   }}
                 >
                   View Details
@@ -735,8 +734,8 @@ export default function CoursesPage() {
             style={{
               fontFamily: 'Inter, sans-serif',
               fontSize: '15px',
-              color: '#3B82F6',
-              borderColor: '#3B82F6',
+              color: '#28A8DF',
+              borderColor: '#28A8DF',
               backgroundColor: 'transparent',
             }}
             onMouseEnter={(e) => {
