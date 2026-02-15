@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../../components/common/Header";
 
 export default function PersonalDetailsPage() {
   const router = useRouter();
@@ -40,6 +39,7 @@ export default function PersonalDetailsPage() {
 
   // Form switching state
   const [activeForm, setActiveForm] = useState<'personal' | 'education' | 'skills' | 'work-exp' | 'salary-exp'>('personal');
+  const [prevForm, setPrevForm] = useState<'personal' | 'education' | 'skills' | 'work-exp' | 'salary-exp' | null>(null);
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
   // Education form state
@@ -666,22 +666,22 @@ export default function PersonalDetailsPage() {
 
   const handleSaveChanges = () => {
     if (activeForm === 'personal') {
-      setSlideDirection('right');
+      setPrevForm(activeForm);
       setTimeout(() => {
         setActiveForm('education');
       }, 50);
     } else if (activeForm === 'education') {
-      setSlideDirection('right');
+      setPrevForm(activeForm);
       setTimeout(() => {
         setActiveForm('skills');
       }, 50);
     } else if (activeForm === 'skills') {
-      setSlideDirection('right');
+      setPrevForm(activeForm);
       setTimeout(() => {
         setActiveForm('work-exp');
       }, 50);
     } else if (activeForm === 'work-exp') {
-      setSlideDirection('right');
+      setPrevForm(activeForm);
       setTimeout(() => {
         setActiveForm('salary-exp');
       }, 50);
@@ -707,7 +707,21 @@ export default function PersonalDetailsPage() {
       }}
     >
       {/* Header */}
-      <Header />
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/SAASA%20Logo.png"
+            alt="SAASA B2E"
+            width={110}
+            height={32}
+            className="h-8 w-auto"
+          />
+        </div>
+        <a href="#" className="text-sm font-semibold text-sky-600 hover:text-sky-700">
+          Help
+        </a>
+      </header>
 
 
       {/* Main Content */}
@@ -733,32 +747,39 @@ export default function PersonalDetailsPage() {
               overflow: hidden;
             }
             .form-slide {
-              transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
               width: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
             }
-            .form-slide.slide-out-left {
-              transform: translateX(-100%);
-              opacity: 0;
+            .form-slide.active {
+              animation: slideInFromRight 0.4s ease-out forwards;
+              z-index: 20;
             }
-            .form-slide.slide-out-right {
-              transform: translateX(100%);
-              opacity: 0;
+            .form-slide.inactive {
+              animation: slideOutToLeft 0.4s ease-out forwards;
+              z-index: 10;
+              pointer-events: none;
             }
-            .form-slide.slide-in-left {
-              transform: translateX(0);
-              opacity: 1;
+            @keyframes slideInFromRight {
+              from {
+                transform: translateX(100%);
+                opacity: 0;
+              }
+              to {
+                transform: translateX(0);
+                opacity: 1;
+              }
             }
-            .form-slide.slide-in-right {
-              transform: translateX(0);
-              opacity: 1;
-            }
-            .form-slide.enter-from-right {
-              transform: translateX(100%);
-              opacity: 0;
-            }
-            .form-slide.enter-from-left {
-              transform: translateX(-100%);
-              opacity: 0;
+            @keyframes slideOutToLeft {
+              from {
+                transform: translateX(0);
+                opacity: 1;
+              }
+              to {
+                transform: translateX(-100%);
+                opacity: 0;
+              }
             }
           `}} />
           {/* White Card Container */}
@@ -878,20 +899,16 @@ export default function PersonalDetailsPage() {
                         key={item.label}
                         type="button"
                         onClick={() => {
+                          setPrevForm(activeForm);
                           if (idx === 0) {
-                            setSlideDirection('left');
                             setTimeout(() => setActiveForm('personal'), 50);
                           } else if (idx === 1) {
-                            setSlideDirection('right');
                             setTimeout(() => setActiveForm('education'), 50);
                           } else if (idx === 2) {
-                            setSlideDirection('right');
                             setTimeout(() => setActiveForm('skills'), 50);
                           } else if (idx === 3) {
-                            setSlideDirection('right');
                             setTimeout(() => setActiveForm('work-exp'), 50);
                           } else if (idx === 4) {
-                            setSlideDirection('right');
                             setTimeout(() => setActiveForm('salary-exp'), 50);
                           }
                         }}
@@ -937,10 +954,7 @@ export default function PersonalDetailsPage() {
                   `}</style>
                   {/* Personal Information Form */}
                   <div
-                    className={`form-slide ${activeForm === 'personal'
-                      ? (slideDirection === 'right' ? 'slide-in-left' : 'slide-in-right')
-                      : (slideDirection === 'right' ? 'slide-out-left' : 'slide-out-right')
-                      }`}
+                    className={`form-slide ${activeForm === 'personal' ? 'active' : prevForm === 'personal' ? 'inactive' : 'invisible opacity-0 pointer-events-none'}`}
                     style={{
                       position: 'absolute',
                       width: '100%',
@@ -1629,10 +1643,7 @@ export default function PersonalDetailsPage() {
 
                   {/* Educational Details Form */}
                   <div
-                    className={`form-slide ${activeForm === 'education'
-                      ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
-                      : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                      }`}
+                    className={`form-slide ${activeForm === 'education' ? 'active' : prevForm === 'education' ? 'inactive' : 'invisible opacity-0 pointer-events-none'}`}
                     style={{
                       position: 'absolute',
                       width: '100%',
@@ -2008,7 +2019,7 @@ export default function PersonalDetailsPage() {
                       <button
                         type="button"
                         onClick={() => {
-                          setSlideDirection('left');
+                          setPrevForm(activeForm);
                           setTimeout(() => setActiveForm('personal'), 50);
                         }}
                         className="transition"
@@ -2053,10 +2064,7 @@ export default function PersonalDetailsPage() {
 
                   {/* Skills Form */}
                   <div
-                    className={`form-slide ${activeForm === 'skills'
-                      ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
-                      : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                      }`}
+                    className={`form-slide ${activeForm === 'skills' ? 'active' : prevForm === 'skills' ? 'inactive' : 'invisible opacity-0 pointer-events-none'}`}
                     style={{
                       position: 'absolute',
                       width: '100%',
@@ -2280,7 +2288,7 @@ export default function PersonalDetailsPage() {
                       <button
                         type="button"
                         onClick={() => {
-                          setSlideDirection('left');
+                          setPrevForm(activeForm);
                           setTimeout(() => setActiveForm('education'), 50);
                         }}
                         className="transition"
@@ -2325,10 +2333,7 @@ export default function PersonalDetailsPage() {
 
                   {/* Work Experience Form */}
                   <div
-                    className={`form-slide ${activeForm === 'work-exp'
-                      ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
-                      : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                      }`}
+                    className={`form-slide ${activeForm === 'work-exp' ? 'active' : prevForm === 'work-exp' ? 'inactive' : 'invisible opacity-0 pointer-events-none'}`}
                     style={{
                       position: 'absolute',
                       width: '100%',
@@ -2890,7 +2895,7 @@ export default function PersonalDetailsPage() {
                       <button
                         type="button"
                         onClick={() => {
-                          setSlideDirection('left');
+                          setPrevForm(activeForm);
                           setTimeout(() => setActiveForm('skills'), 50);
                         }}
                         className="transition"
@@ -2935,10 +2940,7 @@ export default function PersonalDetailsPage() {
 
                   {/* Salary Expectation Form */}
                   <div
-                    className={`form-slide ${activeForm === 'salary-exp'
-                      ? (slideDirection === 'right' ? 'slide-in-right' : 'slide-in-left')
-                      : (slideDirection === 'right' ? 'slide-out-right' : 'slide-out-left')
-                      }`}
+                    className={`form-slide ${activeForm === 'salary-exp' ? 'active' : prevForm === 'salary-exp' ? 'inactive' : 'invisible opacity-0 pointer-events-none'}`}
                     style={{
                       position: 'absolute',
                       width: '100%',
@@ -2964,7 +2966,7 @@ export default function PersonalDetailsPage() {
                           letterSpacing: "0%",
                         }}
                       >
-                        Salary Expectation
+                        Career Preferences
                       </h2>
                       <Image
                         src="/auto_ai.png"
@@ -3778,7 +3780,7 @@ export default function PersonalDetailsPage() {
                       <button
                         type="button"
                         onClick={() => {
-                          setSlideDirection('left');
+                          setPrevForm(activeForm);
                           setTimeout(() => setActiveForm('work-exp'), 50);
                         }}
                         className="transition"

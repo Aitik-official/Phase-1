@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '@/components/common/Header';
 import Footer from '../../components/common/Footer';
 import SearchView from '../../components/ui/SearchView';
@@ -39,6 +40,7 @@ interface JobListing {
 }
 
 const DashboardPage = () => {
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
   const [locationQuery, setLocationQuery] = useState('')
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null)
@@ -754,7 +756,7 @@ const DashboardPage = () => {
                                   </div>
 
                                   <button
-                                    onClick={() => setIsScreeningModalOpen(true)}
+                                    onClick={() => router.push('/cvscore')}
                                     className="bg-[#111827] hover:bg-black text-white font-bold px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 md:py-3 rounded-xl w-full transition-all shadow-md active:scale-95 whitespace-nowrap"
                                     style={{ fontSize: "clamp(11px, 1.2vw, 13px)" }}
                                   >
