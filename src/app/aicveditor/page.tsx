@@ -2,14 +2,15 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Header from '../../components/common/Header';
-import Footer from '../../components/common/Footer';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
+import ApplicationSuccessModal from '@/components/modals/ApplicationSuccessModal';
 
 export default function AICVEditorPage() {
   const router = useRouter();
   const [summary, setSummary] = useState('Experienced software engineer with a strong background in full-stack development and cloud technologies. Proven ability to lead projects, mentor junior developers, and deliver high-quality solutions on time.');
   const [suggestedSummary, setSuggestedSummary] = useState('Proven leadership in developing scalable microservices architecture, reducing system latency by 40%, and mentoring cross-functional teams. Expert in Node.js, Python, and cloud platforms with a track record of delivering enterprise-grade solutions.');
-  
+
   const [experiences, setExperiences] = useState([
     {
       id: 1,
@@ -47,14 +48,14 @@ export default function AICVEditorPage() {
   ]);
 
   const [existingSkills, setExistingSkills] = useState([
-    'React', 'Node.js', 'Python', 'AWS', 'Docker', 'Kubernetes', 
-    'TypeScript', 'JavaScript', 'SQL', 'MongoDB', 'Git', 'Agile', 
+    'React', 'Node.js', 'Python', 'AWS', 'Docker', 'Kubernetes',
+    'TypeScript', 'JavaScript', 'SQL', 'MongoDB', 'Git', 'Agile',
     'Microservices', 'System Design'
   ]);
 
   const [aiSuggestedSkills, setAiSuggestedSkills] = useState([
-    'Leadership', 'Project Management', 'Cloud Architecture', 
-    'Frontend Development', 'Backend Development', 'CI/CD', 
+    'Leadership', 'Project Management', 'Cloud Architecture',
+    'Frontend Development', 'Backend Development', 'CI/CD',
     'Database Management', 'Security Best Practices', 'Machine Learning Basics'
   ]);
 
@@ -73,7 +74,7 @@ export default function AICVEditorPage() {
   ]);
 
   const [highPriorityKeywords] = useState([
-    'Software Engineering', 'Microservices', 'Cloud Computing', 
+    'Software Engineering', 'Microservices', 'Cloud Computing',
     'Full-stack Development', 'Machine Learning'
   ]);
 
@@ -86,6 +87,7 @@ export default function AICVEditorPage() {
   ]);
 
   const [expandedSection, setExpandedSection] = useState<string | null>('summary');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const toggleSection = (section: string) => {
     // If clicking on an already expanded section, collapse it
@@ -114,7 +116,7 @@ export default function AICVEditorPage() {
   const applyRewrite = (suggestionId: number) => {
     const suggestion = aiRewriteSuggestions.find(s => s.id === suggestionId);
     if (suggestion) {
-      const expIndex = experiences.findIndex(exp => 
+      const expIndex = experiences.findIndex(exp =>
         exp.responsibilities.includes(suggestion.original)
       );
       if (expIndex !== -1) {
@@ -134,12 +136,11 @@ export default function AICVEditorPage() {
   };
 
   const handleSubmit = () => {
-    // Redirect to dashboard page
-    router.push('/candidate-dashboard');
+    setIsSuccessModalOpen(true);
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen flex flex-col"
       style={{
         width: '1440px',
@@ -610,7 +611,7 @@ export default function AICVEditorPage() {
             </div>
 
             {/* Submit Button */}
-            <button 
+            <button
               onClick={handleSubmit}
               className="w-full px-6 py-4 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-lg rounded-lg transition-colors shadow-md"
             >
@@ -621,6 +622,18 @@ export default function AICVEditorPage() {
       </main>
 
       <Footer />
+
+      <ApplicationSuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+        jobTitle="Senior Software Engineer"
+        company="Tech Solutions Inc."
+        appliedDate={new Date().toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        })}
+      />
     </div>
   );
 }

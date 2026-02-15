@@ -543,6 +543,7 @@ export default function CandidateDashboardPage() {
                     e.currentTarget.style.width = "48px";
                     e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
+                  onClick={() => router.push('/aicveditor')}
                 >
                   <div className="flex items-center justify-center w-12 h-12 shrink-0">
                     <svg
