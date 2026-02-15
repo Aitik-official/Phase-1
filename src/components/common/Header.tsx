@@ -551,7 +551,7 @@ export default function Header() {
                             className="profile-button h-8 w-8 overflow-hidden rounded-full bg-slate-300 cursor-pointer"
                         >
                             <Image
-                                src="/cv_main.jpg"
+                                src="/Gemini_Generated_Image_xxo7twxxo7twxxo7.png"
                                 alt="User avatar"
                                 width={32}
                                 height={32}
@@ -598,7 +598,7 @@ export default function Header() {
                                                     marginBottom: "2px",
                                                 }}
                                             >
-                                                Vedant Sharma
+                                                Sachin Dubey
                                             </h3>
                                             <p
                                                 style={{
@@ -608,7 +608,7 @@ export default function Header() {
                                                     marginBottom: "4px",
                                                 }}
                                             >
-                                                vedant.sharma@example.com
+                                                Sachin@gmail.com
                                             </p>
                                             <span
                                                 className="inline-block px-1.5 py-0.5 rounded-full"
