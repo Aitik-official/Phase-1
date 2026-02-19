@@ -70,14 +70,15 @@ export default function ProfilePage() {
   // Data storage for modals
   const [basicInfoData, setBasicInfoData] = useState<BasicInfoData | undefined>({
     firstName: 'John',
+    middleName: 'Vedant',
     lastName: 'Doe',
     email: 'john.doe@example.com',
     phone: '123-456-7890',
     phoneCode: '+1 (USA)',
-    dob: 'July 20th, 1990',
-    city: 'New York',
     gender: 'Male',
+    dob: 'July 20th, 1990',
     country: 'United States',
+    city: 'New York',
     employment: 'Employed'
   });
   const [gapExplanationData, setGapExplanationData] = useState<GapExplanationData | undefined>();
