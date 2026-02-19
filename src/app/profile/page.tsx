@@ -78,8 +78,7 @@ export default function ProfilePage() {
     city: 'New York',
     gender: 'Male',
     country: 'United States',
-    employment: 'Employed',
-    notice: '60 days'
+    employment: 'Employed'
   });
   const [gapExplanationData, setGapExplanationData] = useState<GapExplanationData | undefined>();
   const [workExperienceData, setWorkExperienceData] = useState<WorkExperienceData | undefined>();
@@ -580,10 +579,6 @@ export default function ProfilePage() {
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Current City</label>
                         <p className="text-base text-gray-900">{basicInfoData.city}</p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-500 mb-1 block">Notice Period</label>
-                        <p className="text-base text-gray-900">{basicInfoData.notice}</p>
                       </div>
                     </div>
                     <div className="space-y-4">
