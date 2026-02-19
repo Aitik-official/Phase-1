@@ -530,7 +530,7 @@ export default function VisaWorkAuthorizationModal({
                   onChange={(e) => setSelectedDestination(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option value="">Select a destination...</option>
+                  <option value="">Select a Country...</option>
                   {COUNTRIES.map((country) => (
                     <option key={country.code} value={country.code}>
                       {country.name}
