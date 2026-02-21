@@ -72,7 +72,7 @@ const VISA_STATUSES = [
 const VISA_WORKPERMIT_OPTIONS = [
   'YES, I DON\'T HAVE ONE YET',
   'YES, I ALREADY HAVE ONE',
-  'NO, I DON\'T REQUIRE ONE'
+  'Open to either'
 ];
 
 const formatDateForDisplay = (dateString: string): string => {
@@ -252,11 +252,6 @@ export default function VisaWorkAuthorizationModal({
       return;
     }
 
-    if (visaDetailsInitial && !visaDetailsInitial.visaType) {
-      alert('Please select Visa Type for Visa Details Initial.');
-      return;
-    }
-
     if (visaDetailsExpected && !visaDetailsExpected.visaType) {
       alert('Please select Visa Type for Visa Details Expected.');
       return;
@@ -361,16 +356,16 @@ export default function VisaWorkAuthorizationModal({
               </div>
             )}
 
-            {/* Item/Family Number */}
+            {/* Work Permit Number */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Item/Family Number
+                Work Permit Number
               </label>
               <input
                 type="text"
                 value={sectionData.itemFamilyNumber || ''}
                 onChange={(e) => handleVisaDetailChange(sectionId, 'itemFamilyNumber', e.target.value)}
-                placeholder="Enter item/family number"
+                placeholder="Enter work permit number"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -525,17 +520,17 @@ export default function VisaWorkAuthorizationModal({
           {/* Modal Content */}
           <div className="p-6">
             <div className="space-y-6">
-              {/* Select Destination */}
+              {/* Select Countries */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select Destination
+                  Select Countries
                 </label>
                 <select
                   value={selectedDestination}
                   onChange={(e) => setSelectedDestination(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option value="">Select a destination...</option>
+                  <option value="">Select a Country...</option>
                   {COUNTRIES.map((country) => (
                     <option key={country.code} value={country.code}>
                       {country.name}
@@ -546,9 +541,6 @@ export default function VisaWorkAuthorizationModal({
                   Select all countries where you are legally authorized to work.
                 </p>
               </div>
-
-              {/* Visa Details Initial */}
-              {renderVisaDetailsSection(visaDetailsInitial, 'initial', 'Visa Details Initial')}
 
               {/* Visa Details Expected */}
               {renderVisaDetailsSection(visaDetailsExpected, 'expected', 'Visa Details (Expected)')}
@@ -573,26 +565,29 @@ export default function VisaWorkAuthorizationModal({
                     </label>
                   ))}
                 </div>
-                <div className="mt-3">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={openForAll}
-                      onChange={(e) => setOpenForAll(e.target.checked)}
-                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-700">Open for all?</span>
-                  </label>
+                <div className="mt-2 flex items-start gap-2">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="mt-0.5 shrink-0">
+                    <g clipPath="url(#clip0_3_14286)">
+                      <path d="M14.0289 8.00086C14.0289 4.67058 11.3292 1.97086 7.99891 1.97086C4.66863 1.97086 1.96891 4.67058 1.96891 8.00086C1.96891 11.3312 4.66863 14.0309 7.99891 14.0309C11.3292 14.0309 14.0289 11.3312 14.0289 8.00086ZM15.3689 8.00086C15.3689 12.0712 12.0692 15.3709 7.99891 15.3709C3.92857 15.3709 0.628906 12.0712 0.628906 8.00086C0.628906 3.93052 3.92857 0.630859 7.99891 0.630859C12.0692 0.630859 15.3689 3.93052 15.3689 8.00086Z" fill="#4B5563"/>
+                      <path d="M7.32812 10.6703L7.32812 7.99031C7.32812 7.62027 7.62808 7.32031 7.99813 7.32031C8.36817 7.32031 8.66813 7.62027 8.66813 7.99031V10.6703C8.66813 11.0404 8.36817 11.3403 7.99813 11.3403C7.62808 11.3403 7.32812 11.0404 7.32812 10.6703Z" fill="#4B5563"/>
+                      <path d="M8.00469 4.66016L8.07337 4.66343C8.41118 4.69775 8.67469 4.98326 8.67469 5.33016C8.67469 5.67706 8.41118 5.96256 8.07337 5.99689L8.00469 6.00016H7.99813C7.62808 6.00016 7.32812 5.70018 7.32812 5.33016C7.32812 4.96013 7.62808 4.66016 7.99813 4.66016H8.00469Z" fill="#4B5563"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_3_14286">
+                        <rect width="16" height="16" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  <p className="text-xs text-gray-500">
+                    Some selected locations may require company-sponsored visas depending on role and country.
+                  </p>
                 </div>
-                <p className="mt-2 text-xs text-gray-500">
-                  Please ensure location/country may require a Visa/Work permit and if so depending on the end country.
-                </p>
               </div>
 
-              {/* Additional Remarks */}
+              {/* Additional Notes (Optional) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Remarks
+                  Additional Notes (Optional)
                 </label>
                 <textarea
                   value={additionalRemarks}
