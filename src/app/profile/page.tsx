@@ -148,12 +148,7 @@ export default function ProfilePage() {
           status: 'Completed',
           hasInfo: true,
           data: workExperienceData || {
-            jobTitle: 'Software Developer',
-            companyName: 'Tech Corp',
-            startDate: '2020-01-01',
-            endDate: '2023-12-31',
-            currentlyWorkHere: false,
-            workLocation: 'San Francisco, USA'
+            workExperiences: []
           }
         },
         {
@@ -196,8 +191,7 @@ export default function ProfilePage() {
     {
       category: 'PREFERENCES',
       items: [
-        { name: 'Career Preferences', status: 'Completed', hasInfo: true },
-        { name: 'Employment Details', status: 'Partially Completed', hasInfo: true }
+        { name: 'Career Preferences', status: 'Completed', hasInfo: true }
       ]
     },
     {
@@ -647,32 +641,38 @@ export default function ProfilePage() {
 
                 {selectedItem.itemName === 'Work Experience' && (
                   <div>
-                    {workExperienceData ? (
+                    {workExperienceData && workExperienceData.workExperiences && workExperienceData.workExperiences.length > 0 ? (
                       <div className="space-y-4">
-                        <div>
-                          <label className="text-sm font-medium text-gray-500 mb-1 block">Job Title</label>
-                          <p className="text-base text-gray-900">{workExperienceData.jobTitle}</p>
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
-                          <p className="text-base text-gray-900">{workExperienceData.companyName}</p>
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-gray-500 mb-1 block">Employment Type</label>
-                          <p className="text-base text-gray-900">{workExperienceData.employmentType}</p>
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
-                          <p className="text-base text-gray-900">
-                            {workExperienceData.startDate} - {workExperienceData.currentlyWorkHere ? 'Present' : workExperienceData.endDate}
-                          </p>
-                        </div>
-                        {workExperienceData.workLocation && (
-                          <div>
-                            <label className="text-sm font-medium text-gray-500 mb-1 block">Location</label>
-                            <p className="text-base text-gray-900">{workExperienceData.workLocation}</p>
+                        {workExperienceData.workExperiences.map((experience, index) => (
+                          <div key={experience.id || index} className="border-b border-gray-200 pb-4 last:border-b-0 last:pb-0">
+                            <div className="space-y-2">
+                              <div>
+                                <label className="text-sm font-medium text-gray-500 mb-1 block">Job Title</label>
+                                <p className="text-base text-gray-900">{experience.jobTitle}</p>
+                              </div>
+                              <div>
+                                <label className="text-sm font-medium text-gray-500 mb-1 block">Company Name</label>
+                                <p className="text-base text-gray-900">{experience.companyName}</p>
+                              </div>
+                              <div>
+                                <label className="text-sm font-medium text-gray-500 mb-1 block">Employment Type</label>
+                                <p className="text-base text-gray-900">{experience.employmentType}</p>
+                              </div>
+                              <div>
+                                <label className="text-sm font-medium text-gray-500 mb-1 block">Duration</label>
+                                <p className="text-base text-gray-900">
+                                  {experience.startDate} - {experience.currentlyWorkHere ? 'Present' : experience.endDate}
+                                </p>
+                              </div>
+                              {experience.workLocation && (
+                                <div>
+                                  <label className="text-sm font-medium text-gray-500 mb-1 block">Location</label>
+                                  <p className="text-base text-gray-900">{experience.workLocation}</p>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
+                        ))}
                       </div>
                     ) : (
                       <p className="text-base text-gray-500">No work experience added yet.</p>

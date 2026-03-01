@@ -184,7 +184,7 @@ export default function Header() {
 
                 {/* Mobile Menu Overlay */}
                 {isMobileMenuOpen && (
-                    <div className="mobile-menu fixed inset-0 z-[10002] lg:hidden">
+                    <div className="mobile-menu fixed inset-0 z-10002 lg:hidden">
                         {/* Backdrop */}
                         <div
                             className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"

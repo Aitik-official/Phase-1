@@ -229,25 +229,24 @@ export default function EducationModal({
                       </option>
                     ))}
                   </select>
+                  {/* Currently Studying Checkbox */}
+                  <div className="mt-3">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={currentlyStudying}
+                        onChange={(e) => {
+                          setCurrentlyStudying(e.target.checked);
+                          if (e.target.checked) {
+                            setEndYear('');
+                          }
+                        }}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">I am currently studying here</span>
+                    </label>
+                  </div>
                 </div>
-              </div>
-
-              {/* Currently Studying Checkbox */}
-              <div>
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={currentlyStudying}
-                    onChange={(e) => {
-                      setCurrentlyStudying(e.target.checked);
-                      if (e.target.checked) {
-                        setEndYear('');
-                      }
-                    }}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="ml-2 text-sm text-gray-700">I am currently studying here</span>
-                </label>
               </div>
 
               {/* Academic Details Section */}

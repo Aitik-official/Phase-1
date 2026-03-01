@@ -9,11 +9,16 @@ interface VaccinationModalProps {
   initialData?: VaccinationData;
 }
 
+export interface VaccinationItem {
+  id: string;
+  vaccineType: string;
+  lastVaccinationDate: string;
+  certificate?: File | string;
+}
+
 export interface VaccinationData {
   vaccinationStatus: 'Yes' | 'No' | '';
-  vaccineType?: string;
-  lastVaccinationDate?: string;
-  certificate?: File | string;
+  vaccinations: VaccinationItem[];
 }
 
 const formatDateForDisplay = (dateString: string): string => {
@@ -32,18 +37,18 @@ export default function VaccinationModal({
   initialData,
 }: VaccinationModalProps) {
   const [vaccinationStatus, setVaccinationStatus] = useState<'Yes' | 'No' | ''>(initialData?.vaccinationStatus || '');
-  const [vaccineType, setVaccineType] = useState(initialData?.vaccineType || '');
-  const [lastVaccinationDate, setLastVaccinationDate] = useState(initialData?.lastVaccinationDate || '');
-  const [certificate, setCertificate] = useState<File | string | null>(initialData?.certificate || null);
+  const [vaccineType, setVaccineType] = useState('');
+  const [lastVaccinationDate, setLastVaccinationDate] = useState('');
+  const [certificate, setCertificate] = useState<File | string | null>(null);
+  const [vaccinations, setVaccinations] = useState<VaccinationItem[]>(initialData?.vaccinations || []);
+  const [expandedItems, setExpandedItems] = useState<{ [key: string]: boolean }>({});
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (initialData) {
       setVaccinationStatus(initialData.vaccinationStatus || '');
-      setVaccineType(initialData.vaccineType || '');
-      setLastVaccinationDate(initialData.lastVaccinationDate || '');
-      setCertificate(initialData.certificate || null);
+      setVaccinations(initialData.vaccinations || []);
     } else {
       resetForm();
     }
@@ -54,6 +59,7 @@ export default function VaccinationModal({
     setVaccineType('');
     setLastVaccinationDate('');
     setCertificate(null);
+    setVaccinations([]);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -84,6 +90,43 @@ export default function VaccinationModal({
     }
   };
 
+  const handleAddVaccination = () => {
+    if (!vaccineType.trim()) {
+      alert('Please enter vaccine type.');
+      return;
+    }
+    if (!lastVaccinationDate) {
+      alert('Please select last vaccination date.');
+      return;
+    }
+
+    const newVaccination: VaccinationItem = {
+      id: Date.now().toString(),
+      vaccineType: vaccineType.trim(),
+      lastVaccinationDate,
+      certificate: certificate || undefined,
+    };
+
+    setVaccinations([...vaccinations, newVaccination]);
+    setVaccineType('');
+    setLastVaccinationDate('');
+    setCertificate(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleRemoveVaccination = (id: string) => {
+    setVaccinations(vaccinations.filter(v => v.id !== id));
+  };
+
+  const toggleExpand = (id: string) => {
+    setExpandedItems({
+      ...expandedItems,
+      [id]: !expandedItems[id],
+    });
+  };
+
   const handleSave = () => {
     if (!vaccinationStatus) {
       alert('Please select your vaccination status.');
@@ -92,12 +135,21 @@ export default function VaccinationModal({
 
     onSave({
       vaccinationStatus,
-      vaccineType: vaccineType.trim() || undefined,
-      lastVaccinationDate: lastVaccinationDate || undefined,
-      certificate: certificate || undefined,
+      vaccinations,
     });
     onClose();
   };
+
+  const formatDateRange = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const isFormComplete = vaccineType.trim() && lastVaccinationDate;
 
   if (!isOpen) return null;
 
@@ -295,6 +347,136 @@ export default function VaccinationModal({
                   Optional. Upload only if required by the employer.
                 </p>
               </div>
+
+              {/* Add Button */}
+              {isFormComplete && (
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleAddVaccination}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 flex items-center gap-2"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 3.33333V12.6667"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M3.33333 8H12.6667"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    Add Vaccination
+                  </button>
+                </div>
+              )}
+
+              {/* Added Vaccinations List */}
+              {vaccinations.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-sm font-semibold text-gray-900">Added Vaccinations</h3>
+                  {vaccinations.map((vaccination) => (
+                    <div
+                      key={vaccination.id}
+                      className="border border-gray-200 rounded-lg p-4 bg-white"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <h4 className="text-sm font-semibold text-gray-900">
+                            {vaccination.vaccineType}
+                          </h4>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatDateRange(vaccination.lastVaccinationDate)}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleRemoveVaccination(vaccination.id)}
+                            className="text-red-500 hover:text-red-700 p-1"
+                            title="Delete"
+                          >
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 4L4 12M4 4L12 12"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => toggleExpand(vaccination.id)}
+                            className="text-gray-500 hover:text-gray-700 p-1"
+                            title="Expand"
+                          >
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              className={`transition-transform ${expandedItems[vaccination.id] ? 'rotate-180' : ''}`}
+                            >
+                              <path
+                                d="M4 6L8 10L12 6"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      {expandedItems[vaccination.id] && (
+                        <div className="mt-3 pt-3 border-t border-gray-200">
+                          <div className="space-y-2">
+                            <div>
+                              <span className="text-xs text-gray-500">Vaccine Type:</span>
+                              <p className="text-sm text-gray-900">{vaccination.vaccineType}</p>
+                            </div>
+                            <div>
+                              <span className="text-xs text-gray-500">Last Vaccination Date:</span>
+                              <p className="text-sm text-gray-900">
+                                {formatDateForDisplay(vaccination.lastVaccinationDate)}
+                              </p>
+                            </div>
+                            {vaccination.certificate && (
+                              <div>
+                                <span className="text-xs text-gray-500">Certificate:</span>
+                                <p className="text-sm text-gray-900">
+                                  {vaccination.certificate instanceof File
+                                    ? vaccination.certificate.name
+                                    : vaccination.certificate}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Disclaimer */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">

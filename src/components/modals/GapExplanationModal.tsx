@@ -7,6 +7,13 @@ interface GapExplanationModalProps {
   onClose: () => void;
   onSave: (data: GapExplanationData) => void;
   initialData?: GapExplanationData;
+  gapInfo?: {
+    gapYears: number;
+    gapMonths: number;
+    gapDays?: number;
+    fromDate: string;
+    toDate: string;
+  };
 }
 
 export interface GapExplanationData {
@@ -23,11 +30,21 @@ export interface GapExplanationData {
   };
 }
 
+const formatDateForDisplay = (dateString: string) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
 export default function GapExplanationModal({
   isOpen,
   onClose,
   onSave,
   initialData,
+  gapInfo,
 }: GapExplanationModalProps) {
   const [gapCategory, setGapCategory] = useState(initialData?.gapCategory || 'Professional');
   const [reasonForGap, setReasonForGap] = useState(initialData?.reasonForGap || '');
@@ -60,11 +77,11 @@ export default function GapExplanationModal({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-50"
+        className="fixed inset-0 bg-black bg-opacity-50 z-9999"
         onClick={onClose}
       />
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-9999 flex items-center justify-center p-4">
         <div
           className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
@@ -84,6 +101,34 @@ export default function GapExplanationModal({
 
           {/* Modal Body */}
           <div className="px-6 py-6 space-y-6">
+            {/* Gap Information Display */}
+            {gapInfo && (
+              <div className="space-y-4">
+                {/* Gap Duration */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm font-medium text-blue-900 mb-1">
+                    Gap Duration Detected:
+                  </p>
+                  <p className="text-2xl font-bold text-blue-900">
+                    {gapInfo.gapYears > 0 && `${gapInfo.gapYears} ${gapInfo.gapYears === 1 ? 'Year' : 'Years'}`}
+                    {gapInfo.gapMonths > 0 && `${gapInfo.gapYears > 0 ? ' ' : ''}${gapInfo.gapMonths} ${gapInfo.gapMonths === 1 ? 'Month' : 'Months'}`}
+                    {gapInfo.gapDays !== undefined && gapInfo.gapDays > 0 && gapInfo.gapYears === 0 && gapInfo.gapMonths === 0 && `${gapInfo.gapDays} ${gapInfo.gapDays === 1 ? 'Day' : 'Days'}`}
+                    {gapInfo.gapYears === 0 && gapInfo.gapMonths === 0 && (!gapInfo.gapDays || gapInfo.gapDays === 0) && 'Less than 1 day'}
+                  </p>
+                </div>
+
+                {/* Date Range */}
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-2">Gap Period:</p>
+                  <div className="flex items-center gap-2 text-gray-900">
+                    <span className="font-medium">{formatDateForDisplay(gapInfo.fromDate)}</span>
+                    <span className="text-gray-400">to</span>
+                    <span className="font-medium">{formatDateForDisplay(gapInfo.toDate)}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Gap Category */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">

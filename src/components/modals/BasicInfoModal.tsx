@@ -30,26 +30,16 @@ export default function BasicInfoModal({
   onSave,
   initialData,
 }: BasicInfoModalProps) {
-  const [firstNameFocused, setFirstNameFocused] = useState(false);
   const [firstNameValue, setFirstNameValue] = useState(initialData?.firstName || '');
-  const [middleNameFocused, setMiddleNameFocused] = useState(false);
   const [middleNameValue, setMiddleNameValue] = useState(initialData?.middleName || '');
-  const [lastNameFocused, setLastNameFocused] = useState(false);
   const [lastNameValue, setLastNameValue] = useState(initialData?.lastName || '');
-  const [emailFocused, setEmailFocused] = useState(false);
   const [emailValue, setEmailValue] = useState(initialData?.email || '');
-  const [phoneFocused, setPhoneFocused] = useState(false);
   const [phoneValue, setPhoneValue] = useState(initialData?.phone || '');
   const [phoneCode, setPhoneCode] = useState(initialData?.phoneCode || '+1 (USA)');
-  const [genderFocused, setGenderFocused] = useState(false);
   const [genderValue, setGenderValue] = useState(initialData?.gender || '');
-  const [dobFocused, setDobFocused] = useState(false);
   const [dobValue, setDobValue] = useState(initialData?.dob || '');
-  const [countryFocused, setCountryFocused] = useState(false);
   const [countryValue, setCountryValue] = useState(initialData?.country || '');
-  const [cityFocused, setCityFocused] = useState(false);
   const [cityValue, setCityValue] = useState(initialData?.city || '');
-  const [employmentFocused, setEmploymentFocused] = useState(false);
   const [employmentValue, setEmploymentValue] = useState(initialData?.employment || '');
   const dateInputRef = useRef<HTMLInputElement>(null);
 
@@ -140,170 +130,100 @@ export default function BasicInfoModal({
 
           {/* Modal Content */}
           <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Left Column */}
-              <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Name Fields Row */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* First Name */}
-                <div className="relative">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={firstNameValue}
-                      onChange={(e) => setFirstNameValue(e.target.value)}
-                      onFocus={() => setFirstNameFocused(true)}
-                      onBlur={() => setFirstNameFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        firstNameFocused || firstNameValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        firstNameFocused || firstNameValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        firstNameFocused || firstNameValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      First Name
-                    </label>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    value={firstNameValue}
+                    onChange={(e) => setFirstNameValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
                 </div>
 
-                {/* Email Address */}
-                <div className="relative">
-                  <div className="relative">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="email"
-                        value={emailValue}
-                        onChange={(e) => setEmailValue(e.target.value)}
-                        onFocus={() => setEmailFocused(true)}
-                        onBlur={() => setEmailFocused(false)}
-                        className={`flex-1 px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                          emailFocused || emailValue ? "pt-5" : "pt-3"
-                        }`}
-                        style={{
-                          height: "48.19px",
-                          borderRadius: "5.02px",
-                          border: "1px solid #99A1AF",
-                          backgroundColor: "#FFFFFF",
-                        }}
-                      />
-                      <button className="px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700" style={{ height: "48.19px" }}>
-                        Verified
-                      </button>
-                    </div>
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        emailFocused || emailValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        emailFocused || emailValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Email Address
-                    </label>
+                {/* Middle Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Middle Name
+                  </label>
+                  <input
+                    type="text"
+                    value={middleNameValue}
+                    onChange={(e) => setMiddleNameValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+
+                {/* Last Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    value={lastNameValue}
+                    onChange={(e) => setLastNameValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-4">
+                  {/* Email Address */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="email"
+                      value={emailValue}
+                      onChange={(e) => setEmailValue(e.target.value)}
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    />
+                    <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700">
+                      Verified
+                    </button>
                   </div>
                 </div>
 
                 {/* Phone Number */}
-                <div className="relative">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number
+                  </label>
                   <div className="flex gap-2">
-                    <div className="relative" style={{ width: "140px" }}>
-                      <select
-                        value={phoneCode}
-                        onChange={(e) => setPhoneCode(e.target.value)}
-                        className="px-4 pt-3 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 pr-10"
-                        style={{
-                          width: "100%",
-                          height: "48.19px",
-                          borderRadius: "5.02px",
-                          border: "1px solid #99A1AF",
-                          backgroundColor: "#FFFFFF",
-                          appearance: "none",
-                        }}
-                      >
-                        <option>+1 (USA)</option>
-                        <option>+44 (UK)</option>
-                        <option>+91 (India)</option>
-                      </select>
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M3 4.5L6 7.5L9 4.5"
-                            stroke="#99A1AF"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="relative flex-1">
-                      <input
-                        type="tel"
-                        value={phoneValue}
-                        onChange={(e) => setPhoneValue(e.target.value)}
-                        onFocus={() => setPhoneFocused(true)}
-                        onBlur={() => setPhoneFocused(false)}
-                        className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                          phoneFocused || phoneValue ? "pt-5" : "pt-3"
-                        }`}
-                        style={{
-                          width: "100%",
-                          height: "48.19px",
-                          borderRadius: "5.02px",
-                          border: "1px solid #99A1AF",
-                          backgroundColor: "#FFFFFF",
-                        }}
-                      />
-                      <label
-                        className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                          phoneFocused || phoneValue
-                            ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                            : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                        }`}
-                        style={
-                          phoneFocused || phoneValue
-                            ? {
-                                color: "#239CD2",
-                              }
-                            : undefined
-                        }
-                      >
-                        Phone Number
-                      </label>
-                    </div>
+                    <select
+                      value={phoneCode}
+                      onChange={(e) => setPhoneCode(e.target.value)}
+                      className="w-36 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white"
+                    >
+                      <option>+1 (USA)</option>
+                      <option>+44 (UK)</option>
+                      <option>+91 (India)</option>
+                    </select>
+                    <input
+                      type="tel"
+                      value={phoneValue}
+                      onChange={(e) => setPhoneValue(e.target.value)}
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    />
                   </div>
                 </div>
 
                 {/* Date of Birth */}
-                <div className="relative">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Date of Birth
+                  </label>
                   <div className="relative">
                     <div
                       className="absolute left-3 top-1/2 -translate-y-1/2 z-10 cursor-pointer"
@@ -322,341 +242,82 @@ export default function BasicInfoModal({
                       type="text"
                       value={dobValue}
                       onChange={(e) => setDobValue(e.target.value)}
-                      onFocus={() => setDobFocused(true)}
-                      onBlur={() => setDobFocused(false)}
                       onClick={() => dateInputRef.current?.showPicker()}
-                      className={`px-4 pb-2 pl-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        dobFocused || dobValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                      }}
+                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                     />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        dobFocused || dobValue
-                          ? "left-10 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-10 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        dobFocused || dobValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Date of Birth
-                    </label>
                   </div>
                 </div>
 
                 {/* Current City */}
-                <div className="relative">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={cityValue}
-                      onChange={(e) => setCityValue(e.target.value)}
-                      onFocus={() => setCityFocused(true)}
-                      onBlur={() => setCityFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        cityFocused || cityValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        cityFocused || cityValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        cityFocused || cityValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Current City
-                    </label>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Current City
+                  </label>
+                  <input
+                    type="text"
+                    value={cityValue}
+                    onChange={(e) => setCityValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                  />
                 </div>
 
-              </div>
-
-              {/* Right Column */}
-              <div className="space-y-4">
-                {/* Middle Name */}
-                <div className="relative">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={middleNameValue}
-                      onChange={(e) => setMiddleNameValue(e.target.value)}
-                      onFocus={() => setMiddleNameFocused(true)}
-                      onBlur={() => setMiddleNameFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        middleNameFocused || middleNameValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        middleNameFocused || middleNameValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        middleNameFocused || middleNameValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Middle Name
-                    </label>
-                  </div>
                 </div>
 
-                {/* Last Name */}
-                <div className="relative">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={lastNameValue}
-                      onChange={(e) => setLastNameValue(e.target.value)}
-                      onFocus={() => setLastNameFocused(true)}
-                      onBlur={() => setLastNameFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        lastNameFocused || lastNameValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                      }}
-                    />
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        lastNameFocused || lastNameValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        lastNameFocused || lastNameValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Last Name
-                    </label>
-                  </div>
-                </div>
-
-                {/* Gender */}
-                <div className="relative">
-                  <div className="relative">
-                    <select
-                      value={genderValue}
-                      onChange={(e) => setGenderValue(e.target.value)}
-                      onFocus={() => setGenderFocused(true)}
-                      onBlur={() => setGenderFocused(false)}
-                      className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        genderFocused || genderValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                        appearance: "none",
-                      }}
-                    >
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Other</option>
-                      <option>Prefer not to say</option>
-                    </select>
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        genderFocused || genderValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        genderFocused || genderValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Gender
-                    </label>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3 4.5L6 7.5L9 4.5"
-                          stroke="#99A1AF"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                {/* Right Column */}
+                <div className="space-y-4">
+                  {/* Gender */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Gender
+                  </label>
+                  <select
+                    value={genderValue}
+                    onChange={(e) => setGenderValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white"
+                  >
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                    <option>Prefer not to say</option>
+                  </select>
                 </div>
 
                 {/* Current Country */}
-                <div className="relative">
-                  <div className="relative">
-                    <select
-                      value={countryValue}
-                      onChange={(e) => setCountryValue(e.target.value)}
-                      onFocus={() => setCountryFocused(true)}
-                      onBlur={() => setCountryFocused(false)}
-                      className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        countryFocused || countryValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                        appearance: "none",
-                      }}
-                    >
-                      <option>United States</option>
-                      <option>United Kingdom</option>
-                      <option>India</option>
-                      <option>Canada</option>
-                    </select>
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        countryFocused || countryValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        countryFocused || countryValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Current Country
-                    </label>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3 4.5L6 7.5L9 4.5"
-                          stroke="#99A1AF"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Current Country
+                  </label>
+                  <select
+                    value={countryValue}
+                    onChange={(e) => setCountryValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white"
+                  >
+                    <option value="">Select Country</option>
+                    <option>United States</option>
+                    <option>United Kingdom</option>
+                    <option>India</option>
+                    <option>Canada</option>
+                  </select>
                 </div>
 
                 {/* Employment Status */}
-                <div className="relative">
-                  <div className="relative">
-                    <select
-                      value={employmentValue}
-                      onChange={(e) => setEmploymentValue(e.target.value)}
-                      onFocus={() => setEmploymentFocused(true)}
-                      onBlur={() => setEmploymentFocused(false)}
-                      className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        employmentFocused || employmentValue ? "pt-5" : "pt-3"
-                      }`}
-                      style={{
-                        width: "100%",
-                        height: "48.19px",
-                        borderRadius: "5.02px",
-                        border: "1px solid #99A1AF",
-                        backgroundColor: "#FFFFFF",
-                        appearance: "none",
-                      }}
-                    >
-                      <option>Employed</option>
-                      <option>Unemployed</option>
-                      <option>Self-Employed</option>
-                      <option>Student</option>
-                    </select>
-                    <label
-                      className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        employmentFocused || employmentValue
-                          ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
-                          : "left-4 top-1/2 -translate-y-1/2 text-sm"
-                      }`}
-                      style={
-                        employmentFocused || employmentValue
-                          ? {
-                              color: "#239CD2",
-                            }
-                          : undefined
-                      }
-                    >
-                      Employment Status
-                    </label>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3 4.5L6 7.5L9 4.5"
-                          stroke="#99A1AF"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Employment Status
+                  </label>
+                  <select
+                    value={employmentValue}
+                    onChange={(e) => setEmploymentValue(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none appearance-none bg-white"
+                  >
+                    <option value="">Select Status</option>
+                    <option>Employed</option>
+                    <option>Unemployed</option>
+                    <option>Self-Employed</option>
+                    <option>Student</option>
+                  </select>
+                </div>
                 </div>
               </div>
             </div>

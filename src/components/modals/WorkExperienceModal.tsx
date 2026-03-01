@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import GapExplanationModal, { GapExplanationData } from './GapExplanationModal';
 
 interface WorkExperienceModalProps {
   isOpen: boolean;
@@ -9,7 +10,8 @@ interface WorkExperienceModalProps {
   initialData?: WorkExperienceData;
 }
 
-export interface WorkExperienceData {
+export interface WorkExperienceEntry {
+  id: string;
   jobTitle: string;
   companyName: string;
   employmentType: string;
@@ -27,33 +29,117 @@ export interface WorkExperienceData {
   workSkills: string[];
 }
 
+export interface WorkExperienceData {
+  workExperiences: WorkExperienceEntry[];
+}
+
 export default function WorkExperienceModal({
   isOpen,
   onClose,
   onSave,
   initialData,
 }: WorkExperienceModalProps) {
-  const [jobTitle, setJobTitle] = useState(initialData?.jobTitle || '');
-  const [companyName, setCompanyName] = useState(initialData?.companyName || '');
-  const [employmentType, setEmploymentType] = useState(initialData?.employmentType || '');
-  const [industryDomain, setIndustryDomain] = useState(initialData?.industryDomain || '');
-  const [numberOfReportees, setNumberOfReportees] = useState(initialData?.numberOfReportees || '');
-  const [startDate, setStartDate] = useState(initialData?.startDate || '');
-  const [endDate, setEndDate] = useState(initialData?.endDate || '');
-  const [currentlyWorkHere, setCurrentlyWorkHere] = useState(initialData?.currentlyWorkHere ?? true);
-  const [workLocation, setWorkLocation] = useState(initialData?.workLocation || '');
-  const [workMode, setWorkMode] = useState(initialData?.workMode || '');
-  const [companyProfile, setCompanyProfile] = useState(initialData?.companyProfile || '');
-  const [companyTurnover, setCompanyTurnover] = useState(initialData?.companyTurnover || '');
-  const [keyResponsibilities, setKeyResponsibilities] = useState(initialData?.keyResponsibilities || '');
-  const [achievements, setAchievements] = useState(initialData?.achievements || '');
+  const [jobTitle, setJobTitle] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [employmentType, setEmploymentType] = useState('');
+  const [industryDomain, setIndustryDomain] = useState('');
+  const [numberOfReportees, setNumberOfReportees] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [currentlyWorkHere, setCurrentlyWorkHere] = useState(false);
+  const [workLocation, setWorkLocation] = useState('');
+  const [workMode, setWorkMode] = useState('');
+  const [companyProfile, setCompanyProfile] = useState('');
+  const [companyTurnover, setCompanyTurnover] = useState('');
+  const [keyResponsibilities, setKeyResponsibilities] = useState('');
+  const [achievements, setAchievements] = useState('');
   const [workSkillsInput, setWorkSkillsInput] = useState('');
-  const [workSkills, setWorkSkills] = useState<string[]>(initialData?.workSkills || []);
+  const [workSkills, setWorkSkills] = useState<string[]>([]);
+  const [workExperiences, setWorkExperiences] = useState<WorkExperienceEntry[]>(initialData?.workExperiences || []);
+  const [expandedEntries, setExpandedEntries] = useState<{ [key: string]: boolean }>({});
+  const [isGapModalOpen, setIsGapModalOpen] = useState(false);
+  const [gapInfo, setGapInfo] = useState<{
+    gapYears: number;
+    gapMonths: number;
+    gapDays?: number;
+    fromDate: string;
+    toDate: string;
+  } | null>(null);
+  const [gapExplanationData, setGapExplanationData] = useState<GapExplanationData | undefined>();
 
-  const handleSave = () => {
-    onSave({
-      jobTitle,
-      companyName,
+  useEffect(() => {
+    if (initialData) {
+      setWorkExperiences(initialData.workExperiences || []);
+    } else {
+      resetForm();
+    }
+  }, [initialData, isOpen]);
+
+  const clearFormFields = () => {
+    setJobTitle('');
+    setCompanyName('');
+    setEmploymentType('');
+    setIndustryDomain('');
+    setNumberOfReportees('');
+    setStartDate('');
+    setEndDate('');
+    setCurrentlyWorkHere(false);
+    setWorkLocation('');
+    setWorkMode('');
+    setCompanyProfile('');
+    setCompanyTurnover('');
+    setKeyResponsibilities('');
+    setAchievements('');
+    setWorkSkillsInput('');
+    setWorkSkills([]);
+  };
+
+  const resetForm = () => {
+    clearFormFields();
+    setWorkExperiences([]);
+    setExpandedEntries({});
+  };
+
+  const handleAddWorkExperience = () => {
+    if (!jobTitle.trim()) {
+      alert('Please enter Job Title.');
+      return;
+    }
+    if (!companyName.trim()) {
+      alert('Please enter Company Name.');
+      return;
+    }
+    if (!employmentType) {
+      alert('Please select Employment Type.');
+      return;
+    }
+    if (!startDate) {
+      alert('Please select Start Date.');
+      return;
+    }
+
+    // Check for gap before adding (only if there are existing experiences and gap modal is not already open)
+    if (!isGapModalOpen) {
+      const hasGap = checkForGapAndShowModal(startDate);
+      
+      if (hasGap) {
+        // Don't add yet, wait for user to acknowledge the gap in the modal
+        return;
+      }
+    } else {
+      // If gap modal is already open, don't check again - user needs to close or save it first
+      return;
+    }
+
+    // If no gap or first experience, proceed with adding
+    addWorkExperienceEntry();
+  };
+
+  const addWorkExperienceEntry = () => {
+    const newEntry: WorkExperienceEntry = {
+      id: Date.now().toString(),
+      jobTitle: jobTitle.trim(),
+      companyName: companyName.trim(),
       employmentType,
       industryDomain,
       numberOfReportees,
@@ -67,6 +153,250 @@ export default function WorkExperienceModal({
       keyResponsibilities,
       achievements,
       workSkills,
+    };
+
+    // Add the new entry to the list
+    setWorkExperiences([...workExperiences, newEntry]);
+    
+    // Clear only the form fields for the next entry
+    clearFormFields();
+    
+    // Close gap modal if open
+    setIsGapModalOpen(false);
+    setGapInfo(null);
+  };
+
+  const handleGapExplanationSave = (data: GapExplanationData) => {
+    setGapExplanationData(data);
+    // Close the gap modal
+    setIsGapModalOpen(false);
+    // After saving gap explanation, proceed to add the work experience
+    addWorkExperienceEntry();
+  };
+
+  const getGapDurationText = () => {
+    if (!gapInfo) return '6 months - 1 year';
+    const { gapYears, gapMonths } = gapInfo;
+    
+    if (gapYears === 0 && gapMonths < 3) {
+      return 'Less than 3 months';
+    } else if (gapYears === 0 && gapMonths < 6) {
+      return '3-6 months';
+    } else if (gapYears === 0) {
+      return '6 months - 1 year';
+    } else if (gapYears === 1) {
+      return '1-2 years';
+    } else {
+      return 'More than 2 years';
+    }
+  };
+
+  const handleRemoveWorkExperience = (id: string) => {
+    setWorkExperiences(workExperiences.filter(entry => entry.id !== id));
+  };
+
+  const toggleExpandEntry = (id: string) => {
+    setExpandedEntries({
+      ...expandedEntries,
+      [id]: !expandedEntries[id]
+    });
+  };
+
+  const formatDateRange = (startDate: string, endDate: string, currentlyWorkHere: boolean) => {
+    if (!startDate) return '';
+    const start = new Date(startDate);
+    const day = String(start.getDate()).padStart(2, '0');
+    const month = String(start.getMonth() + 1).padStart(2, '0');
+    const year = start.getFullYear();
+    const startFormatted = `${day}-${month}-${year}`;
+    
+    if (currentlyWorkHere || !endDate) {
+      return `${startFormatted} - Present`;
+    }
+    
+    const end = new Date(endDate);
+    const endDay = String(end.getDate()).padStart(2, '0');
+    const endMonth = String(end.getMonth() + 1).padStart(2, '0');
+    const endYear = end.getFullYear();
+    const endFormatted = `${endDay}-${endMonth}-${endYear}`;
+    
+    return `${startFormatted} - ${endFormatted}`;
+  };
+
+  const formatDateForDisplay = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const parseDate = (dateString: string): Date | null => {
+    if (!dateString) return null;
+    
+    try {
+      // Handle YYYY-MM-DD format (from date input)
+      if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        return new Date(dateString + 'T00:00:00');
+      }
+      
+      // Handle DD-MM-YYYY format
+      if (dateString.includes('-') && dateString.split('-').length === 3) {
+        const parts = dateString.split('-');
+        if (parts[0].length === 2 && parts[1].length === 2 && parts[2].length === 4) {
+          // DD-MM-YYYY
+          return new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`);
+        }
+      }
+      
+      // Handle MM/DD/YYYY or DD/MM/YYYY format
+      if (dateString.includes('/')) {
+        const parts = dateString.split('/');
+        if (parts.length === 3) {
+          // Try MM/DD/YYYY first (most common)
+          const month = parseInt(parts[0]);
+          const day = parseInt(parts[1]);
+          if (month > 12) {
+            // Must be DD/MM/YYYY
+            return new Date(`${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}T00:00:00`);
+          } else {
+            // Assume MM/DD/YYYY
+            return new Date(`${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}T00:00:00`);
+          }
+        }
+      }
+      
+      // Try default Date parsing
+      const date = new Date(dateString);
+      if (!isNaN(date.getTime())) {
+        return date;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error parsing date:', dateString, error);
+      return null;
+    }
+  };
+
+  const calculateGap = (previousEndDate: string, newStartDate: string) => {
+    if (!previousEndDate || !newStartDate) {
+      console.log('Missing dates for gap calculation');
+      return null;
+    }
+    
+    const prevEnd = parseDate(previousEndDate);
+    const newStart = parseDate(newStartDate);
+    
+    if (!prevEnd || !newStart) {
+      console.log('Invalid dates - prevEnd:', prevEnd, 'newStart:', newStart);
+      return null;
+    }
+    
+    // Check if dates are valid
+    if (isNaN(prevEnd.getTime()) || isNaN(newStart.getTime())) {
+      console.log('Invalid date values');
+      return null;
+    }
+    
+    console.log('Comparing dates - Previous End:', prevEnd.toISOString(), 'New Start:', newStart.toISOString());
+    
+    // Check if new start date is actually after previous end date
+    // Add 1 day buffer to account for same-day transitions
+    const prevEndPlusOne = new Date(prevEnd);
+    prevEndPlusOne.setDate(prevEndPlusOne.getDate() + 1);
+    
+    if (newStart <= prevEndPlusOne) {
+      console.log('No gap - new start is not after previous end (or within 1 day)');
+      return null; // No gap, dates overlap or are continuous (within 1 day)
+    }
+    
+    // Calculate the difference in milliseconds
+    const diffTime = newStart.getTime() - prevEnd.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    console.log('Days difference:', diffDays);
+    
+    // Calculate years, months, and days
+    let gapYears = 0;
+    let gapMonths = 0;
+    let gapDays = diffDays;
+    
+    // Calculate years
+    if (diffDays >= 365) {
+      gapYears = Math.floor(diffDays / 365);
+      gapDays = diffDays % 365;
+    }
+    
+    // Calculate months from remaining days
+    if (gapDays >= 30) {
+      gapMonths = Math.floor(gapDays / 30);
+      gapDays = gapDays % 30;
+    }
+    
+    console.log('Gap calculated - Years:', gapYears, 'Months:', gapMonths, 'Days:', gapDays);
+    
+    // Return gap info for ANY gap (even if just days)
+    return {
+      gapYears,
+      gapMonths,
+      gapDays,
+      fromDate: previousEndDate,
+      toDate: newStartDate,
+    };
+  };
+
+  const checkForGapAndShowModal = (newStartDate: string) => {
+    if (!newStartDate || workExperiences.length === 0) {
+      console.log('Cannot check gap - missing start date or no previous experiences');
+      return false;
+    }
+    
+    const lastExperience = workExperiences[workExperiences.length - 1];
+    let previousEndDate = lastExperience.endDate;
+    
+    console.log('Checking gap - Last experience:', lastExperience);
+    console.log('Previous end date:', previousEndDate);
+    console.log('Currently working:', lastExperience.currentlyWorkHere);
+    
+    // If currently working or no end date, use today's date
+    if (lastExperience.currentlyWorkHere || !previousEndDate) {
+      const today = new Date();
+      previousEndDate = today.toISOString().split('T')[0];
+      console.log('Using today as previous end date:', previousEndDate);
+    }
+    
+    console.log('Calculating gap between:', previousEndDate, 'and', newStartDate);
+    
+    // Calculate gap - returns gap info for ANY gap (days, months, or years)
+    const gap = calculateGap(previousEndDate, newStartDate);
+    
+    if (gap) {
+      console.log('Gap detected! Opening modal. Gap info:', gap);
+      // Show modal for ANY gap detected (days, months, or years)
+      setGapInfo(gap);
+      setIsGapModalOpen(true);
+      return true; // Gap detected
+    }
+    
+    console.log('No gap detected');
+    return false; // No gap detected
+  };
+
+  const handleStartDateChange = (newStartDate: string) => {
+    setStartDate(newStartDate);
+    
+    // Check for gap when start date is selected
+    checkForGapAndShowModal(newStartDate);
+  };
+
+
+  const isFormComplete = jobTitle.trim() && companyName.trim() && employmentType && startDate;
+
+  const handleSave = () => {
+    onSave({
+      workExperiences,
     });
     onClose();
   };
@@ -75,6 +405,31 @@ export default function WorkExperienceModal({
 
   return (
     <>
+      {/* Gap Explanation Modal */}
+      <GapExplanationModal
+        isOpen={isGapModalOpen}
+        onClose={() => {
+          // When closing without saving, allow user to add experience anyway
+          setIsGapModalOpen(false);
+          // Keep gapInfo in case user wants to add experience
+        }}
+        onSave={handleGapExplanationSave}
+        initialData={gapInfo ? {
+          gapCategory: 'Professional',
+          reasonForGap: '',
+          gapDuration: getGapDurationText(),
+          selectedSkills: [],
+          coursesText: '',
+          preferredSupport: {
+            flexibleRole: false,
+            hybridRemote: false,
+            midLevelReEntry: false,
+            skillRefresher: false,
+          },
+        } : undefined}
+        gapInfo={gapInfo || undefined}
+      />
+
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black bg-opacity-50 z-50"
@@ -223,10 +578,9 @@ export default function WorkExperienceModal({
                 </label>
                 <div className="relative">
                   <input
-                    type="text"
+                    type="date"
                     value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    placeholder="Pick a date"
+                    onChange={(e) => handleStartDateChange(e.target.value)}
                     className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     style={{
                       fontFamily: 'Inter, sans-serif',
@@ -249,10 +603,9 @@ export default function WorkExperienceModal({
                 </label>
                 <div className="relative">
                   <input
-                    type="text"
+                    type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    placeholder="Pick a date"
                     disabled={currentlyWorkHere}
                     className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                     style={{
@@ -503,6 +856,169 @@ export default function WorkExperienceModal({
                 <span className="text-sm font-medium">Upload Your Work Experience Certificates/Documents</span>
               </button>
             </div>
+
+            {/* Add Button */}
+            {isFormComplete && (
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleAddWorkExperience}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 flex items-center gap-2"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 3.33333V12.6667"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M3.33333 8H12.6667"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  Add Work Experience
+                </button>
+              </div>
+            )}
+
+            {/* Added Work Experiences List */}
+            {workExperiences.length > 0 && (
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-gray-900">Added Work Experiences</h3>
+                {workExperiences.map((entry) => (
+                  <div
+                    key={entry.id}
+                    className="border border-gray-200 rounded-lg p-4 bg-white"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <h4 className="text-sm font-semibold text-gray-900">
+                          {entry.jobTitle} at {entry.companyName}
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {formatDateRange(entry.startDate, entry.endDate, entry.currentlyWorkHere)}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleRemoveWorkExperience(entry.id)}
+                          className="text-red-500 hover:text-red-700 p-1"
+                          title="Delete"
+                        >
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 4L4 12M4 4L12 12"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={() => toggleExpandEntry(entry.id)}
+                          className="text-gray-500 hover:text-gray-700 p-1"
+                          title="Expand"
+                        >
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={`transition-transform ${expandedEntries[entry.id] ? 'rotate-180' : ''}`}
+                          >
+                            <path
+                              d="M4 6L8 10L12 6"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    {expandedEntries[entry.id] && (
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="space-y-2">
+                          <div>
+                            <span className="text-xs text-gray-500">Job Title:</span>
+                            <p className="text-sm text-gray-900">{entry.jobTitle}</p>
+                          </div>
+                          <div>
+                            <span className="text-xs text-gray-500">Company:</span>
+                            <p className="text-sm text-gray-900">{entry.companyName}</p>
+                          </div>
+                          {entry.employmentType && (
+                            <div>
+                              <span className="text-xs text-gray-500">Employment Type:</span>
+                              <p className="text-sm text-gray-900">{entry.employmentType}</p>
+                            </div>
+                          )}
+                          {entry.workLocation && (
+                            <div>
+                              <span className="text-xs text-gray-500">Location:</span>
+                              <p className="text-sm text-gray-900">{entry.workLocation}</p>
+                            </div>
+                          )}
+                          {entry.workMode && (
+                            <div>
+                              <span className="text-xs text-gray-500">Work Mode:</span>
+                              <p className="text-sm text-gray-900">{entry.workMode}</p>
+                            </div>
+                          )}
+                          {entry.keyResponsibilities && (
+                            <div>
+                              <span className="text-xs text-gray-500">Key Responsibilities:</span>
+                              <p className="text-sm text-gray-900">{entry.keyResponsibilities}</p>
+                            </div>
+                          )}
+                          {entry.achievements && (
+                            <div>
+                              <span className="text-xs text-gray-500">Achievements:</span>
+                              <p className="text-sm text-gray-900">{entry.achievements}</p>
+                            </div>
+                          )}
+                          {entry.workSkills && entry.workSkills.length > 0 && (
+                            <div>
+                              <span className="text-xs text-gray-500">Skills:</span>
+                              <div className="flex flex-wrap gap-2 mt-1">
+                                {entry.workSkills.map((skill, index) => (
+                                  <span
+                                    key={index}
+                                    className="inline-flex items-center px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Modal Footer */}
@@ -517,7 +1033,7 @@ export default function WorkExperienceModal({
               onClick={handleSave}
               className="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
             >
-              Save Internship
+              Save Work Experience
             </button>
           </div>
         </div>
