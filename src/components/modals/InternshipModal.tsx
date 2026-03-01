@@ -82,7 +82,7 @@ export default function InternshipModal({
             <h2 className="text-xl font-semibold text-gray-900">Edit Internship</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-500"
+              className="text-[#9095A1] hover:text-gray-500"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -205,7 +205,7 @@ export default function InternshipModal({
                       }}
                     />
                     <svg
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#9095A1] pointer-events-none"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -232,7 +232,7 @@ export default function InternshipModal({
                       }}
                     />
                     <svg
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#9095A1] pointer-events-none"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

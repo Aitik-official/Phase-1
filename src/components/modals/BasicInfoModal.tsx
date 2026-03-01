@@ -12,16 +12,16 @@ interface BasicInfoModalProps {
 
 export interface BasicInfoData {
   firstName: string;
+  middleName: string;
   lastName: string;
   email: string;
   phone: string;
   phoneCode: string;
-  dob: string;
-  city: string;
   gender: string;
+  dob: string;
   country: string;
+  city: string;
   employment: string;
-  notice: string;
 }
 
 export default function BasicInfoModal({
@@ -32,6 +32,8 @@ export default function BasicInfoModal({
 }: BasicInfoModalProps) {
   const [firstNameFocused, setFirstNameFocused] = useState(false);
   const [firstNameValue, setFirstNameValue] = useState(initialData?.firstName || '');
+  const [middleNameFocused, setMiddleNameFocused] = useState(false);
+  const [middleNameValue, setMiddleNameValue] = useState(initialData?.middleName || '');
   const [lastNameFocused, setLastNameFocused] = useState(false);
   const [lastNameValue, setLastNameValue] = useState(initialData?.lastName || '');
   const [emailFocused, setEmailFocused] = useState(false);
@@ -39,63 +41,61 @@ export default function BasicInfoModal({
   const [phoneFocused, setPhoneFocused] = useState(false);
   const [phoneValue, setPhoneValue] = useState(initialData?.phone || '');
   const [phoneCode, setPhoneCode] = useState(initialData?.phoneCode || '+1 (USA)');
-  const [dobFocused, setDobFocused] = useState(false);
-  const [dobValue, setDobValue] = useState(initialData?.dob || '');
-  const [cityFocused, setCityFocused] = useState(false);
-  const [cityValue, setCityValue] = useState(initialData?.city || '');
   const [genderFocused, setGenderFocused] = useState(false);
   const [genderValue, setGenderValue] = useState(initialData?.gender || '');
+  const [dobFocused, setDobFocused] = useState(false);
+  const [dobValue, setDobValue] = useState(initialData?.dob || '');
   const [countryFocused, setCountryFocused] = useState(false);
   const [countryValue, setCountryValue] = useState(initialData?.country || '');
+  const [cityFocused, setCityFocused] = useState(false);
+  const [cityValue, setCityValue] = useState(initialData?.city || '');
   const [employmentFocused, setEmploymentFocused] = useState(false);
   const [employmentValue, setEmploymentValue] = useState(initialData?.employment || '');
-  const [noticeFocused, setNoticeFocused] = useState(false);
-  const [noticeValue, setNoticeValue] = useState(initialData?.notice || '');
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   // Update values when initialData changes
   useEffect(() => {
     if (initialData) {
       setFirstNameValue(initialData.firstName || '');
+      setMiddleNameValue(initialData.middleName || '');
       setLastNameValue(initialData.lastName || '');
       setEmailValue(initialData.email || '');
       setPhoneValue(initialData.phone || '');
       setPhoneCode(initialData.phoneCode || '+1 (USA)');
-      setDobValue(initialData.dob || '');
-      setCityValue(initialData.city || '');
       setGenderValue(initialData.gender || '');
+      setDobValue(initialData.dob || '');
       setCountryValue(initialData.country || '');
+      setCityValue(initialData.city || '');
       setEmploymentValue(initialData.employment || '');
-      setNoticeValue(initialData.notice || '');
     } else {
       // Clear all fields for "Add" mode
       setFirstNameValue('');
+      setMiddleNameValue('');
       setLastNameValue('');
       setEmailValue('');
       setPhoneValue('');
       setPhoneCode('+1 (USA)');
-      setDobValue('');
-      setCityValue('');
       setGenderValue('');
+      setDobValue('');
       setCountryValue('');
+      setCityValue('');
       setEmploymentValue('');
-      setNoticeValue('');
     }
   }, [initialData, isOpen]);
 
   const handleSave = () => {
     onSave({
       firstName: firstNameValue,
+      middleName: middleNameValue,
       lastName: lastNameValue,
       email: emailValue,
       phone: phoneValue,
       phoneCode,
-      dob: dobValue,
-      city: cityValue,
       gender: genderValue,
+      dob: dobValue,
       country: countryValue,
+      city: cityValue,
       employment: employmentValue,
-      notice: noticeValue,
     });
     onClose();
   };
@@ -120,7 +120,7 @@ export default function BasicInfoModal({
             <h2 className="text-xl font-semibold text-gray-900">Edit Basic Information</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -394,16 +394,21 @@ export default function BasicInfoModal({
                   </div>
                 </div>
 
-                {/* Notice Period */}
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-4">
+                {/* Middle Name */}
                 <div className="relative">
                   <div className="relative">
-                    <select
-                      value={noticeValue}
-                      onChange={(e) => setNoticeValue(e.target.value)}
-                      onFocus={() => setNoticeFocused(true)}
-                      onBlur={() => setNoticeFocused(false)}
-                      className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        noticeFocused || noticeValue ? "pt-5" : "pt-3"
+                    <input
+                      type="text"
+                      value={middleNameValue}
+                      onChange={(e) => setMiddleNameValue(e.target.value)}
+                      onFocus={() => setMiddleNameFocused(true)}
+                      onBlur={() => setMiddleNameFocused(false)}
+                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
+                        middleNameFocused || middleNameValue ? "pt-5" : "pt-3"
                       }`}
                       style={{
                         width: "100%",
@@ -411,53 +416,27 @@ export default function BasicInfoModal({
                         borderRadius: "5.02px",
                         border: "1px solid #99A1AF",
                         backgroundColor: "#FFFFFF",
-                        appearance: "none",
                       }}
-                    >
-                      <option>60 days</option>
-                      <option>30 days</option>
-                      <option>15 days</option>
-                      <option>Immediate</option>
-                    </select>
+                    />
                     <label
                       className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${
-                        noticeFocused || noticeValue
+                        middleNameFocused || middleNameValue
                           ? "left-4 -top-2.5 text-xs font-medium bg-white px-1"
                           : "left-4 top-1/2 -translate-y-1/2 text-sm"
                       }`}
                       style={
-                        noticeFocused || noticeValue
+                        middleNameFocused || middleNameValue
                           ? {
                               color: "#239CD2",
                             }
                           : undefined
                       }
                     >
-                      Notice Period
+                      Middle Name
                     </label>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3 4.5L6 7.5L9 4.5"
-                          stroke="#99A1AF"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Right Column */}
-              <div className="space-y-4">
                 {/* Last Name */}
                 <div className="relative">
                   <div className="relative">

@@ -214,7 +214,7 @@ export default function PortfolioLinksModal({
             <h2 className="text-xl font-semibold text-gray-900">Add Portfolio Link</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -359,7 +359,7 @@ export default function PortfolioLinksModal({
                         <div className="flex items-center gap-2 flex-shrink-0">
                           <button
                             onClick={() => handleEditLink(link)}
-                            className="p-2 text-gray-400 hover:text-blue-600"
+                            className="p-2 text-[#9095A1] hover:text-blue-600"
                             title="Edit"
                           >
                             <svg
@@ -378,7 +378,7 @@ export default function PortfolioLinksModal({
                           </button>
                           <button
                             onClick={() => handleDeleteLink(link.id)}
-                            className="p-2 text-gray-400 hover:text-red-600"
+                            className="p-2 text-[#9095A1] hover:text-red-600"
                             title="Delete"
                           >
                             <svg

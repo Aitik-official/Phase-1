@@ -220,7 +220,7 @@ The course also covers AI-driven networking strategies and market analysis, help
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '12px',
                       fontWeight: 600,
-                      color: '#3B82F6',
+                      color: '#28A8DF',
                       backgroundColor: '#DBEAFE',
                     }}
                   >
@@ -254,7 +254,7 @@ The course also covers AI-driven networking strategies and market analysis, help
                       width="40"
                       height="40"
                       viewBox="0 0 24 24"
-                      fill="#3B82F6"
+                      fill="#28A8DF"
                       className="ml-1"
                     >
                       <path d="M8 5v14l11-7z" />
@@ -372,7 +372,7 @@ The course also covers AI-driven networking strategies and market analysis, help
                               fontFamily: 'Inter, sans-serif',
                               fontSize: '14px',
                               fontWeight: 700,
-                              color: '#3B82F6',
+                              color: '#28A8DF',
                             }}
                           >
                             {module.id}
@@ -615,13 +615,13 @@ The course also covers AI-driven networking strategies and market analysis, help
               style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '17px',
-                background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+                background: 'linear-gradient(135deg, #28A8DF 0%, #2563EB 100%)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+                e.currentTarget.style.background = 'linear-gradient(135deg, #28A8DF 0%, #2563EB 100%)';
               }}
             >
               Enroll Now & Improve Your Job Fit Score
@@ -716,13 +716,13 @@ The course also covers AI-driven networking strategies and market analysis, help
                 style={{
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '15px',
-                  background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+                  background: 'linear-gradient(135deg, #28A8DF 0%, #2563EB 100%)',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)';
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #28A8DF 0%, #2563EB 100%)';
                 }}
               >
                 Enroll Now
@@ -743,7 +743,7 @@ The course also covers AI-driven networking strategies and market analysis, help
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-gray-200 shadow-lg">
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center flex-shrink-0 shadow-md">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2.5">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#28A8DF" strokeWidth="2.5">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
                     <line x1="16" y1="13" x2="8" y2="13"></line>

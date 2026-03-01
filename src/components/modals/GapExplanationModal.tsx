@@ -74,7 +74,7 @@ export default function GapExplanationModal({
             <h2 className="text-xl font-semibold text-gray-900">Explain Employment Gap</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-500"
+              className="text-[#9095A1] hover:text-gray-500"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -189,7 +189,7 @@ export default function GapExplanationModal({
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#9095A1] hover:text-gray-600"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
