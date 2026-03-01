@@ -7,6 +7,7 @@ import EditText from '../../components/ui/EditText';
 import Dropdown from '../../components/ui/Dropdown';
 import Button from '../../components/ui/Button';
 import Image from 'next/image';
+import ApplicationSuccessModal from '../../components/modals/ApplicationSuccessModal';
 
 interface JobListing {
   id: number
@@ -20,6 +21,20 @@ interface JobListing {
   match: string
   timeAgo: string
   isHighlighted?: boolean
+  description: string
+  responsibilities: string[]
+  requiredSkills: string[]
+  niceToHaveSkills?: string[]
+  companyOverview: string
+  experienceLevel: string
+  department?: string
+  workMode: string
+  industry: string
+  visaAvailability: string
+  applicantCount: string
+  postedDate: string
+  strengths?: string[]
+  gaps?: string[]
 }
 
 const DashboardPage = () => {
@@ -28,13 +43,16 @@ const DashboardPage = () => {
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null)
   const [jobListings, setJobListings] = useState<JobListing[]>([])
   const [loading, setLoading] = useState(true)
+  const [viewMode, setViewMode] = useState<'grid' | 'detail'>('grid')
+  const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid')
   const [isScreeningModalOpen, setIsScreeningModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
 
   // Screening form states
   const [experienceAnswer, setExperienceAnswer] = useState<string | null>('yes')
   const [nightShiftFocused, setNightShiftFocused] = useState(false)
   const [nightShiftValue, setNightShiftValue] = useState('')
-  const [excelProficiency, setExcelProficiency] = useState(0)
+  const [excelProficiency, setExcelProficiency] = useState(0) // 0 = Beginner, 100 = Expert
   const [joiningAvailability, setJoiningAvailability] = useState<string | null>(null)
 
   // Dropdown options
@@ -82,6 +100,47 @@ const DashboardPage = () => {
         const mockJobs: JobListing[] = [
           {
             id: 1,
+            title: 'Software Engineer',
+            company: 'Google',
+            logo: '/images/img_image_29.png', // Keeping existing logo path or placeholder
+            location: 'Mountain View, CA',
+            salary: '$150,000 - $180,000/year',
+            type: 'Full-time',
+            skills: ['Python', 'Java', 'AWS'],
+            match: '82% Match',
+            timeAgo: '2 days ago',
+            isHighlighted: true,
+            description: 'As a Software Engineer at Google, you will work on a mission-driven team to develop innovative solutions that impact millions of users globally. You will be responsible for designing, developing, testing, and deploying scalable software systems. This role requires strong problem-solving skills and a passion for technology.',
+            responsibilities: [
+              'Design, develop, test, deploy, and maintain software.',
+              'Manage individual project priorities, deadlines, and deliverables.',
+              'Collaborate with other engineers and cross-functional teams.',
+              'Contribute to architectural design and code reviews.',
+              'Troubleshoot and debug complex issues across distributed systems.'
+            ],
+            requiredSkills: ['Python', 'Java', 'AWS', 'Distributed Systems', 'Data Structures'],
+            niceToHaveSkills: ['Machine Learning', 'Go', 'Kubernetes', 'Microservices'],
+            companyOverview: "Google's mission is to organize the world's information and make it universally accessible and useful. We build products and provide services that improve the lives of billions of people each day.",
+            experienceLevel: '3-5 Years',
+            department: 'Engineering',
+            workMode: 'Hybrid (3 days in office)',
+            industry: 'Technology',
+            visaAvailability: 'Available',
+            applicantCount: '300+',
+            postedDate: '7/29/2024',
+            strengths: [
+              'Strong experience with React and Node.js',
+              'Proficient in TypeScript development',
+              'Experience with cloud platforms like AWS',
+              'Solid understanding of SQL databases'
+            ],
+            gaps: [
+              'Experience with cloud platforms like AWS',
+              'Solid understanding of SQL databases'
+            ]
+          },
+          {
+            id: 2,
             title: 'Project Coordinator',
             company: 'Project Alpha Inc.',
             logo: '/images/img_image_29.png',
@@ -91,19 +150,21 @@ const DashboardPage = () => {
             skills: ['Agile', 'Jira', 'Reporting'],
             match: '85% Match',
             timeAgo: '3 days ago',
-            isHighlighted: true
-          },
-          {
-            id: 2,
-            title: 'Software Engineer',
-            company: 'Tech Solutions LLC',
-            logo: '/images/img_image_30.png',
-            location: 'Remote',
-            salary: '$100k - $130k / Year',
-            type: 'Full-time',
-            skills: ['React', 'Node.js', 'AWS'],
-            match: '92% Match',
-            timeAgo: '1 day ago'
+            isHighlighted: true,
+            description: 'We are looking for a detailed-oriented Project Coordinator to join our team. You will assist project managers in organizing ongoing projects, including monitoring project plans, schedules, work hours, budgets, and expenditures.',
+            responsibilities: [
+              'Maintain and monitor project plans and project schedules.',
+              'Organize, attend and participate in stakeholder meetings.',
+              'Document and follow up on important actions and decisions from meetings.'
+            ],
+            requiredSkills: ['Project Management', 'Communication', 'Time Management', 'Microsoft Office'],
+            companyOverview: 'Project Alpha Inc. is a leading consultancy firm specializing in project management solutions.',
+            experienceLevel: 'Entry-Mid',
+            workMode: 'On-site',
+            industry: 'Consulting',
+            visaAvailability: 'Sponsorship Available',
+            applicantCount: '120+',
+            postedDate: 'Jul 14, 2025'
           },
           {
             id: 3,
@@ -115,7 +176,21 @@ const DashboardPage = () => {
             type: 'Contract',
             skills: ['SEO', 'Content', 'Analytics'],
             match: '78% Match',
-            timeAgo: '5 days ago'
+            timeAgo: '5 days ago',
+            description: 'We are seeking a creative Marketing Specialist to drive our digital marketing efforts. You will be responsible for creating content, managing social media, and analyzing campaign performance.',
+            responsibilities: [
+              'Develop and implement digital marketing strategies.',
+              'Create engaging content for blog, social media, and email campaigns.',
+              'Track and analyze website traffic and campaign performance metrics.'
+            ],
+            requiredSkills: ['Digital Marketing', 'SEO/SEM', 'Google Analytics', 'Content Creation'],
+            companyOverview: 'Global Innovations is a forward-thinking company dedicated to bringing new ideas to life.',
+            experienceLevel: 'Mid Level',
+            workMode: 'Hybrid',
+            industry: 'Marketing',
+            visaAvailability: 'Available',
+            applicantCount: '80+',
+            postedDate: 'Jul 12, 2025'
           },
           {
             id: 4,
@@ -127,7 +202,21 @@ const DashboardPage = () => {
             type: 'Full-time',
             skills: ['SQL', 'Python', 'Tableau'],
             match: '88% Match',
-            timeAgo: '2 days ago'
+            timeAgo: '2 days ago',
+            description: 'Uncover insights from vast amounts of data to help improve patient outcomes. You will work closely with the product and clinical teams.',
+            responsibilities: [
+              'Interpret data, analyze results using statistical techniques and provide ongoing reports.',
+              'Develop and implement databases, data collection systems, data analytics and other strategies.',
+              'Acquire data from primary or secondary data sources and maintain databases/data systems.'
+            ],
+            requiredSkills: ['SQL', 'Python', 'Data Visualization', 'Tableau'],
+            companyOverview: 'Healthcare Co. is committed to improving lives through data-driven healthcare solutions.',
+            experienceLevel: 'Mid Level',
+            workMode: 'On-site',
+            industry: 'Healthcare',
+            visaAvailability: 'Sponsorship Available',
+            applicantCount: '150+',
+            postedDate: 'Jul 10, 2025'
           },
           {
             id: 5,
@@ -139,7 +228,21 @@ const DashboardPage = () => {
             type: 'Hybrid',
             skills: ['Figma', 'Prototyping', 'User Research'],
             match: '95% Match',
-            timeAgo: 'Just now'
+            timeAgo: 'Just now',
+            description: 'Design intuitive and beautiful user interfaces for our clients. You will conduct user research and create wireframes, prototypes, and high-fidelity mockups.',
+            responsibilities: [
+              'Gather and evaluate user requirements in collaboration with product managers and engineers.',
+              'Illustrate design ideas using storyboards, process flows and sitemaps.',
+              'Design graphic user interface elements, like menus, tabs and widgets.'
+            ],
+            requiredSkills: ['UI/UX Design', 'Figma', 'Adobe XD', 'User Research'],
+            companyOverview: 'Future Forward Agency is a premier design agency shaping the digital future.',
+            experienceLevel: 'Senior Level',
+            workMode: 'Hybrid',
+            industry: 'Design',
+            visaAvailability: 'Not Available',
+            applicantCount: '40+',
+            postedDate: 'Jun 28, 2025'
           },
           {
             id: 6,
@@ -151,7 +254,219 @@ const DashboardPage = () => {
             type: 'Contract',
             skills: ['SEO', 'Content', 'Analytics'],
             match: '78% Match',
-            timeAgo: '5 days ago'
+            timeAgo: '5 days ago',
+            description: 'We are seeking a creative Marketing Specialist to drive our digital marketing efforts. You will be responsible for creating content, managing social media, and analyzing campaign performance.',
+            responsibilities: [
+              'Develop and implement digital marketing strategies.',
+              'Create engaging content for blog, social media, and email campaigns.',
+              'Track and analyze website traffic and campaign performance metrics.'
+            ],
+            requiredSkills: ['Digital Marketing', 'SEO/SEM', 'Google Analytics', 'Content Creation'],
+            companyOverview: 'Global Innovations is a forward-thinking company dedicated to bringing new ideas to life.',
+            experienceLevel: 'Mid Level',
+            workMode: 'Hybrid',
+            industry: 'Marketing',
+            visaAvailability: 'Available',
+            applicantCount: '85+',
+            postedDate: 'Jun 25, 2025'
+          },
+          {
+            id: 7,
+            title: 'Senior Product Manager',
+            company: 'Tech Giants',
+            logo: '/images/img_image_29.png',
+            location: 'Seattle, WA',
+            salary: '$180k - $220k / Year',
+            type: 'Full-time',
+            skills: ['Product Strategy', 'Growth', 'Data'],
+            match: '91% Match',
+            timeAgo: '1 day ago',
+            applicantCount: '250+',
+            description: 'Lead the product lifecycle for our core platform products.',
+            responsibilities: ['Define product vision', 'Analyze market trends', 'Collaborate with engineering'],
+            requiredSkills: ['Product Strategy', 'Growth', 'Data'],
+            companyOverview: 'Tech Giants is leading the industry in platform innovation.',
+            experienceLevel: '5+ Years',
+            postedDate: 'Aug 01, 2025',
+            workMode: 'On-site',
+            industry: 'Technology',
+            visaAvailability: 'Available'
+          },
+          {
+            id: 8,
+            title: 'Full Stack Developer',
+            company: 'Startup Hub',
+            logo: '/images/img_image_31.png',
+            location: 'Austin, TX',
+            salary: '$120k - $160k / Year',
+            type: 'Remote',
+            skills: ['React', 'Node.js', 'PostgreSQL'],
+            match: '89% Match',
+            timeAgo: '4 hours ago',
+            applicantCount: '45+',
+            description: 'Join our fast-growing startup and build the future of fintech.',
+            responsibilities: ['Develop new features', 'Maintain codebase', 'Optimize performance'],
+            requiredSkills: ['React', 'Node.js', 'PostgreSQL'],
+            companyOverview: 'Startup Hub is a fintech pioneer focused on user experience.',
+            experienceLevel: '3-5 Years',
+            postedDate: 'Aug 04, 2025',
+            workMode: 'Remote',
+            industry: 'Fintech',
+            visaAvailability: 'Not Available'
+          },
+          {
+            id: 9,
+            title: 'DevOps Engineer',
+            company: 'Cloud Scale',
+            logo: '/images/img_image_32.png',
+            location: 'Remote',
+            salary: '$140k - $175k / Year',
+            type: 'Full-time',
+            skills: ['Kubernetes', 'Terraform', 'CI/CD'],
+            match: '84% Match',
+            timeAgo: '6 hours ago',
+            applicantCount: '60+',
+            description: 'Automate and scale our global infrastructure.',
+            responsibilities: ['Manage infrastructure', 'Improve CI/CD pipelines', 'Enhance security'],
+            requiredSkills: ['Kubernetes', 'Terraform', 'CI/CD'],
+            companyOverview: 'Cloud Scale provides cutting-edge infrastructure solutions.',
+            experienceLevel: '4+ Years',
+            postedDate: 'Aug 04, 2025',
+            workMode: 'Hybrid',
+            industry: 'Cloud Computing',
+            visaAvailability: 'Sponsorship Available'
+          },
+          {
+            id: 10,
+            title: 'Business Analyst',
+            company: 'Finance Corp',
+            logo: '/images/img_image_33.png',
+            location: 'Chicago, IL',
+            salary: '$85k - $110k / Year',
+            type: 'Full-time',
+            skills: ['Excel', 'SQL', 'Modeling'],
+            match: '76% Match',
+            timeAgo: '1 week ago',
+            applicantCount: '200+',
+            description: 'Drive business decisions with data-driven modeling.',
+            responsibilities: ['Analyze financial data', 'Create reports', 'Advise stakeholders'],
+            requiredSkills: ['Excel', 'SQL', 'Modeling'],
+            companyOverview: 'Finance Corp is a global leader in financial services.',
+            experienceLevel: '2-4 Years',
+            postedDate: 'Jul 28, 2025',
+            workMode: 'On-site',
+            industry: 'Finance',
+            visaAvailability: 'Available'
+          },
+          {
+            id: 11,
+            title: 'Content Strategist',
+            company: 'Creative Studio',
+            logo: '/images/img_image_29.png',
+            location: 'Los Angeles, CA',
+            salary: '$95k - $125k / Year',
+            type: 'Full-time',
+            skills: ['Copywriting', 'SEO', 'Social Media'],
+            match: '83% Match',
+            timeAgo: '2 days ago',
+            applicantCount: '95+',
+            description: 'Craft compelling stories for global brands.',
+            responsibilities: ['Develop content plans', 'Write and edit copy', 'Analyze engagement'],
+            requiredSkills: ['Copywriting', 'SEO', 'Strategy'],
+            companyOverview: 'We are a boutique agency focused on digital storytelling.',
+            experienceLevel: '3+ Years',
+            postedDate: 'Aug 03, 2025',
+            workMode: 'Hybrid',
+            industry: 'Advertising',
+            visaAvailability: 'Not Available'
+          },
+          {
+            id: 12,
+            title: 'Systems Architect',
+            company: 'Enterprise Solutions',
+            logo: '/images/img_image_31.png',
+            location: 'Denver, CO',
+            salary: '$160k - $210k / Year',
+            type: 'Full-time',
+            skills: ['Microservices', 'AWS', 'Security'],
+            match: '94% Match',
+            timeAgo: '12 hours ago',
+            applicantCount: '30+',
+            description: 'Design the foundation for high-performance enterprise apps.',
+            responsibilities: ['Define architecture', 'Lead technical teams', 'Ensure scalability'],
+            requiredSkills: ['Architecture', 'Cloud Systems', 'Security'],
+            companyOverview: 'Enterprise Solutions scales businesses with robust technology.',
+            experienceLevel: '8+ Years',
+            postedDate: 'Aug 04, 2025',
+            workMode: 'On-site',
+            industry: 'Software',
+            visaAvailability: 'Sponsorship Available'
+          },
+          {
+            id: 13,
+            title: 'Customer Success lead',
+            company: 'SaaS Platform',
+            logo: '/images/img_image_32.png',
+            location: 'Salt Lake City, UT',
+            salary: '$100k - $130k / Year',
+            type: 'Full-time',
+            skills: ['CRM', 'Communication', 'Retention'],
+            match: '87% Match',
+            timeAgo: '3 days ago',
+            applicantCount: '110+',
+            description: 'Empower our clients to achieve their business goals.',
+            responsibilities: ['Manage client relationships', 'Driving feature adoption', 'Reducing churn'],
+            requiredSkills: ['CRM', 'Leadership', 'Strategy'],
+            companyOverview: 'SaaS Platform is the #1 tool for mid-market businesses.',
+            experienceLevel: '4+ Years',
+            postedDate: 'Aug 02, 2025',
+            workMode: 'Remote',
+            industry: 'SaaS',
+            visaAvailability: 'Available'
+          },
+          {
+            id: 14,
+            title: 'Data Scientist',
+            company: 'AI Research Lab',
+            logo: '/images/img_image_33.png',
+            location: 'Toronto, ON',
+            salary: '$130k - $170k / Year',
+            type: 'Full-time',
+            skills: ['PyTorch', 'TensorFlow', 'NLP'],
+            match: '90% Match',
+            timeAgo: '1 day ago',
+            applicantCount: '180+',
+            description: 'Pioneer the next generation of generative AI models.',
+            responsibilities: ['Train LLMs', 'Conduct research', 'Deploy models'],
+            requiredSkills: ['Python', 'Deep Learning', 'Math'],
+            companyOverview: 'AI Research Lab is pushing the boundaries of machine intelligence.',
+            experienceLevel: 'Senior Level',
+            postedDate: 'Aug 03, 2025',
+            workMode: 'Hybrid',
+            industry: 'Artificial Intelligence',
+            visaAvailability: 'Available'
+          },
+          {
+            id: 15,
+            title: 'HR Manager',
+            company: 'Corporate Services',
+            logo: '/images/img_image_29.png',
+            location: 'Atlanta, GA',
+            salary: '$90k - $115k / Year',
+            type: 'Full-time',
+            skills: ['Recruitment', 'Policy', 'Culture'],
+            match: '72% Match',
+            timeAgo: '5 days ago',
+            applicantCount: '140+',
+            description: 'Shape the employee experience and organizational culture.',
+            responsibilities: ['Manage talent acquisition', 'Oversee compliance', 'Foster engagement'],
+            requiredSkills: ['HR Management', 'Compliance', 'Communication'],
+            companyOverview: 'Corporate Services manages operations for Fortune 500 companies.',
+            experienceLevel: '5+ Years',
+            postedDate: 'Jul 30, 2025',
+            workMode: 'On-site',
+            industry: 'Human Resources',
+            visaAvailability: 'Not Available'
           }
         ]
         setJobListings(mockJobs)
@@ -198,6 +513,19 @@ const DashboardPage = () => {
       joiningAvailability
     })
     handleCloseModal()
+    setIsSuccessModalOpen(true)
+  }
+
+  const handleCloseSuccessModal = () => {
+    setIsSuccessModalOpen(false)
+  }
+
+  const formatDate = (date: Date): string => {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
   }
 
   const getProficiencyLabel = (value: number) => {
@@ -212,302 +540,778 @@ const DashboardPage = () => {
     // Implement save job logic
   }
 
-  const renderJobCard = (job: JobListing) => (
-    <div
-      key={job.id}
-      onClick={() => handleJobClick(job)}
-      className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md mb-3 ${job.isHighlighted
-        ? 'border-blue-500 bg-blue-100/25 backdrop-blur-lg shadow-sm'
-        : 'border-white/20 bg-white/20 backdrop-blur-lg'
-        } ${selectedJob?.id === job.id ? 'ring-2 ring-blue-500' : ''}`}
-    >
-      <div className="flex items-start gap-4 mb-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg flex-shrink-0" style={{
-          backgroundColor: job.id % 3 === 1 ? "#E0F2FE" : job.id % 3 === 2 ? "#D1FAE5" : "#FEF3C7",
-          border: `1px solid ${job.id % 3 === 1 ? "#BAE6FD" : job.id % 3 === 2 ? "#A7F3D0" : "#FDE68A"}`
-        }}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="9" width="3.5" height="9" rx="1.5" fill={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} />
-            <path d="M6.5 18V13C6.5 12.4477 6.94772 12 7.5 12H12.5C13.0523 12 13.5 12.4477 13.5 13V18H6.5Z" fill={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} />
-            <rect x="7.5" y="5" width="5" height="7" rx="0.5" fill={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} />
-            <path d="M7.5 13C7.5 12.4477 7.94772 12 8.5 12H11.5C12.0523 12 12.5 12.4477 12.5 13V13.5C12.5 13.7761 12.2761 14 12 14H8C7.72386 14 7.5 13.7761 7.5 13.5V13Z" fill={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} />
-            <line x1="8.5" y1="7.5" x2="11.5" y2="7.5" stroke={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} strokeWidth="0.8" />
-            <line x1="8.5" y1="9" x2="11.5" y2="9" stroke={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} strokeWidth="0.8" />
-            <line x1="8.5" y1="10.5" x2="11.5" y2="10.5" stroke={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} strokeWidth="0.8" />
-            <rect x="14.5" y="9" width="3.5" height="9" rx="1.5" fill={job.id % 3 === 1 ? "#0EA5E9" : job.id % 3 === 2 ? "#10B981" : "#F59E0B"} />
+  const handleBackToGrid = () => {
+    setViewMode('grid')
+    setSelectedJob(null)
+  }
+
+  const renderJobCard = (job: JobListing, isCompact = false) => {
+    const isSelected = selectedJob?.id === job.id && isCompact;
+
+    return (
+      <div
+        key={job.id}
+        onClick={() => {
+          handleJobClick(job);
+          if (!isCompact) setViewMode('detail');
+        }}
+        className={`group ${isCompact
+          ? `py-6 px-4 mb-4 rounded-2xl border border-gray-100 ${isSelected ? 'bg-[#111827] text-white border-transparent shadow-xl' : 'bg-white text-gray-900 shadow-sm hover:bg-blue-50 hover:border-blue-200 hover:shadow-md'}`
+          : 'p-4 md:p-5 lg:p-6 mb-3 sm:mb-4 rounded-3xl bg-white text-gray-900 border border-gray-100 hover:bg-[#111827] hover:text-white hover:shadow-2xl hover:border-transparent'
+          } cursor-pointer transition-all duration-500 relative w-full max-w-full overflow-hidden ${isCompact ? 'h-auto' : 'h-full'} flex flex-col`}
+      >
+        {/* Header: Logo, Date, Bookmark */}
+        <div className={`flex justify-between items-start ${isCompact ? 'mb-2' : 'mb-2 sm:mb-3 md:mb-4'} min-w-0`}>
+          <div className="rounded-full overflow-hidden bg-white border border-gray-100 flex items-center justify-center shrink-0" style={{ width: isCompact ? "40px" : "48px", height: isCompact ? "40px" : "48px", padding: "4px" }}>
+            <Image src="/perosn_icon.png" alt={job.company} width={isCompact ? 40 : 48} height={isCompact ? 40 : 48} className="object-contain" />
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className={`font-medium whitespace-nowrap transition-colors duration-500 ${isCompact ? (isSelected ? 'text-gray-400' : 'text-gray-500') : 'text-gray-500 group-hover:text-gray-400'}`} style={{ fontSize: isCompact ? "10px" : "12px" }}>{job.postedDate}</span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className={`transition-colors duration-500 shrink-0 ${isCompact ? (isSelected ? 'text-gray-400 hover:text-white' : 'text-gray-400 hover:text-gray-900') : 'text-gray-400 group-hover:text-gray-400 group-hover:hover:text-white hover:text-gray-900'}`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ width: isCompact ? "18px" : "20px", height: isCompact ? "18px" : "20px" }}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Company Name & Verified */}
+        <div className={`flex items-center gap-2 ${isCompact ? 'mb-0.5' : 'mb-1.5 sm:mb-2'} min-w-0`}>
+          <span className={`font-semibold wrap-break-word flex-1 min-w-0 transition-colors duration-500 ${isCompact ? (isSelected ? 'text-gray-200' : 'text-gray-900') : 'text-gray-900 group-hover:text-gray-200'}`} style={{ fontSize: isCompact ? "12px" : "13px" }}>{job.company}</span>
+          <svg className="text-green-500 fill-current shrink-0" viewBox="0 0 20 20" style={{ width: "14px", height: "14px" }}>
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-              <path d="M2 5C2 4.44772 2.44772 4 3 4H13C13.5523 4 14 4.44772 14 5V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V5Z" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M5 4V2C5 1.44772 5.44772 1 6 1H10C10.5523 1 11 1.44772 11 2V4" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <h3 className="text-base font-medium text-gray-900">{job.title}</h3>
+
+        {/* Job Title */}
+        <h3 className={`font-bold wrap-break-word line-clamp-2 transition-colors duration-500 ${isCompact ? 'mb-2' : 'mb-2 sm:mb-3'} ${isCompact ? (isSelected ? 'text-white' : 'text-gray-900') : 'text-gray-900 group-hover:text-white'}`} style={{ fontSize: isCompact ? "16px" : "19px" }}>{job.title}</h3>
+
+        {/* Tags - Hide in Sidebar */}
+        {!isCompact && (
+          <div className="flex flex-wrap gap-1.5 mb-2 sm:mb-3">
+            <span className="px-2.5 py-0.5 rounded-full font-medium transition-colors duration-500 shrink-0 whitespace-nowrap bg-gray-100 text-gray-600 group-hover:bg-gray-800 group-hover:text-gray-300" style={{ fontSize: "11px" }}>
+              {job.type}
+            </span>
+            {job.skills.slice(0, 2).map((skill, index) => (
+              <span key={index} className="px-2.5 py-0.5 rounded-full font-medium transition-colors duration-500 shrink-0 wrap-break-word bg-gray-100 text-gray-600 group-hover:bg-gray-800 group-hover:text-gray-300" style={{ fontSize: "11px" }}>
+                {skill}
+              </span>
+            ))}
           </div>
-          <p className="text-sm text-gray-600">{job.company}</p>
+        )}
+
+        {/* Salary */}
+        <p className={`wrap-break-word transition-colors duration-500 ${isCompact ? 'mb-0.5' : 'mb-3 sm:mb-4 lg:mb-5'} ${isCompact ? (isSelected ? 'text-gray-400' : 'text-gray-500') : 'text-gray-500 group-hover:text-gray-400'}`} style={{ fontSize: isCompact ? "11px" : "13px" }}>{job.salary}</p>
+
+        {/* Footer: Stats & Button */}
+        <div className={`flex items-center justify-between ${isCompact ? 'mt-0.5' : 'mt-auto'} gap-2 min-w-0`}>
+          {!isCompact ? (
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-1.5 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="transition-colors text-gray-400 group-hover:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: "16px", height: "16px" }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="font-medium transition-colors duration-500 whitespace-nowrap text-gray-600 group-hover:text-gray-300" style={{ fontSize: "12px" }}>{job.applicantCount.replace('+', '')}</span>
+              </div>
+
+              <div className="flex items-center gap-1.5 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" className="transition-colors text-gray-400 group-hover:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: "16px", height: "16px" }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="font-medium transition-colors duration-500 whitespace-nowrap text-gray-600 group-hover:text-gray-300" style={{ fontSize: "12px" }}>{Math.floor(Math.random() * 50) + 10}</span>
+              </div>
+            </div>
+          ) : (
+            <div className="text-emerald-600 font-bold" style={{ fontSize: "11px" }}>{job.match}</div>
+          )}
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleJobClick(job);
+              if (!isCompact) setViewMode('detail');
+            }}
+            className={`rounded-full font-bold transition-all duration-500 active:scale-95 whitespace-nowrap shrink-0 ${isCompact
+              ? (isSelected ? 'bg-white text-[#111827]' : 'bg-gray-900 text-white hover:bg-black')
+              : 'bg-[#111827] text-white hover:bg-black group-hover:bg-white group-hover:text-[#111827] group-hover:px-8'
+              }`} style={{
+                fontSize: isCompact ? "12px" : "12px",
+                padding: isCompact ? "8px 18px" : "8px 20px"
+              }}>
+            {isCompact ? "View" : "Details"}
+          </button>
         </div>
       </div>
+    );
+  };
 
-      <div className="flex items-center gap-4 mb-3 text-sm">
-        <div className="flex items-center gap-1">
-          <Image src="/images/img_map_pin_blue_500.svg" alt="Location" width={16} height={16} />
-          <span className="text-gray-600">{job.location}</span>
+  const renderJobListItem = (job: JobListing) => {
+    return (
+      <div
+        key={job.id}
+        onClick={() => {
+          handleJobClick(job);
+          setViewMode('detail');
+        }}
+        className="group bg-white p-4 sm:p-5 rounded-2xl cursor-pointer hover:bg-[#111827] hover:text-white hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-transparent flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full shadow-sm"
+      >
+        {/* Company Logo */}
+        <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white border border-gray-100 flex items-center justify-center p-2 shadow-inner group-hover:border-transparent transition-all overflow-hidden">
+          <Image src="/perosn_icon.png" alt={job.company} width={64} height={64} className="object-contain" />
         </div>
-        <span className="text-green-600 font-medium">{job.salary}</span>
-      </div>
 
-      <div className="flex flex-wrap gap-2 mb-3">
-        {job.skills.map((skill, index) => (
-          <span key={index} className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full">
-            {skill}
-          </span>
-        ))}
-      </div>
+        {/* Job Info */}
+        <div className="flex-1 min-w-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-gray-900 group-hover:text-white transition-colors duration-500" style={{ fontSize: "clamp(16px, 2vw, 22px)" }}>{job.title}</h3>
+            <div className="flex flex-wrap items-center gap-3 mt-1 text-gray-500 group-hover:text-gray-400 transition-colors duration-500" style={{ fontSize: "clamp(12px, 1.4vw, 15px)" }}>
+              <span className="font-semibold text-gray-900 group-hover:text-gray-200">{job.company}</span>
+              <span className="opacity-50">•</span>
+              <span>{job.location}</span>
+              <span className="opacity-50">•</span>
+              <span className="font-semibold text-blue-600 transition-colors group-hover:text-blue-400">{job.salary}</span>
+            </div>
 
-      <div className="flex items-center justify-between">
-        <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">
-          {job.match}
-        </span>
-        <span className="text-xs text-gray-500">{job.timeAgo}</span>
+            <div className="flex flex-wrap gap-2 mt-4">
+              <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-bold border border-blue-100 group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent transition-all duration-500" style={{ fontSize: "clamp(10px, 1.1vw, 12px)" }}>
+                {job.type}
+              </span>
+              {job.skills.slice(0, 4).map((skill, index) => (
+                <span key={index} className="px-3 py-1 rounded-full bg-gray-50 text-gray-600 font-medium border border-gray-100 group-hover:bg-gray-800 group-hover:text-gray-300 group-hover:border-transparent transition-all duration-500" style={{ fontSize: "clamp(10px, 1.1vw, 12px)" }}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4 shrink-0 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 group-hover:border-gray-800 pt-4 md:pt-0 mt-2 md:mt-0 transition-colors">
+            <div className="flex items-center gap-5">
+              <div className="flex items-center gap-1.5 transition-colors duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-400 group-hover:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: "18px", height: "18px" }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm font-medium text-gray-500 group-hover:text-gray-300 whitespace-nowrap">{job.timeAgo}</span>
+              </div>
+              <div className="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full font-bold shadow-sm border border-emerald-100 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-transparent transition-all duration-500" style={{ fontSize: "12px" }}>
+                {job.match}
+              </div>
+            </div>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleJobClick(job);
+                setViewMode('detail');
+              }}
+              className="bg-gray-900 text-white font-bold px-6 py-2.5 rounded-xl transition-all shadow-lg active:scale-95 group-hover:bg-white group-hover:text-[#111827] group-hover:px-10"
+              style={{ fontSize: "14px" }}
+            >
+              Details
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    );
+  };
 
   return (
-    <div className="min-h-screen" style={{ background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(135deg, #fde9d4, #fafbfb, #bddffb)" }}>
       <Header />
 
-      <main className="w-full">
-        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full grow overflow-x-hidden">
+        <div className="mx-auto max-w-[1414px] px-6 py-4 sm:py-5 md:py-6 lg:py-7 xl:py-8">
+          {/* CSS for placeholder text wrapping prevention */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              .filter-input::placeholder {
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+              }
+              .filter-input button span {
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                display: block !important;
+                max-width: 100%;
+              }
+
+              .custom-scrollbar::-webkit-scrollbar {
+                width: 6px;
+              }
+              .custom-scrollbar::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #e5e7eb;
+                border-radius: 10px;
+              }
+              .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #9ca3af;
+              }
+              .group:hover .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #4b5563;
+              }
+
+              .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+              }
+              .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+              }
+            `
+          }} />
+
           {/* Search Filters Section */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8 shadow-sm text-slate-900">
-            <div>
-              <div className="flex flex-col lg:flex-row gap-4 items-start mb-4">
-                <div className="flex-1 w-full lg:w-auto">
-                  <SearchView
-                    placeholder="Search job titles, skills, companies"
-                    value={searchQuery}
-                    onSubmit={handleSearchSubmit}
+          <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Job Title / Keywords</label>
+                <EditText
+                  placeholder="e.g. UI Designer, Backend Developer"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Location</label>
+                <EditText
+                  placeholder="e.g. Remote, New York, Berlin"
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">Experience Level</label>
+                <Dropdown
+                  options={experienceLevelOptions}
+                  placeholder="Select Experience Level"
+                  // @ts-ignore
+                  onSelect={() => { }}
+                  className="w-full"
+                />
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-1 space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Job Type</label>
+                  <Dropdown
+                    options={jobTypeOptions}
+                    placeholder="Select Job Type"
+                    // @ts-ignore
+                    onSelect={() => { }}
                     className="w-full"
                   />
                 </div>
-                <div className="flex-1 w-full lg:w-auto">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={locationQuery}
-                      onChange={(e) => setLocationQuery(e.target.value)}
-                      placeholder="City, state or country"
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500"
-                    />
-                    <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="w-full lg:w-auto lg:min-w-[120px]">
-                  <Dropdown placeholder="Job Type" options={jobTypeOptions} className="w-full" />
-                </div>
-                <div className="w-full lg:w-auto lg:min-w-[120px]">
-                  <Dropdown placeholder="Work Mode" options={workModeOptions} className="w-full" />
-                </div>
-                <div className="w-full lg:w-auto lg:min-w-[140px]">
-                  <Dropdown placeholder="Experience Level" options={experienceLevelOptions} className="w-full" />
-                </div>
-                <div className="w-full lg:w-auto lg:min-w-[130px]">
-                  <Dropdown placeholder="Salary Range" options={salaryRangeOptions} className="w-full" />
-                </div>
-                <div className="w-full lg:w-auto lg:min-w-[110px]">
-                  <Dropdown placeholder="Industry" options={industryOptions} className="w-full" />
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <Button onClick={handleResetFilters} text="Reset Filters" className="text-sm text-gray-600 hover:text-gray-900" />
+                <Button
+                  text="Search"
+                  // @ts-ignore
+                  icon="/search-white.svg"
+                  className="bg-black text-white px-8 h-[42px] mt-auto rounded-lg hover:bg-gray-800 transition-colors"
+                />
               </div>
             </div>
           </div>
 
           {/* Main Content Area */}
-          <div className="flex flex-col lg:flex-row gap-2">
-            {/* Left Sidebar - Job Listings */}
-            <div className="w-full" style={{ maxWidth: "580px", width: "100%", marginLeft: "-40px", marginRight: "10px", paddingLeft: "40px" }}>
-              <div
-                className="border border-white/30 p-4 backdrop-blur-xl"
-                style={{
-                  width: "374px",
-                  minHeight: "1331px",
-                  borderRadius: "10px",
-                  backgroundColor: "rgba(255, 255, 255, 0.15)",
-                  opacity: 1,
-                  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.07)"
-                }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-medium text-gray-900">Most Recent Jobs</h2>
-                  <a href="/jobs" className="text-sm font-medium text-gray-600 hover:text-gray-900">View All</a>
+          {viewMode === 'grid' ? (
+            <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 xl:space-y-8">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white p-3 lg:p-4 rounded-2xl shadow-sm mb-3 min-w-0">
+                <div className="flex-1 min-w-0">
+                  <h2 className="font-bold text-gray-900 mb-0.5 wrap-break-word" style={{ fontSize: "clamp(16px, 2vw, 24px)" }}>Let AI find your ideal job</h2>
+                  <p className="text-gray-500 wrap-break-word" style={{ fontSize: "clamp(11px, 1.2vw, 14px)" }}>Upload your CV and get matched instantly</p>
                 </div>
 
-                <div className="space-y-1">
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                  {/* View Switcher */}
+                  <div className="flex p-1 bg-gray-100 rounded-xl">
+                    <button
+                      onClick={() => setDisplayMode('grid')}
+                      className={`p-2 rounded-lg transition-all ${displayMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                      title="Grid View"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H18a2.25 2.25 0 01-2.25-2.25v-2.25z" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => setDisplayMode('list')}
+                      className={`p-2 rounded-lg transition-all ${displayMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                      title="List View"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                      </svg>
+                    </button>
+                  </div>
+                  <Button text="Get Matched" className="bg-black text-white px-3 sm:px-4 md:px-5 lg:px-6 xl:px-8 py-2 sm:py-2.5 md:py-3 rounded-lg shrink-0 whitespace-nowrap flex-1 sm:flex-initial" />
+                </div>
+              </div>
+
+              <div className="max-h-[520px] overflow-y-auto pr-2 custom-scrollbar transition-all duration-300">
+                <div className={displayMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5" : "flex flex-col gap-4"}>
                   {loading ? (
-                    <div className="space-y-4">
-                      {[...Array(6)].map((_, i) => (
-                        <div key={i} className="animate-pulse">
-                          <div className="h-32 bg-gray-200 rounded-lg"></div>
-                        </div>
-                      ))}
-                    </div>
+                    // Loading skeletons
+                    [...Array(6)].map((_, i) => (
+                      <div key={i} className="bg-white p-3 sm:p-4 md:p-5 lg:p-6 xl:p-7 rounded-3xl h-auto min-h-[180px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[260px] animate-pulse w-full max-w-full overflow-hidden"></div>
+                    ))
                   ) : (
-                    jobListings.slice(0, 6).map(renderJobCard)
+                    jobListings.map(job => (
+                      <div key={job.id} className="w-full min-w-0 h-full flex">
+                        {displayMode === 'grid' ? renderJobCard(job) : renderJobListItem(job)}
+                      </div>
+                    ))
                   )}
                 </div>
               </div>
             </div>
+          ) : (
+            <div>
+              {/* Back Button */}
+              <button
+                onClick={handleBackToGrid}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium mb-6 transition-colors"
+                style={{ marginLeft: '4px' }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span className="wrap-break-word">Back </span>
+              </button>
 
-            <div className="hidden lg:block w-px bg-gray-200"></div>
-
-            {/* Right Content - Job Details */}
-            <div className="flex-1">
-              {selectedJob ? (
-                <div className="bg-transparent p-8 min-h-screen" style={{ maxWidth: "1150px", width: "100%", marginLeft: "-20px", paddingLeft: "20px" }}>
-                  <div className="mb-8">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
-                      <div className="mb-4 lg:mb-0" style={{ maxWidth: "85%" }}>
-                        <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Software Engineer</h1>
-                        <p className="text-lg text-gray-600 mb-2">Google - Mountain View, CA</p>
-                        <p className="text-base text-gray-600">$150,000 - $180,000/year | 3-5 Years Experience</p>
-                      </div>
-                      <div className="flex flex-col sm:row gap-3">
-                        <button onClick={handleApplyNow} className="bg-orange-500 hover:bg-orange-600 text-white shadow-sm flex items-center justify-center font-medium transition-colors" style={{ width: "122px", height: "40px", borderRadius: "10px", opacity: 1, padding: 0 }}>Apply Now</button>
-                        <button onClick={handleSaveJob} className="bg-gray-50 border border-blue-500 text-blue-500 hover:bg-blue-50 flex items-center justify-center font-medium transition-colors" style={{ width: "122px", height: "40px", borderRadius: "10px", opacity: 1, padding: 0 }}>Save Job</button>
-                      </div>
+              <div className="flex flex-col lg:flex-row gap-6">
+                {/* Left Sidebar - Job Listings */}
+                <div className="w-full lg:w-auto lg:max-w-[420px] lg:min-w-[340px] xl:max-w-[460px] xl:min-w-[360px] shrink-0 min-w-0">
+                  <div
+                    className="border border-white/60 p-4 sm:p-5 sticky top-1 backdrop-blur-md flex flex-col w-full max-w-full overflow-hidden"
+                    style={{
+                      borderRadius: "16px",
+                      backgroundColor: "rgba(255, 255, 255, 0.4)",
+                      height: "calc(100vh - 20px)",
+                      minHeight: "1000px",
+                      maxHeight: "2500px"
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-5 px-2 shrink-0 min-w-0">
+                      <h2 className="font-semibold text-gray-900 wrap-break-word flex-1 min-w-0" style={{ fontSize: "clamp(16px, 2.2vw, 22px)" }}>Most Recent Jobs</h2>
+                      <span className="font-medium text-gray-500 cursor-pointer hover:text-gray-900 shrink-0 whitespace-nowrap ml-2" style={{ fontSize: "clamp(12px, 1.3vw, 15px)" }}>View All</span>
                     </div>
 
-                    <div className="h-px bg-gray-200 mb-8"></div>
+                    <div className="space-y-3 overflow-y-auto flex-1 pr-0 scrollbar-hide">
+                      {jobListings.map(job => renderJobCard(job, true))}
+                    </div>
+                  </div>
+                </div>
 
-                    <div className="flex flex-col xl:flex-row gap-8">
-                      <div className="flex-1">
-                        <section className="mb-8">
-                          <h2 className="text-xl font-medium text-gray-900 mb-4">About the Role</h2>
-                          <p className="text-base text-gray-600 leading-6 mb-8">As a Software Engineer at Google, you will work on a mission-driven team to develop innovative solutions that impact millions of users globally.</p>
-                          <h3 className="text-xl font-medium text-gray-900 mb-4">Responsibilities</h3>
-                          <div className="space-y-3 mb-8">
-                            {['Design, develop, test, deploy, and maintain software.', 'Manage individual project priorities.', 'Collaborate with other engineers.'].map((responsibility, index) => (
-                              <div key={index} className="flex items-start gap-3">
-                                <Image src="/circle-check-big.svg" alt="Check" width={17} height={17} className="mt-0.5 flex-shrink-0" />
-                                <p className="text-base text-gray-600">{responsibility}</p>
+                {/* Right Content - Job Details */}
+                <div className="flex-1">
+                  {selectedJob ? (
+                    <div
+                      className="p-8 backdrop-blur-md"
+                      style={{
+                        borderRadius: "24px",
+                        backgroundColor: "rgba(255, 255, 255, 0.6)",
+                        border: "1px solid rgba(255, 255, 255, 0.8)",
+                        boxShadow: "0 4px 24px rgba(0, 0, 0, 0.02)"
+                      }}
+                    >
+                      <div className="mb-0">
+                        {/* Header Section */}
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
+                          <div className="mb-4 lg:mb-0 max-w-[70%]">
+                            <h1 className="text-3xl font-bold text-gray-900 mb-2">{selectedJob.title}</h1>
+                            <p className="text-lg text-gray-500 mb-1">{selectedJob.company} - {selectedJob.location}</p>
+                            <p className="text-lg text-gray-500">{selectedJob.salary} | {selectedJob.experienceLevel} Experience</p>
+                          </div>
+                          <div className="flex gap-3">
+                            <button onClick={handleApplyNow} className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-2.5 rounded-lg transition-colors shadow-sm">
+                              Apply Now
+                            </button>
+                            <button onClick={handleSaveJob} className="bg-white hover:bg-blue-50 text-blue-600 font-medium px-6 py-2.5 rounded-lg border border-blue-200 transition-colors flex items-center gap-2">
+                              Save Job
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="h-px bg-gray-200 w-full mb-8"></div>
+
+                        <div className="flex flex-col xl:flex-row gap-8">
+                          <div className="flex-1 min-w-0">
+                            {/* About the Role */}
+                            <section className="mb-8">
+                              <h3 className="text-lg font-bold text-gray-900 mb-3">About the Role</h3>
+                              <p className="text-base text-gray-600 leading-relaxed">
+                                {selectedJob.description}
+                              </p>
+                            </section>
+
+                            {/* Responsibilities */}
+                            <section className="mb-8">
+                              <h3 className="text-lg font-bold text-gray-900 mb-3">Responsibilities</h3>
+                              <div className="space-y-3">
+                                {selectedJob.responsibilities?.map((item, idx) => (
+                                  <div key={idx} className="flex items-start gap-4">
+                                    <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full border-[2px] border-[#3b82f6] flex items-center justify-center">
+                                      <svg className="w-3 h-3 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                      </svg>
+                                    </div>
+                                    <p className="text-gray-600 leading-relaxed font-medium">{item}</p>
+                                  </div>
+                                ))}
                               </div>
-                            ))}
-                          </div>
-                        </section>
+                            </section>
 
-                        <section className="mb-8">
-                          <h2 className="text-xl font-medium text-gray-900 mb-4">Required Skills</h2>
-                          <div className="flex flex-wrap gap-3 mb-6">
-                            {['Python', 'Java', 'AWS', 'Distributed Systems'].map((skill) => (
-                              <span key={skill} className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-900">{skill}</span>
-                            ))}
-                          </div>
-                        </section>
-
-                        <section className="mb-8">
-                          <h2 className="text-xl font-medium text-gray-900 mb-4">Job Information</h2>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div><h4 className="text-sm text-gray-600 mb-1">Employment Type</h4><p className="text-base font-medium text-gray-900">Full-time</p></div>
-                            <div><h4 className="text-sm text-gray-600 mb-1">Work Mode</h4><p className="text-base font-medium text-gray-900">Hybrid</p></div>
-                            <div><h4 className="text-sm text-gray-600 mb-1">Industry</h4><p className="text-base font-medium text-gray-900">Technology</p></div>
-                          </div>
-                        </section>
-
-                        <section className="mb-8">
-                          <div className="bg-gradient-to-r from-orange-100 via-blue-100 to-blue-200 p-8" style={{ width: "680px", height: "380px", borderRadius: "16.05px", boxShadow: "0px 5.35px 6.69px -4.01px rgba(0,0,0,0.1)" }}>
-                            <div className="flex flex-col lg:flex-row gap-8 items-center">
-                              <div className="lg:w-1/3 bg-white bg-opacity-75 rounded-lg p-6 flex flex-col items-center justify-center">
-                                <div className="text-center mb-6">
-                                  <p className="text-xs font-medium text-gray-700 mb-1">AI Job Fit Score</p>
-                                  <div className="bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-lg inline-block">POWERED BY SAASA AI</div>
-                                </div>
-                                <div className="relative w-28 h-28 mx-auto">
-                                  <svg viewBox="0 0 100 100" className="w-28 h-28">
-                                    <circle cx="50" cy="50" r="45" stroke="#e5e7eb" strokeWidth="8" fill="none" />
-                                    <circle cx="50" cy="50" r="45" stroke="#3b82f6" strokeWidth="8" fill="none" strokeDasharray={`${82 * 2.83} 283`} strokeLinecap="round" className="rotate-[-90deg] origin-center" />
-                                  </svg>
-                                  <div className="absolute inset-0 flex items-center justify-center"><span className="text-3xl font-medium text-gray-900">82%</span></div>
-                                </div>
-                                <div className="mt-5"><Button text="Improve CV for this job" className="bg-gray-900 text-white text-xs px-5 py-2 rounded-lg shadow-sm" /></div>
+                            {/* Required Skills */}
+                            <section className="mb-6">
+                              <h3 className="text-lg font-bold text-gray-900 mb-3">Required Skills</h3>
+                              <div className="flex flex-wrap gap-2">
+                                {selectedJob.requiredSkills?.map((skill, idx) => (
+                                  <span key={idx} className="px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full shadow-sm">
+                                    {skill}
+                                  </span>
+                                ))}
                               </div>
-                              <div className="lg:w-2/3 bg-white bg-opacity-75 rounded-lg p-5 flex flex-col justify-center">
-                                <h4 className="text-xs font-medium text-gray-600 uppercase mb-2.5">Strengths</h4>
-                                <div className="space-y-1.5">
-                                  {['Strong experience with React', 'Proficient in TypeScript'].map((strength, index) => (
-                                    <div key={index} className="flex items-start gap-2.5"><p className="text-xs text-gray-700">{strength}</p></div>
+                            </section>
+
+                            {/* Nice-to-have Skills */}
+                            {selectedJob.niceToHaveSkills && (
+                              <section className="mb-8">
+                                <h3 className="text-lg font-bold text-gray-900 mb-3">Nice-to-have Skills</h3>
+                                <div className="flex flex-wrap gap-2">
+                                  {selectedJob.niceToHaveSkills.map((skill, idx) => (
+                                    <span key={idx} className="px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full">
+                                      {skill}
+                                    </span>
                                   ))}
+                                </div>
+                              </section>
+                            )}
+
+                            {/* Job Information Grid */}
+                            <section className="mb-8">
+                              <h3 className="text-lg font-bold text-gray-900 mb-4">Job Information</h3>
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-y-6 gap-x-4">
+                                <div>
+                                  <p className="text-sm text-gray-500 mb-1">Employment Type</p>
+                                  <p className="font-medium text-gray-900">{selectedJob.type}</p>
+                                </div>
+                                <div>
+                                  <p className="text-sm text-gray-500 mb-1">Work Mode</p>
+                                  <p className="font-medium text-gray-900">{selectedJob.workMode}</p>
+                                </div>
+                                <div>
+                                  <p className="text-sm text-gray-500 mb-1">Industry</p>
+                                  <p className="font-medium text-gray-900">{selectedJob.industry}</p>
+                                </div>
+                              </div>
+                            </section>
+
+                            {/* AI Job Fit Score Card - EXACT DESIGN MATCH */}
+                            <div
+                              className="rounded-[32px] p-6 relative overflow-hidden flex items-center mb-8 shadow-sm border border-blue-50"
+                              style={{
+                                background: "linear-gradient(135deg, #fff1e6 10%, #e8f4ff 90%)",
+                                width: "632px",
+                                height: "353px"
+                              }}
+                            >
+                              <div
+                                className="bg-white rounded-[24px] shadow-sm w-full h-full p-8 flex gap-8 items-center"
+                              >
+                                {/* Left Column: Score */}
+                                <div className="flex flex-col items-center justify-between h-full min-w-[200px]">
+                                  <div className="text-center space-y-1">
+                                    <p className="font-bold text-gray-500 uppercase tracking-wide wrap-break-word" style={{ fontSize: "clamp(10px, 1.1vw, 13px)" }}>AI Job Fit Score</p>
+                                    <div className="px-2.5 sm:px-3 md:px-4 py-0.5 sm:py-1 md:py-1.5 bg-[#28A8DF] text-white font-black rounded-full tracking-wider shadow-sm whitespace-nowrap" style={{ fontSize: "clamp(8px, 0.9vw, 10px)" }}>
+                                      Powered by SAASA B2E AI
+                                    </div>
+                                  </div>
+
+                                  <div className="relative w-32 h-32 flex items-center justify-center">
+                                    <svg className="w-full h-full transform -rotate-90">
+                                      <circle cx="64" cy="64" r="54" fill="transparent" stroke="#eff3f8" strokeWidth="12" />
+                                      <circle
+                                        cx="64"
+                                        cy="64"
+                                        r="54"
+                                        fill="transparent"
+                                        stroke="#3b82f6"
+                                        strokeWidth="12"
+                                        strokeDasharray={`${2 * Math.PI * 54}`}
+                                        strokeDashoffset={`${2 * Math.PI * 54 * (1 - 82 / 100)}`}
+                                        strokeLinecap="round"
+                                      />
+                                    </svg>
+                                    <span className="absolute text-[32px] font-black text-gray-900">82%</span>
+                                  </div>
+
+                                  <button
+                                    onClick={() => setIsScreeningModalOpen(true)}
+                                    className="bg-[#111827] hover:bg-black text-white text-[13px] font-bold px-4 py-3 rounded-xl w-full transition-all shadow-md active:scale-95"
+                                  >
+                                    Improve CV for this Job
+                                  </button>
+                                </div>
+
+                                {/* Right Column: Strengths & Gaps */}
+                                <div className="flex-1 flex flex-col justify-center gap-8 h-full">
+                                  {/* Strengths */}
+                                  <div>
+                                    <h4 className="text-[11px] font-black text-[#94a3b8] uppercase tracking-[0.2em] mb-4">STRENGTHS</h4>
+                                    <div className="space-y-3">
+                                      {['Strong experience with React and Node.js', 'Proficient in TypeScript development'].map((item, idx) => (
+                                        <div key={idx} className="flex items-start gap-4">
+                                          <div className="flex-shrink-0 w-6 h-6 rounded-full border-[2.5px] border-[#3b82f6] flex items-center justify-center mt-0.5">
+                                            <svg className="w-3.5 h-3.5 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={4}>
+                                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                          </div>
+                                          <p className="text-[14px] text-[#475569] font-bold leading-tight">{item}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+
+                                  {/* Gaps */}
+                                  <div>
+                                    <h4 className="text-[11px] font-black text-[#94a3b8] uppercase tracking-[0.2em] mb-4">GAPS</h4>
+                                    <div className="space-y-3">
+                                      {['Experience with cloud platforms like AWS', 'Solid understanding of SQL databases'].map((item, idx) => (
+                                        <div key={idx} className="flex items-start gap-4">
+                                          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-white border-[2px] border-red-500 flex items-center justify-center mt-0.5">
+                                            <svg className="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="4">
+                                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                          </div>
+                                          <p className="text-[14px] text-[#475569] font-semibold leading-tight">{item}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </section>
-                      </div>
 
-                      <div className="w-full xl:w-auto">
-                        <div className="space-y-6">
-                          <div className="bg-white rounded-xl p-6 shadow-sm" style={{ width: "260px", height: "273px" }}>
-                            <h3 className="text-lg font-medium text-gray-900 mb-4">Company Overview</h3>
-                            <p className="text-sm text-gray-600 leading-5">Google's mission is to organize the world's information.</p>
-                          </div>
-                          <div className="bg-white rounded-xl p-6 shadow-sm" style={{ width: "270px", height: "273px" }}>
-                            <h3 className="text-lg font-medium text-gray-900 mb-6">Quick Highlights</h3>
-                            <div className="space-y-6">
-                              <div className="flex justify-between">
-                                <div><p className="text-sm text-gray-600">Experience</p><span className="text-xs font-medium text-gray-900">Mid-Senior</span></div>
-                                <div><p className="text-sm text-gray-600">Mode</p><span className="text-xs font-medium text-gray-900">Hybrid</span></div>
-                              </div>
-                              <div className="flex justify-between">
-                                <div><p className="text-sm text-gray-600">Visa</p><span className="text-xs font-medium text-gray-900">Available</span></div>
-                                <div><p className="text-sm text-gray-600">Applicants</p><span className="text-xs font-medium text-gray-900">300+</span></div>
+                          {/* Right Column: Company & Highlights */}
+                          <div className="w-full xl:w-[300px] flex-shrink-0 space-y-6">
+                            {/* Company Overview Card */}
+                            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                              <h3 className="text-lg font-bold text-gray-900 mb-4">Company Overview</h3>
+                              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                {selectedJob.companyOverview}
+                              </p>
+                            </div>
+
+                            {/* Quick Highlights Card */}
+                            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                              <h3 className="text-lg font-bold text-gray-900 mb-6">Quick Highlights</h3>
+                              <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+                                <div>
+                                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Experience</p>
+                                  <p className="text-sm font-medium text-gray-900">{selectedJob.experienceLevel.includes('Year') ? 'Mid-Senior' : selectedJob.experienceLevel}</p>
+                                </div>
+                                <div>
+                                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Mode</p>
+                                  <p className="text-sm font-medium text-gray-900">{selectedJob.workMode.split(' ')[0]}</p>
+                                </div>
+                                <div>
+                                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Visa</p>
+                                  <p className="text-sm font-medium text-gray-900">{selectedJob.visaAvailability === 'Available' ? 'Available' : 'Unavailable'}</p>
+                                </div>
+                                <div>
+                                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Applicants</p>
+                                  <p className="text-sm font-medium text-gray-900">{selectedJob.applicantCount}</p>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="bg-transparent p-8 flex items-center justify-center min-h-96">
-                  <p className="text-gray-500">Select a job to view details</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {isScreeningModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCloseModal} />
-          <div className="bg-white rounded-lg shadow-xl overflow-y-auto border border-blue-200 z-10" style={{ width: "600px", maxHeight: "85vh" }} onClick={(e) => e.stopPropagation()}>
-            <div className="px-6 pt-6 pb-4">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Quick Screening Questions</h2>
-              <div className="h-px bg-blue-300 mt-4"></div>
-            </div>
-            <div className="px-6 py-6 space-y-8">
-              <div>
-                <label className="block text-base font-medium text-gray-900 mb-3">Do you have at least 2 years of experience?</label>
-                <div className="flex gap-3">
-                  <button onClick={() => setExperienceAnswer('yes')} className={`px-6 py-2.5 rounded-lg border ${experienceAnswer === 'yes' ? 'bg-blue-500 text-white' : 'bg-white'}`}>Yes</button>
-                  <button onClick={() => setExperienceAnswer('no')} className={`px-6 py-2.5 rounded-lg border ${experienceAnswer === 'no' ? 'bg-blue-500 text-white' : 'bg-white'}`}>No</button>
+                  ) : (
+                    <div className="bg-transparent p-8 flex items-center justify-center min-h-[500px] flex-col gap-4 text-center">
+                      <div className="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center">
+                        <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium text-gray-900">Select a job to view details</h3>
+                        <p className="text-gray-500 mt-1">Click on any job card from the list to see full requirements and apply.</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="px-6 py-4 border-t border-gray-200 flex justify-between">
-              <button onClick={handleCloseModal} className="px-4 py-2 text-blue-500 font-medium">Cancel</button>
-              <button onClick={handleSubmitScreening} className="px-6 py-2 bg-orange-500 text-white font-medium rounded-lg">Submit & Continue</button>
+          )}
+        </div>
+      </main>
+
+      {isScreeningModalOpen && selectedJob && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCloseModal} />
+          <div
+            className="bg-white rounded-lg shadow-xl overflow-y-auto z-10"
+            style={{
+              width: "600px",
+              maxHeight: "85vh",
+              borderRadius: "10px",
+              boxShadow: "0 0 2px 0 rgba(23, 26, 31, 0.20), 0 0 1px 0 rgba(23, 26, 31, 0.07)"
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="px-6 pt-6 pb-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Quick Screening Questions</h2>
+              <p className="text-base text-gray-700 mb-1">{selectedJob.title} — {selectedJob.company}</p>
+              <p className="text-sm text-gray-600 mb-4">These quick questions help us understand if you are a good fit for the role.</p>
+              <div className="h-px bg-blue-300"></div>
+            </div>
+
+            {/* Questions */}
+            <div className="px-6 py-6 space-y-8">
+              {/* Question 1: Experience */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  Do you have at least 2 years of experience for this role?
+                </label>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setExperienceAnswer('yes')}
+                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${experienceAnswer === 'yes'
+                      ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                      : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      }`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => setExperienceAnswer('no')}
+                    className={`px-6 py-2.5 rounded-lg border-2 transition-colors ${experienceAnswer === 'no'
+                      ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                      : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                      }`}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+
+              {/* Question 2: Night Shift */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  Are you willing to work in Night Shift?
+                </label>
+                <div className="relative">
+                  <select
+                    value={nightShiftValue}
+                    onChange={(e) => setNightShiftValue(e.target.value)}
+                    onFocus={() => setNightShiftFocused(true)}
+                    onBlur={() => setNightShiftFocused(false)}
+                    className={`w-full px-4 py-2.5 rounded-lg border-2 appearance-none bg-white text-gray-900 ${nightShiftFocused ? 'border-blue-500' : 'border-blue-200'
+                      } focus:outline-none focus:ring-2 focus:ring-blue-200`}
+                  >
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="maybe">Maybe</option>
+                  </select>
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Question 3: Excel Proficiency */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  Rate your proficiency in Excel
+                </label>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-gray-600">Beginner</span>
+                    <span className="text-sm text-gray-600">Expert</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={excelProficiency}
+                    onChange={(e) => setExcelProficiency(Number(e.target.value))}
+                    className="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    style={{
+                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${excelProficiency}%, #e0e7ff ${excelProficiency}%, #e0e7ff 100%)`
+                    }}
+                  />
+                  <p className="text-sm text-blue-600 font-medium">
+                    Current selection: {excelProficiency < 50 ? 'Beginner' : 'Expert'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Question 4: Joining Availability */}
+              <div>
+                <label className="block text-base font-medium text-gray-900 mb-3">
+                  How soon can you join?
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {['Immediate', '15 Days', '30 Days', '60 Days'].map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setJoiningAvailability(option)}
+                      className={`px-4 py-2.5 rounded-lg border-2 transition-colors ${joiningAvailability === option
+                        ? 'border-blue-500 bg-blue-50 text-blue-600 font-medium'
+                        : 'border-blue-200 bg-white text-gray-900 hover:border-blue-300'
+                        }`}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 py-4 border-t border-gray-200 flex justify-between items-center">
+              <button
+                onClick={handleCloseModal}
+                className="px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitScreening}
+                className="px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors"
+              >
+                Submit & Continue
+              </button>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Application Success Modal */}
+      {selectedJob && (
+        <ApplicationSuccessModal
+          isOpen={isSuccessModalOpen}
+          onClose={handleCloseSuccessModal}
+          jobTitle={selectedJob.title}
+          company={selectedJob.company}
+          appliedDate={formatDate(new Date())}
+          jobId={selectedJob.id}
+        />
       )}
 
       <Footer />

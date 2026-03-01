@@ -1,10 +1,28 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white px-6 py-4 text-xs text-slate-500">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 py-4 text-center md:flex-row md:text-left">
-        <p>Terms of Use</p>
-        <p>Privacy Policy</p>
-        <p>Contact Support</p>
+    <footer className="border-t border-slate-200 bg-white px-6 py-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-sm text-slate-600">© 2025 SAASA B2E.</p>
+        <div className="flex items-center gap-4">
+          <a
+            href="#"
+            className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+          >
+            Privacy
+          </a>
+          <a
+            href="#"
+            className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+          >
+            Terms
+          </a>
+          <a
+            href="#"
+            className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+          >
+            Help
+          </a>
+        </div>
       </div>
     </footer>
   );

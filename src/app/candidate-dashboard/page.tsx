@@ -3,13 +3,38 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import Header from "../../components/common/Header";
 
 export default function CandidateDashboardPage() {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: "New Job Alert: Senior UX Designer at Google", time: "2m ago", type: "New" },
+    { id: 2, text: "Your application at Amazon was viewed", time: "1h ago", type: "Viewed" },
+    { id: 3, text: "Interview invitation: Meta Frontend Role", time: "3h ago", type: "Invite" },
+    { id: 4, text: "Skill assessment: 85th percentile in React", time: "5h ago", type: "Result" },
+    { id: 5, text: "New message from HR: Microsoft", time: "1d ago", type: "Message" },
+  ]);
+  const [isRotating, setIsRotating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsRotating(true);
+      // Wait for exit animation to complete
+      setTimeout(() => {
+        setNotifications((prev) => {
+          const next = [...prev];
+          const last = next.pop();
+          if (last) next.unshift(last);
+          return next;
+        });
+        setIsRotating(false);
+      }, 500); // Animation duration
+    }, 5000); // Interval between rotations
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Order matches the visual clockwise order from top: Green, Purple, Red, Blue, Teal, Yellow
   // Yellow segment weight significantly increased for visibility (reduced from green and other colors)
@@ -857,12 +882,13 @@ export default function CandidateDashboardPage() {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-full w-64 bg-white shadow-2xl transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 h-full w-64 backdrop-blur-xl bg-white/90 shadow-2xl transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         onClick={(e) => e.stopPropagation()}
         style={{
           fontFamily: "Inter, sans-serif",
           zIndex: 9999,
+          borderRight: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
         <div className="flex flex-col h-full pt-8">
@@ -911,7 +937,7 @@ export default function CandidateDashboardPage() {
             {/* Jobs */}
             <div
               className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-gray-50"
-              onClick={() => router.push("/jobs")}
+              onClick={() => router.push("/explore-jobs")}
             >
               <svg
                 width="20"
@@ -1162,68 +1188,254 @@ export default function CandidateDashboardPage() {
         </div>
       </div>
 
-      {/* Click outside handler for dropdowns */}
-      {(isProfileModalOpen || isNotificationsModalOpen) && (
-        <div
-          className="fixed inset-0 z-[10000]"
-          onClick={() => {
-            setIsProfileModalOpen(false);
-            setIsNotificationsModalOpen(false);
-          }}
-        ></div>
-      )}
 
       {/* Main Content */}
-      <main className="mx-auto max-width[1200px] px-6 py-8">
+      <main className="mx-auto max-w-[1414px] px-6 py-8">
         <div className="mx-auto max-w-7xl">
-          {/* Welcome & quick actions */}
-          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-            <div className="flex items-center gap-4">
-              {/* Hamburger Button */}
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="flex items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ color: "#111827" }}
-                >
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-              </button>
-              <div>
-                <h1
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <h1
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "36px",
+                fontWeight: 700,
+                color: "#111827",
+                marginBottom: "8px",
+                letterSpacing: "-0.5px",
+              }}
+            >
+              Welcome Sachin !
+            </h1>
+            <p
+              style={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: "15px",
+                color: "#6B7280",
+                marginBottom: "24px",
+                fontWeight: 400,
+              }}
+            >
+              Your AI-powered job search dashboard. Last updated today.
+            </p>
+
+            {/* Quick Action Icons and Key Metrics Cards - Same Row */}
+            <div className="flex items-center justify-between mb-8">
+              {/* Quick Action Icons - Left Side */}
+              <div className="flex items-center gap-4">
+                {/* Search Icon - Expands to Input */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
                   style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "24px",
-                    fontWeight: 600,
-                    color: "#111827",
+                    backgroundColor: "#1F2937", // Default Slate-800
+                    width: "48px", // Default width (w-12)
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "300px";
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
                 >
-                  Welcome, Sachin Dubey!
-                </h1>
-                <p
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Explore Jobs"
+                    className="bg-transparent border-none outline-none text-black placeholder-gray-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75"
+                    style={{
+                      width: "200px",
+                      marginLeft: "4px",
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        router.push("/explore-jobs");
+                      }
+                    }}
+                  />
+                </div>
+
+                {/* Edit Icon - AI CV Editor */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
                   style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "13px",
-                    color: "#6B7280",
-                    marginTop: "4px",
+                    backgroundColor: "#1F2937",
+                    width: "48px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "180px"; // Adjust width as needed for text
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
                 >
-                  Your AI-powered job search dashboard. Last updated today.
-                </p>
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </div>
+                  <span className="text-black text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 ml-2">
+                    AI CV Editor
+                  </span>
+                </div>
+
+                {/* Grid Icon - Application Management */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
+                  style={{
+                    backgroundColor: "#1F2937",
+                    width: "48px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "240px";
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
+                  }}
+                  onClick={() => router.push("/applications")}
+                >
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <rect x="3" y="3" width="7" height="7"></rect>
+                      <rect x="14" y="3" width="7" height="7"></rect>
+                      <rect x="14" y="14" width="7" height="7"></rect>
+                      <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                  </div>
+                  <span className="text-black text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 ml-2">
+                    Application Management
+                  </span>
+                </div>
+
+                {/* Graduation Cap Icon - Skill Enhancement */}
+                <div
+                  className="group relative h-12 rounded-full flex items-center transition-all duration-700 ease-in-out cursor-pointer shadow-md overflow-hidden"
+                  style={{
+                    backgroundColor: "#1F2937",
+                    width: "48px",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.width = "200px";
+                    e.currentTarget.style.backgroundColor = "#FCCD2A";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.width = "48px";
+                    e.currentTarget.style.backgroundColor = "#1F2937";
+                  }}
+                  onClick={() => router.push("/courses")}
+                >
+                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-white group-hover:text-black transition-colors duration-300"
+                    >
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                    </svg>
+                  </div>
+                  <span className="text-black text-sm font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75 ml-2">
+                    Skill Enhancement
+                  </span>
+                </div>
+              </div>
+
+              {/* Key Metrics Cards - Right Side */}
+              <div className="flex items-center gap-6">
+                {/* Active Applications Card */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#FEF3E2" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "32px", fontWeight: 700, color: "#374151", margin: 0, lineHeight: "1.2" }}>36</p>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#374151", margin: 0, marginTop: "4px" }}>Active Applications</p>
+                  </div>
+                </div>
+
+                {/* Interviews Card */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#FEF3E2" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "32px", fontWeight: 700, color: "#374151", margin: 0, lineHeight: "1.2" }}>3</p>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#374151", margin: 0, marginTop: "4px" }}>Interviews</p>
+                  </div>
+                </div>
+
+                {/* Saved Jobs Card */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#FEF3E2" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B5563" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 7h16"></path>
+                      <path d="M4 12h16"></path>
+                      <path d="M4 17h16"></path>
+                      <rect x="2" y="3" width="20" height="18" rx="2" fill="none"></rect>
+                      <rect x="6" y="6" width="3" height="3" fill="#4B5563" opacity="0.3"></rect>
+                      <rect x="11" y="6" width="3" height="3" fill="#4B5563" opacity="0.3"></rect>
+                      <rect x="6" y="11" width="3" height="3" fill="#4B5563" opacity="0.3"></rect>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "32px", fontWeight: 700, color: "#374151", margin: 0, lineHeight: "1.2" }}>52</p>
+                    <p style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#374151", margin: 0, marginTop: "4px" }}>Saved Jobs</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1233,22 +1445,23 @@ export default function CandidateDashboardPage() {
             {/* Left Column: Profile Card */}
             <div className="flex-shrink-0">
               <div
-                className="bg-white rounded-lg overflow-hidden"
+                className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                 style={{
-                  width: "244px",
-                  height: "357px",
-                  borderRadius: "24px",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(23, 26, 31, 0.3), 0px 0px 0px rgba(0, 0, 0, 0)",
+                  width: "356px",
+                  height: "377px",
+                  borderRadius: "6px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                   position: "relative",
                 }}
+                onClick={() => router.push("/profile")}
               >
                 {/* Profile Picture with Gradient Overlay */}
-                <div className="relative w-full" style={{ height: "357px" }}>
+                <div className="relative w-full" style={{ height: "377px" }}>
                   <Image
                     src="/Gemini_Generated_Image_xxo7twxxo7twxxo7.png"
-                    alt="Anglina Jolie"
-                    width={244}
-                    height={357}
+                    alt="Sachin Dubey"
+                    width={356}
+                    height={377}
                     className="w-full h-full object-cover"
                   />
                   {/* White Gradient Overlay - Linear gradient: transparent white (0% opacity) at 70% to opaque white (100% opacity) at 100% (bottom 30% has white overlay) */}
@@ -1270,7 +1483,7 @@ export default function CandidateDashboardPage() {
                         marginBottom: "4px",
                       }}
                     >
-                      Anglina Jolie
+                      Sachin Dubey
                     </h3>
                     <p
                       style={{
@@ -1294,17 +1507,18 @@ export default function CandidateDashboardPage() {
                   </div>
                   {/* View Button - Bottom Right */}
                   <button
-                    className="absolute bottom-4 right-4 px-3 py-1.5 rounded-md text-sm font-medium"
+                    className="absolute bottom-4 right-4 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 backdrop-blur-md"
                     style={{
-                      backgroundColor: "#F3F4F6",
-                      color: "#111827",
+                      background: "#000000",
+                      color: "#FFFFFF",
                       fontFamily: "Inter, sans-serif",
                       zIndex: 10,
-                      borderRadius: "6px",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                     }}
-                    onClick={() => router.push("/personal-details")}
+                    onClick={() => router.push("/profile")}
                   >
-                    view
+                    View Profile
                   </button>
                 </div>
               </div>
@@ -1313,23 +1527,23 @@ export default function CandidateDashboardPage() {
             {/* Middle Column: Application Status */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "512px",
-                  height: "357px",
-                  borderRadius: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.6)",
-                  border: "1px solid rgba(158, 157, 157, 0.8)",
-                  boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0)",
-                  padding: "20px",
+                  width: "580px",
+                  height: "378px",
+                  borderRadius: "6px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                  padding: "24px",
                   position: "relative",
+                  cursor: "pointer",
                 }}
+                onClick={() => router.push("/applications")}
               >
                 <h2
-                  className="mb-3"
+                  className="mb-4"
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "16px",
+                    fontSize: "18px",
                     fontWeight: 600,
                     color: "#111827",
                   }}
@@ -1530,16 +1744,16 @@ export default function CandidateDashboardPage() {
             {/* Right Column: Notifications */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="bg-white overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full mx-auto h-full"
                 style={{
-                  width: "230px",
-                  height: "361px",
-                  borderRadius: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.5)",
-                  border: "1px solid rgba(158, 157, 157, 0.6)",
-                  boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                  padding: "20px",
+                  width: "430px",
+                  height: "378px",
+                  borderRadius: "6px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                  padding: "20px 24px",
+                  cursor: "pointer",
                 }}
+                onClick={() => router.push("/notification")}
               >
                 <h2
                   className="mb-4"
@@ -1552,210 +1766,83 @@ export default function CandidateDashboardPage() {
                 >
                   Notifications
                 </h2>
-                <div className="flex flex-col" style={{ gap: "8px" }}>
-                  {/* Notification Item 1 */}
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "205px",
-                      height: "77px",
-                      borderRadius: "0px",
-                      padding: "8px",
-                    }}
-                  >
-                    {/* Top Row: New Tag and Timestamp */}
-                    <div className="flex items-start justify-between mb-2">
-                      {/* Left: New Tag */}
-                      <span
-                        className="px-2 py-1 rounded-full"
-                        style={{
-                          backgroundColor: "#4B5563",
-                          color: "#FFFFFF",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 500,
-                          borderRadius: "12px",
-                        }}
-                      >
-                        New
-                      </span>
-                      {/* Right: Timestamp */}
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#6B7280",
-                        }}
-                      >
-                        2 min ago
-                      </span>
-                    </div>
-                    {/* Bottom Row: Icon and Text */}
-                    <div className="flex items-start gap-2">
-                      {/* Icon */}
+                <div className="flex flex-col items-center overflow-hidden" style={{ gap: "4px", height: "300px" }}>
+                  {notifications.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className={`flex items-center gap-2 sm:gap-4 transition-all duration-500 rounded-lg cursor-pointer w-full min-w-0 ${index === notifications.length - 1 && isRotating ? "animate-notification-out" : ""
+                        } ${index === 0 && !isRotating ? "animate-notification-in" : ""
+                        } hover:bg-gray-50`}
+                      style={{
+                        width: "390px",
+                        height: "56px",
+                        padding: "0 12px",
+                      }}
+                    >
+                      {/* Left: Icon Box */}
                       <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="flex-shrink-0 flex items-center justify-center rounded-xl"
                         style={{
-                          width: "32px",
-                          height: "32px",
-                          backgroundColor: "#FCE7F3",
+                          width: "44px",
+                          height: "44px",
+                          backgroundColor: "#EFF6FF", // Light Blue
                         }}
                       >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#EF4444" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M12 3L14.5 9.5L21 12L14.5 14.5L12 21L9.5 14.5L3 12L9.5 9.5L12 3Z"
+                            fill="#EF4444" // Red Star
+                            stroke="#EF4444"
+                            strokeWidth="1"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <circle cx="18" cy="8" r="1.5" stroke="#3B82F6" strokeWidth="1.5" />
+                          <circle cx="6" cy="16" r="1.5" stroke="#3B82F6" strokeWidth="1.5" />
                         </svg>
                       </div>
-                      {/* Text */}
-                      <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#111827",
-                          fontWeight: 400,
-                          lineHeight: "1.4",
-                          margin: 0,
-                        }}
-                      >
-                        New Job Alert: Senior UX Designer at Google
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Notification Item 2 */}
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "205px",
-                      height: "77px",
-                      borderRadius: "0px",
-                      padding: "8px",
-                    }}
-                  >
-                    {/* Top Row: New Tag and Timestamp */}
-                    <div className="flex items-start justify-between mb-2">
-                      {/* Left: New Tag */}
-                      <span
-                        className="px-2 py-1 rounded-full"
-                        style={{
-                          backgroundColor: "#4B5563",
-                          color: "#FFFFFF",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 500,
-                          borderRadius: "12px",
-                        }}
-                      >
-                        New
-                      </span>
-                      {/* Right: Timestamp */}
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#6B7280",
-                        }}
-                      >
-                        2 min ago
-                      </span>
-                    </div>
-                    {/* Bottom Row: Icon and Text */}
-                    <div className="flex items-start gap-2">
-                      {/* Icon */}
-                      <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full"
-                        style={{
-                          width: "32px",
-                          height: "32px",
-                          backgroundColor: "#FCE7F3",
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#EF4444" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                      {/* Middle: Message */}
+                      <div className="flex-1 min-w-0">
+                        <p
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            color: "#111827",
+                            lineHeight: "1.4",
+                          }}
+                        >
+                          New Job Alert: Senior UX Designer at Google
+                        </p>
                       </div>
-                      {/* Text */}
-                      <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#111827",
-                          fontWeight: 400,
-                          lineHeight: "1.4",
-                          margin: 0,
-                        }}
-                      >
-                        New Job Alert: Senior UX Designer at Google
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Notification Item 3 */}
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "205px",
-                      height: "77px",
-                      borderRadius: "0px",
-                      padding: "8px",
-                    }}
-                  >
-                    {/* Top Row: New Tag and Timestamp */}
-                    <div className="flex items-start justify-between mb-2">
-                      {/* Left: New Tag */}
-                      <span
-                        className="px-2 py-1 rounded-full"
-                        style={{
-                          backgroundColor: "#4B5563",
-                          color: "#FFFFFF",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          fontWeight: 500,
-                          borderRadius: "12px",
-                        }}
-                      >
-                        New
-                      </span>
-                      {/* Right: Timestamp */}
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#6B7280",
-                        }}
-                      >
-                        2 min ago
-                      </span>
-                    </div>
-                    {/* Bottom Row: Icon and Text */}
-                    <div className="flex items-start gap-2">
-                      {/* Icon */}
-                      <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-full"
-                        style={{
-                          width: "32px",
-                          height: "32px",
-                          backgroundColor: "#FCE7F3",
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#EF4444" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                      {/* Right: Status/Time Stack */}
+                      <div className="flex flex-col items-end flex-shrink-0" style={{ gap: "4px" }}>
+                        <span
+                          className="px-3 py-1 rounded-full text-center"
+                          style={{
+                            backgroundColor: "#111827", // Navy
+                            color: "#FFFFFF",
+                            fontSize: "10px",
+                            fontWeight: 600,
+                            minWidth: "44px",
+                          }}
+                        >
+                          New
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "11px",
+                            color: "#6B7280",
+                          }}
+                        >
+                          2 min ago
+                        </span>
                       </div>
-                      {/* Text */}
-                      <p
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          color: "#111827",
-                          fontWeight: 400,
-                          lineHeight: "1.4",
-                          margin: 0,
-                        }}
-                      >
-                        New Job Alert: Senior UX Designer at Google
-                      </p>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1763,398 +1850,227 @@ export default function CandidateDashboardPage() {
 
           {/* Second Row: Application Tasks and CV Score Tracker */}
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
-            {/* Left: Application Tasks Card */}
+            {/* Left: Hiring Signals Card */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-[#333333] transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "778px",
-                  height: "197px",
-                  borderRadius: "17px",
-                  backgroundColor: "#2D2D2D",
-                  border: "1px solid rgba(188, 181, 181, 1)",
-                  borderStyle: "solid",
-                  boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-                  padding: "20px",
+                  width: "960px",
+                  height: "229px",
+                  borderRadius: "6px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+                  padding: "24px",
                   position: "relative",
+                  color: "#FFFFFF",
                 }}
               >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <h2
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h2
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "20px",
+                        fontWeight: 400,
+                        marginBottom: "4px",
+                      }}
+                    >
+                      Hiring Signals for You
+                    </h2>
+                    <p
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "13px",
+                        color: "#9CA3AF",
+                      }}
+                    >
+                      AI insights based on current job market & your profile
+                    </p>
+                  </div>
+                  <button
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors"
                     style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    Application Tasks
-                  </h2>
-                  <span
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "14px",
+                      fontSize: "12px",
                       fontWeight: 500,
                       color: "#FFFFFF",
                     }}
                   >
-                    2/4
-                  </span>
+                    View Job Trends
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
                 </div>
-                {/* Tasks List - Horizontal */}
-                <div className="flex items-start" style={{ gap: "12px" }}>
-                  {/* Task 1: Onboarding */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="6" width="18" height="12" rx="2" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <circle cx="9" cy="12" r="2" fill="#FFFFFF" />
-                      </svg>
-                    </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Onboarding
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 08:30
-                      </span>
-                    </div>
-                    {/* Status - Yellow checkmark - properly sized circle with non-compressed checkmark */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        backgroundColor: "#FACC15",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-                        <path d="M20 6L9 17L4 12" stroke="#111827" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+
+                {/* Grid Content */}
+                <div className="grid grid-cols-[1.2fr_1fr_1.5fr_1fr] gap-4">
+                  {/* Roles in Demand */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>ROLES IN DEMAND</h3>
+                    <div className="space-y-3">
+                      <div className="group flex items-center gap-2 text-[13px] font-medium cursor-pointer transition-all duration-300 hover:translate-x-1">
+                        <span className="group-hover:text-orange-400 transition-colors duration-300">Frontend Developer</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
+                          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                          <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                      </div>
+                      <div className="group flex items-center gap-2 text-[13px] font-medium cursor-pointer transition-all duration-300 hover:translate-x-1">
+                        <span className="group-hover:text-orange-400 transition-colors duration-300">React Engineer</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
+                          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                          <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                      </div>
+                      <div className="group flex items-center gap-2 text-[13px] font-medium cursor-pointer transition-all duration-300 hover:translate-x-1">
+                        <span className="group-hover:text-gray-200 transition-colors duration-300">UI Engineer</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Task 2: Skills Matching */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <circle cx="9" cy="7" r="4" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                      </svg>
-                    </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Skills Matching
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 10:00
-                      </span>
-                    </div>
-                    {/* Status - Yellow checkmark - properly sized circle with non-compressed checkmark */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        backgroundColor: "#FACC15",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block" }}>
-                        <path d="M20 6L9 17L4 12" stroke="#111827" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                  {/* Top Locations */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>TOP LOCATIONS</h3>
+                    <div className="space-y-3">
+                      <div className="group flex items-center gap-2 text-[13px] text-gray-300 cursor-pointer transition-all duration-300 group-hover:text-orange-400">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }} className="transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Remote
+                      </div>
+                      <div className="group flex items-center gap-2 text-[13px] text-gray-300 cursor-pointer transition-all duration-300 group-hover:text-orange-400">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }} className="transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Bangalore
+                      </div>
+                      <div className="group flex items-center gap-2 text-[13px] text-gray-300 cursor-pointer transition-all duration-300 group-hover:text-orange-400">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }} className="transition-all duration-300 group-hover:scale-110 group-hover:opacity-100">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Berlin
+                      </div>
                     </div>
                   </div>
 
-                  {/* Task 3: Project Update */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <polyline points="14 2 14 8 20 8" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                        <line x1="12" y1="18" x2="12" y2="12" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
-                        <polyline points="9 15 12 12 15 15" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      </svg>
+                  {/* Skills */}
+                  <div>
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "12px", letterSpacing: "0.05em" }}>SKILLS INCREASING INTERVIEW CHANCES</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["React Hooks", "System Design", "AWS Basics"].map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-2 py-1 rounded-full bg-[#4B4B4B] text-[11px] font-medium text-gray-200 text-center cursor-pointer transition-all duration-300 hover:bg-[#F97316] hover:scale-105 hover:text-black active:scale-95 shadow-sm"
+                          style={{ fontFamily: "Inter, sans-serif" }}
+                        >
+                          {skill}
+                        </span>
+                      ))}
                     </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Project Update
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 14:00
-                      </span>
-                    </div>
-                    {/* Status - Gray filled circle */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "18px",
-                        height: "18px",
-                        backgroundColor: "#6B7280",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    ></div>
                   </div>
 
-                  {/* Task 4: HR policy */}
-                  <div
-                    className="flex items-center"
-                    style={{
-                      width: "160.48px",
-                      height: "62.9px",
-                      borderRadius: "11.29px",
-                      padding: "8px 12px",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    {/* Icon bubble */}
-                    <div
-                      className="flex items-center justify-center"
-                      style={{
-                        width: "36px",
-                        height: "26px",
-                        borderRadius: "8px",
-                        backgroundColor: "#4B4B4B",
-                        marginRight: "10px",
-                        boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.3)",
-                      }}
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#FFFFFF" strokeWidth="1.5" fill="none" />
-                      </svg>
+                  {/* Market Fit */}
+                  <div className="group cursor-pointer">
+                    <h3 style={{ fontSize: "10px", fontWeight: 600, color: "#9CA3AF", marginBottom: "10px", letterSpacing: "0.05em" }}>YOUR MARKET FIT</h3>
+                    <div className="flex flex-col">
+                      <span className="transition-all duration-500 group-hover:scale-110 origin-left" style={{ fontSize: "32px", fontWeight: 400, color: "#F97316", lineHeight: "1" }}>78%</span>
+                      <span style={{ fontSize: "11px", color: "#9CA3AF", marginTop: "8px", marginBottom: "12px" }}>match with current openings</span>
+                      <div className="relative w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#F97316] rounded-full transition-all duration-700 ease-out group-hover:shadow-[0_0_8px_rgba(249,115,22,0.6)]" style={{ width: "78%" }}></div>
+                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
+                      </div>
                     </div>
-                    {/* Text */}
-                    <div className="flex-1 flex flex-col" style={{ gap: "2px" }}>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        HR policy
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "11px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        Sep 13, 15:00
-                      </span>
-                    </div>
-                    {/* Status - Hollow gray circle */}
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: "18px",
-                        height: "18px",
-                        border: "2px solid #9CA3AF",
-                        backgroundColor: "transparent",
-                        marginLeft: "16px",
-                        flexShrink: 0,
-                      }}
-                    ></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right: CV Score Tracker Card */}
+            {/* Right: CV Score Card */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0"
+                className="flex-shrink-0 bg-[#FFF9F2] transition-all duration-300 hover:scale-[1.01]"
                 style={{
-                  width: "236px",
-                  height: "196px",
-                  borderRadius: "17.96px",
-                  backgroundColor: "rgba(255, 255, 255, 1)",
-                  border: "1px solid rgba(158, 157, 157, 0.8)",
-                  borderStyle: "solid",
-                  boxShadow: "0px 0.75px 2.24px 0px rgba(0, 0, 0, 0.1)",
-                  padding: "20px",
+                  width: "430px",
+                  height: "229px",
+                  borderRadius: "6px",
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                  padding: "32px 24px",
+                  display: "flex",
+                  flexDirection: "column",
                   position: "relative",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
                 }}
+                onClick={() => router.push("/cvscore")}
               >
                 {/* Header */}
-                <div className="flex items-center justify-between" style={{ marginBottom: "16px" }}>
+                <div className="flex items-start justify-between">
                   <h2
                     style={{
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "16px",
-                      fontWeight: 600,
+                      fontSize: "24px",
+                      fontWeight: 300,
                       color: "#111827",
                     }}
                   >
-                    CV Score Tracker
+                    CV Score
                   </h2>
-                  {/* Action Icon - Arrow pointing out of square */}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ cursor: "pointer", flexShrink: 0 }}>
-                    <rect x="3" y="3" width="14" height="14" rx="1.5" stroke="#6B7280" strokeWidth="1.5" fill="none" />
-                    <path d="M7 3h6v6" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    <line x1="13" y1="3" x2="21" y2="11" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="17" y1="3" x2="21" y2="3" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="21" y1="3" x2="21" y2="7" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+                  <span
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "42px",
+                      fontWeight: 300,
+                      color: "#111827",
+                    }}
+                  >
+                    82%
+                  </span>
                 </div>
-                {/* CV Score Visualization */}
-                <div className="flex items-center justify-center">
-                  <div className="relative" style={{ width: "120px", height: "120px" }}>
-                    {/* Dotted Circle Outline */}
-                    <svg viewBox="0 0 100 100" className="w-full h-full" style={{ transform: "rotate(-90deg)" }}>
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="45"
-                        fill="none"
-                        stroke="#E5E7EB"
-                        strokeWidth="4"
-                        strokeDasharray="4 4"
-                      />
-                      {/* Yellow Segments */}
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="45"
-                        fill="none"
-                        stroke="#FACC15"
-                        strokeWidth="4"
-                        strokeDasharray={`${(72 / 100) * 282.74} 282.74`}
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    {/* Center Text */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "32px",
-                          fontWeight: 700,
-                          color: "#111827",
-                        }}
-                      >
-                        72
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "12px",
-                          color: "#9CA3AF",
-                        }}
-                      >
-                        CV Score
-                      </span>
+
+                {/* Segmented Capsule Graph */}
+                <div className="relative">
+                  {/* Labels row - moved further up and ensured visibility */}
+                  <div className="flex w-full mb-3" style={{ paddingLeft: "10px" }}>
+                    <div style={{ width: "40%" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#9CA3AF", fontWeight: 400 }}>Skills</span>
+                    </div>
+                    <div style={{ width: "35%", paddingLeft: "8px" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#9CA3AF", fontWeight: 400 }}>Exp</span>
+                    </div>
+                    <div style={{ width: "25%", paddingLeft: "8px" }}>
+                      <span style={{ fontFamily: "Inter, sans-serif", fontSize: "14px", color: "#9CA3AF", fontWeight: 400 }}>Edu</span>
+                    </div>
+                  </div>
+                  {/* Capsule row */}
+                  <div className="flex w-full h-[54px] rounded-full overflow-hidden shadow-inner">
+                    {/* Skills Segment */}
+                    <div
+                      className="h-full flex items-center justify-center bg-[#FFD65C]"
+                      style={{ width: "40%" }}
+                    >
+                      <span className="text-[14px] text-[#111827] font-medium" style={{ fontFamily: "Inter, sans-serif" }}>High</span>
+                    </div>
+                    {/* Exp Segment */}
+                    <div
+                      className="h-full flex items-center justify-center bg-[#232931]"
+                      style={{ width: "35%", borderLeft: "2px solid #FFF9F2", borderRight: "2px solid #FFF9F2" }}
+                    >
+                      <span className="text-[14px] text-white font-medium" style={{ fontFamily: "Inter, sans-serif" }}>Good</span>
+                    </div>
+                    {/* Edu Segment */}
+                    <div
+                      className="h-full flex items-center justify-center bg-[#A4ADB8]"
+                      style={{ width: "25%" }}
+                    >
+                      <span className="text-[14px] text-white font-medium" style={{ fontFamily: "Inter, sans-serif" }}>Avg</span>
                     </div>
                   </div>
                 </div>
@@ -2166,25 +2082,22 @@ export default function CandidateDashboardPage() {
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left: Job Matches Card */}
             <div
-              className="flex flex-col"
+              className="flex-shrink-0 flex flex-col bg-white"
               style={{
-                width: "700px",
-                height: "580px",
-                borderRadius: "17px",
-                backgroundColor: "rgba(255, 255, 255, 1)",
-                opacity: "100%",
-                border: "1px solid rgba(158, 157, 157, 0.8)",
-                boxShadow: "0px 3.05px 3.05px rgba(0, 0, 0, 0.25)",
-                padding: "24px",
+                width: "960px",
+                height: "526px",
+                borderRadius: "6px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                padding: "32px",
               }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-8">
                 <h2
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "20px",
-                    fontWeight: 600,
+                    fontSize: "24px",
+                    fontWeight: 400,
                     color: "#111827",
                   }}
                 >
@@ -2201,695 +2114,301 @@ export default function CandidateDashboardPage() {
                     cursor: "pointer",
                     padding: "4px 8px",
                   }}
+                  onClick={() => router.push("/explore-jobs")}
                 >
                   View All Jobs
                 </button>
               </div>
+
               {/* Job List */}
-              <div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
-                {/* Job 1: Frontend Developer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
+              <div className="flex flex-col gap-4 pt-2 pb-2 px-1" style={{ overflowY: "auto", flex: 1 }}>
+                {[
+                  {
+                    title: "Frontend Developer",
+                    company: "Tech Solutions Inc.",
+                    location: "New York, USA",
+                    skills: ["React", "TypeScript", "UI/UX"],
+                    match: "92% Match",
+                  },
+                  {
+                    title: "Backend Engineer",
+                    company: "Global Innovations",
+                    location: "San Francisco, USA",
+                    skills: ["Nodejs", "Python", "AWS"],
+                    match: "88% Match",
+                  },
+                  {
+                    title: "Data Analyst",
+                    company: "Analytics Corp.",
+                    location: "Boston, USA",
+                    skills: ["SQL", "Python", "Tableau"],
+                    match: "85% Match",
+                  },
+                  {
+                    title: "Product Designer",
+                    company: "Creative Studio",
+                    location: "London, UK",
+                    skills: ["Figma", "UI/UX", "User Research"],
+                    match: "90% Match",
+                  },
+                ].map((job, index) => (
                   <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
+                    key={index}
+                    className="group flex items-center gap-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] cursor-pointer overflow-hidden relative"
                     style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
+                      width: "100%",
+                      height: "85px",
+                      flexShrink: 0,
+                      padding: "0 20px",
+                      border: "1px solid #E5E7EB",
                       borderRadius: "8px",
+                      backgroundImage: "linear-gradient(to right, #F0F9FF 50%, #FFFFFF 50%)",
+                      backgroundSize: "200% 100%",
+                      backgroundPosition: "right bottom",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundPosition = "left bottom";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundPosition = "right bottom";
                     }}
                   >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
+                    {/* Icon */}
+                    <div className="flex-shrink-0 transition-colors duration-300">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black group-hover:text-blue-600">
+                        <rect x="4" y="5" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <rect x="4" y="10" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <rect x="4" y="15" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <circle cx="18" cy="7" r="0.5" fill="currentColor" />
+                        <circle cx="18" cy="12" r="0.5" fill="currentColor" />
+                        <circle cx="18" cy="17" r="0.5" fill="currentColor" />
+                      </svg>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0 transition-colors duration-300">
                       <h3
+                        className="group-hover:text-blue-900 transition-colors duration-300"
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
+                          fontSize: "16px",
+                          fontWeight: 600,
                           color: "#111827",
+                          marginBottom: "2px",
                         }}
                       >
-                        Frontend Developer
+                        {job.title}
                       </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Tech Solutions Inc. New York, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "TypeScript", "UI/UX"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      92% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-
-                {/* Job 2: Backend Engineer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#D1FAE5",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#10B981" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#10B981" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
+                      <p
+                        className="group-hover:text-blue-700 transition-colors duration-300"
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
+                          fontSize: "12px",
+                          color: "#4B5563",
+                          marginBottom: "8px",
                         }}
                       >
-                        Backend Engineer
-                      </h3>
-
+                        {job.company} • {job.location}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {job.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="px-3 py-1 rounded-full transition-all duration-300 group-hover:bg-blue-100 group-hover:text-blue-800"
+                            style={{
+                              fontSize: "10px",
+                              backgroundColor: "#F3F4F6",
+                              color: "#6B7280",
+                              fontFamily: "Inter, sans-serif",
+                            }}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Global Innovations San Francisco, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["Node.js", "Python", "AWS"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      88% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
 
-                {/* Job 3: Data Analyst */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
+                    {/* Right Column */}
+                    <div className="flex flex-col items-end gap-1 z-10">
+                      <span
+                        className="transition-colors duration-300 group-hover:text-blue-600 font-semibold"
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          color: "#3B82F6",
                         }}
                       >
-                        Data Analyst
-                      </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Analytics Corp. Boston, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["SQL", "Python", "Tableau"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      85% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-
-                {/* Job 4: Full Stack Developer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
+                        {job.match}
+                      </span>
+                      <button
+                        className="px-4 py-1.5 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95"
                         style={{
+                          backgroundColor: "#F97316",
+                          color: "#FFFFFF",
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
+                          fontSize: "11px",
+                          border: "none",
+                          cursor: "pointer",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push("/explore-jobs");
                         }}
                       >
-                        Full Stack Developer
-                      </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Digital Innovations Inc. Seattle, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "Node.js", "MongoDB"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                        View Details
+                      </button>
                     </div>
                   </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      90% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-
-                {/* Job 5: UI/UX Designer */}
-                <div
-                  className="flex items-center gap-4 relative"
-                  style={{
-                    width: "100%",
-                    height: "85px",
-                    borderRadius: "10.66px",
-                    backgroundColor: "#FFFFFF",
-                    border: "0.76px solid #C6C6C6",
-                    boxShadow: "0px 0.76px 1.52px rgba(0, 0, 0, 0.07)",
-                    padding: "12px 16px",
-                  }}
-                >
-                  {/* Icon */}
-                  <div
-                    className="flex-shrink-0 rounded-lg flex items-center justify-center"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      backgroundColor: "#DBEAFE",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="#3B82F6" opacity="0.2" />
-                      <rect x="6" y="6" width="12" height="12" rx="1" fill="#3B82F6" />
-                      <rect x="8" y="8" width="8" height="8" fill="#FFFFFF" />
-                    </svg>
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-1">
-                      <h3
-                        style={{
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
-                          color: "#111827",
-                        }}
-                      >
-                        UI/UX Designer
-                      </h3>
-
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "12px",
-                        color: "#6B7280",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Creative Studio LLC. Los Angeles, USA
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {["Figma", "Sketch", "Adobe XD"].map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2 py-0.5 rounded-full"
-                          style={{
-                            fontSize: "10px",
-                            backgroundColor: "#F3F4F6",
-                            color: "#6B7280",
-                            fontFamily: "Inter, sans-serif",
-                          }}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Right Column */}
-                  <div className="flex flex-col items-end gap-3">
-                    <span
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#3B82F6",
-                      }}
-                    >
-                      87% Match
-                    </span>
-                    <button
-                      className="px-4 py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#F97316",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: "8px",
-                      }}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div >
+            </div>
 
             {/* Right: Recommended Courses Card */}
-            < div
-              className="flex flex-col"
+            <div
+              className="flex-shrink-0 flex flex-col bg-white"
               style={{
-                width: "320px",
-                height: "580px",
-                borderRadius: "17px",
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
-                border: "1px solid rgba(158, 157, 157, 0.8)",
-                boxShadow: "0px 3.05px 3.05px rgba(0, 0, 0, 0.25)",
+                width: "430px",
+                height: "526px",
+                borderRadius: "6px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
                 padding: "24px",
-              }
-              }
+              }}
             >
               {/* Header */}
-              < div className="mb-4" >
+              <div className="flex justify-between items-center mb-5">
                 <h2
                   style={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "20px",
-                    fontWeight: 600,
+                    fontWeight: 500,
                     color: "#111827",
                   }}
                 >
                   Recommended Courses
                 </h2>
-              </div >
-              {/* Course List */}
-              < div className="flex flex-col gap-4" style={{ overflowY: "auto", flex: 1 }}>
-                {/* Course 1 */}
-                < div
-                  className="flex flex-col rounded-lg overflow-hidden"
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  {/* Code Snippet */}
-                  < div
-                    className="px-4 py-3"
-                    style={{
-                      backgroundColor: "#1E293B",
-                      fontFamily: "Monaco, 'Courier New', monospace",
-                      fontSize: "11px",
-                      color: "#E2E8F0",
-                      lineHeight: "1.5",
-                    }}
-                  >
-                    <div style={{ color: "#60A5FA" }}>function</div>
-                    <div style={{ color: "#FBBF24", marginLeft: "16px" }}>communicate</div>
-                    <div style={{ color: "#E2E8F0", marginLeft: "16px" }}>(</div>
-                    <div style={{ color: "#34D399", marginLeft: "32px" }}>message</div>
-                    <div style={{ color: "#E2E8F0" }}>)</div>
-                  </div >
-                  {/* Course Info */}
-                  < div className="px-4 py-3" >
-                    <h3
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        color: "#111827",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Effective Communication in Tech
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        color: "#6B7280",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      2h 15m
-                    </p>
-                    <button
-                      className="w-full py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#3B82F6",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      View Course
-                    </button>
-                  </div >
-                </div >
+              </div>
 
-                {/* Course 2 */}
-                < div
-                  className="flex flex-col rounded-lg overflow-hidden"
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
-                  {/* Code Snippet */}
-                  < div
-                    className="px-4 py-3"
+              {/* Course List */}
+              <div className="flex flex-col gap-5" style={{ overflow: "hidden", flex: 1 }}>
+                {[
+                  {
+                    title: "Effective Communication in Tech",
+                    duration: "2h 15m",
+                    code: "ending\",r={state:function(){return n},always:promise)?e.promise().done(n.resolve).fail(n.re dd(function(){n=s},t[1^e][2].disable,t[2][2]. 0,n=h.call(arguments),r=n.length,i=1!==r||e& r),l=Array(r);r>t;t++)n[t]&&b.isFunction(n[t >><table></table><a href='/a'>a</a><in typ TagName(\"input\")[0],r.style.cssText=\"top:1px test(r.getAttribute(\"style\")),hrefNormalized:",
+                  },
+                  {
+                    title: "Advanced React Patterns",
+                    duration: "3h 30m",
+                    code: "const [state, disp] = useRed(red, init); export default function App() { return <div className=\"app-container\"> <Header title=\"Dashboard\" /> <MainLayout> <Sidebar /> <ContentArea /> </MainLayout> </div>; }",
+                  },
+                ].map((course, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col rounded-xl overflow-hidden border border-gray-100"
                     style={{
-                      backgroundColor: "#1E293B",
-                      fontFamily: "Monaco, 'Courier New', monospace",
-                      fontSize: "11px",
-                      color: "#E2E8F0",
-                      lineHeight: "1.5",
+                      width: "100%",
+                      height: "204px",
+                      flexShrink: 0,
+                      backgroundColor: "#FFFFFF",
+                      boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.05)",
                     }}
                   >
-                    <div style={{ color: "#60A5FA" }}>const</div>
-                    <div style={{ color: "#FBBF24", marginLeft: "8px" }}>learn</div>
-                    <div style={{ color: "#E2E8F0" }}> = </div>
-                    <div style={{ color: "#34D399" }}>"React"</div>
-                    <div style={{ color: "#E2E8F0" }}>;</div>
-                  </div >
-                  {/* Course Info */}
-                  < div className="px-4 py-3" >
-                    <h3
+                    {/* Banner with Play Icon */}
+                    <div
+                      className="relative h-[100px] w-full flex items-center justify-center overflow-hidden"
                       style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        color: "#111827",
-                        marginBottom: "4px",
+                        backgroundColor: "#1F2937",
                       }}
                     >
-                      Advanced React Patterns
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "14px",
-                        color: "#6B7280",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      3h 30m
-                    </p>
-                    <button
-                      className="w-full py-2 rounded-lg text-sm font-medium"
-                      style={{
-                        backgroundColor: "#3B82F6",
-                        color: "#FFFFFF",
-                        fontFamily: "Inter, sans-serif",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      View Course
-                    </button>
-                  </div >
-                </div >
-              </div >
-            </div >
-          </div >
+                      {/* Code Background Overlay */}
+                      <div
+                        className="absolute inset-0 opacity-40 p-2"
+                        style={{
+                          fontFamily: "Monaco, 'Courier New', monospace",
+                          fontSize: "8px",
+                          color: "#E5E7EB",
+                          wordBreak: "break-all",
+                          lineHeight: "1.2",
+                          userSelect: "none",
+                        }}
+                      >
+                        {course.code}
+                      </div>
+                      {/* Play Icon */}
+                      <div className="relative z-10">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M8 5V19L19 12L8 5Z" fill="white" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Course Info */}
+                    <div className="p-3.5 flex flex-col gap-3">
+                      <div className="flex justify-between items-center">
+                        <h3
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            color: "#111827",
+                          }}
+                        >
+                          {course.title}
+                        </h3>
+                        <span
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "14px",
+                            color: "#111827",
+                          }}
+                        >
+                          {course.duration}
+                        </span>
+                      </div>
+                      <button
+                        className="w-full py-2.5 rounded-lg text-sm font-medium transition-colors"
+                        style={{
+                          backgroundColor: "#38B6FF",
+                          color: "#FFFFFF",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => router.push("/courses")}
+                      >
+                        View Course
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Fourth Row: Other Cards */}
-          < div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
+          <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left Column */}
-            < div className="flex flex-col gap-6" style={{ width: "244px" }}>
+            <div className="flex flex-col gap-6" style={{ width: "244px" }}>
               {/* Additional content can go here */}
-            </div >
+            </div>
 
             {/* Right Column */}
-            < div className="flex flex-col gap-6" >
-
-
-
-            </div >
-          </div >
-
-        </div >
-      </main >
+            <div className="flex flex-col gap-6">
+            </div>
+          </div>
+        </div>
+      </main>
 
       {/* Footer */}
-      < footer className="border-t border-slate-200 bg-white px 6 py-4 text-xs text-slate-500" >
+      <footer className="border-t border-slate-200 bg-white px-6 py-4 text-xs text-slate-500">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 py-4 text-center md:flex-row md:text-left">
           <p>Terms of Use</p>
           <p>Privacy Policy</p>
           <p>Contact Support</p>
         </div>
-      </footer >
-    </div >
+      </footer>
+    </div>
   );
 }
-
-
