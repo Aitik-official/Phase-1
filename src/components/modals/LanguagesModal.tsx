@@ -114,7 +114,7 @@ export default function LanguagesModal({
             <h2 className="text-xl font-semibold text-gray-900">Add Language</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"

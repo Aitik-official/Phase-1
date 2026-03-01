@@ -131,7 +131,7 @@ export default function VaccinationModal({
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -214,7 +214,7 @@ export default function VaccinationModal({
                     className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                   <svg
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#9095A1] pointer-events-none"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -258,7 +258,7 @@ export default function VaccinationModal({
                 ) : (
                   <div className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
                     <svg
-                      className="w-6 h-6 text-gray-400"
+                      className="w-6 h-6 text-[#9095A1]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -272,7 +272,7 @@ export default function VaccinationModal({
                     </div>
                     <button
                       onClick={handleRemoveFile}
-                      className="text-gray-400 hover:text-red-600"
+                      className="text-[#9095A1] hover:text-red-600"
                       title="Remove file"
                     >
                       <svg

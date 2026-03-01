@@ -70,16 +70,16 @@ export default function ProfilePage() {
   // Data storage for modals
   const [basicInfoData, setBasicInfoData] = useState<BasicInfoData | undefined>({
     firstName: 'John',
+    middleName: 'Vedant',
     lastName: 'Doe',
     email: 'john.doe@example.com',
     phone: '123-456-7890',
     phoneCode: '+1 (USA)',
-    dob: 'July 20th, 1990',
-    city: 'New York',
     gender: 'Male',
+    dob: 'July 20th, 1990',
     country: 'United States',
-    employment: 'Employed',
-    notice: '60 days'
+    city: 'New York',
+    employment: 'Employed'
   });
   const [gapExplanationData, setGapExplanationData] = useState<GapExplanationData | undefined>();
   const [workExperienceData, setWorkExperienceData] = useState<WorkExperienceData | undefined>();
@@ -382,7 +382,7 @@ export default function ProfilePage() {
                     cx="50"
                     cy="50"
                     r="45"
-                    stroke="#3b82f6"
+                    stroke="#28A8DF"
                     strokeWidth="8"
                     fill="none"
                     strokeDasharray={`${85 * 2.83} 283`}
@@ -579,10 +579,6 @@ export default function ProfilePage() {
                       <div>
                         <label className="text-sm font-medium text-gray-500 mb-1 block">Current City</label>
                         <p className="text-base text-gray-900">{basicInfoData.city}</p>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-500 mb-1 block">Notice Period</label>
-                        <p className="text-base text-gray-900">{basicInfoData.notice}</p>
                       </div>
                     </div>
                     <div className="space-y-4">

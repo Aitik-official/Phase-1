@@ -109,7 +109,7 @@ export default function SkillsModal({
             <h2 className="text-xl font-semibold text-gray-900">Edit Skills</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-[#9095A1] hover:text-gray-600"
             >
               <svg
                 width="24"
@@ -166,7 +166,7 @@ export default function SkillsModal({
                         </select>
                         <button
                           onClick={() => handleRemoveSkill(index)}
-                          className="text-gray-400 hover:text-gray-600 ml-1"
+                          className="text-[#9095A1] hover:text-gray-600 ml-1"
                         >
                           <svg
                             width="16"
