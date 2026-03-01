@@ -9,6 +9,32 @@ export default function CandidateDashboardPage() {
   const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState([
+    { id: 1, text: "New Job Alert: Senior UX Designer at Google", time: "2m ago", type: "New" },
+    { id: 2, text: "Your application at Amazon was viewed", time: "1h ago", type: "Viewed" },
+    { id: 3, text: "Interview invitation: Meta Frontend Role", time: "3h ago", type: "Invite" },
+    { id: 4, text: "Skill assessment: 85th percentile in React", time: "5h ago", type: "Result" },
+    { id: 5, text: "New message from HR: Microsoft", time: "1d ago", type: "Message" },
+  ]);
+  const [isRotating, setIsRotating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsRotating(true);
+      // Wait for exit animation to complete
+      setTimeout(() => {
+        setNotifications((prev) => {
+          const next = [...prev];
+          const last = next.pop();
+          if (last) next.unshift(last);
+          return next;
+        });
+        setIsRotating(false);
+      }, 500); // Animation duration
+    }, 5000); // Interval between rotations
+
+    return () => clearInterval(interval);
+  }, []);
 
   // Order matches the visual clockwise order from top: Green, Purple, Red, Blue, Teal, Yellow
   // Yellow segment weight significantly increased for visibility (reduced from green and other colors)
@@ -981,7 +1007,7 @@ export default function CandidateDashboardPage() {
             {/* Right Column: Notifications */}
             <div className="flex-shrink-0">
               <div
-                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
+                className="bg-white overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full mx-auto h-full"
                 style={{
                   width: "430px",
                   height: "378px",
@@ -1003,11 +1029,13 @@ export default function CandidateDashboardPage() {
                 >
                   Notifications
                 </h2>
-                <div className="flex flex-col items-center" style={{ gap: "4px" }}>
-                  {[1, 2, 3, 4, 5].map((item) => (
+                <div className="flex flex-col items-center overflow-hidden" style={{ gap: "4px", height: "300px" }}>
+                  {notifications.map((item, index) => (
                     <div
-                      key={item}
-                      className="flex items-center gap-4 transition-all duration-300 hover:bg-gray-50 rounded-lg cursor-pointer mx-auto"
+                      key={item.id}
+                      className={`flex items-center gap-2 sm:gap-4 transition-all duration-500 rounded-lg cursor-pointer w-full min-w-0 ${index === notifications.length - 1 && isRotating ? "animate-notification-out" : ""
+                        } ${index === 0 && !isRotating ? "animate-notification-in" : ""
+                        } hover:bg-gray-50`}
                       style={{
                         width: "390px",
                         height: "56px",

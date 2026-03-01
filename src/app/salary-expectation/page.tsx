@@ -31,30 +31,19 @@ export default function SalaryExpectationPage() {
   const [currentLocationFocused, setCurrentLocationFocused] = useState(false);
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
   const [benefitOptions, setBenefitOptions] = useState<string[]>([
-    "Health Insurance",
-    "Dental Insurance",
-    "Vision Insurance",
-    "401(k) Matching",
-    "Paid Time Off",
-    "Remote Work",
-    "Stock Options",
-    "Gym Membership",
-    "Life Insurance",
-    "Disability Insurance",
-    "Flexible Spending Account",
-    "Health Savings Account",
-    "Tuition Reimbursement",
-    "Professional Development",
-    "Commuter Benefits",
-    "Childcare Assistance",
-    "Wellness Programs",
-    "Free Meals",
-    "Company Car",
-    "Relocation Assistance",
+    "Family Accommodation",
+    "Bachelor Accommodation",
+    "Food Allowance",
+    "Car Allowance",
+    "Fuel and Driver",
+    "Medical",
+    "Visa",
+    "Travel and Tickets",
+    "Additional Benefits",
   ]);
   const [newBenefit, setNewBenefit] = useState("");
   const [showAddBenefit, setShowAddBenefit] = useState(false);
-  
+
   // Expected Salary states
   const [preferredSalary, setPreferredSalary] = useState("");
   const [preferredSalaryFocused, setPreferredSalaryFocused] = useState(false);
@@ -85,14 +74,14 @@ export default function SalaryExpectationPage() {
   const [preferredWorkMode, setPreferredWorkMode] = useState("");
   const [preferredWorkModeFocused, setPreferredWorkModeFocused] = useState(false);
   const [expectedSelectedBenefits, setExpectedSelectedBenefits] = useState<string[]>([]);
-  
+
   // Chips for Preferred Locations and Roles
   const locationChips = ["New York", "London", "Berlin", "Dubai", "Singapore", "San Francisco", "Toronto", "Sydney"];
   const roleChips = ["Software Developer", "Tech Lead", "UX Designer", "Product Manager", "Data Scientist", "DevOps Engineer", "QA Engineer", "Business Analyst"];
-  
+
   // Locations that require company-sponsored visa
   const locationsRequiringSponsorship = ["New York", "Singapore"];
-  
+
   // Expected Salary states
   const [expectedCurrency, setExpectedCurrency] = useState("");
   const [expectedCurrencyFocused, setExpectedCurrencyFocused] = useState(false);
@@ -107,15 +96,15 @@ export default function SalaryExpectationPage() {
   const salaryTypes = ["Annual", "Monthly", "Hourly"];
   const workModes = ["Remote", "Hybrid", "On-site"];
   const visaStatusOptions = ["Citizen", "Permanent Resident", "Work Visa", "Student Visa", "Tourist Visa", "No Visa Required", "Other"];
-  
+
   // Toggle functions for Preferred Locations and Roles
   const toggleLocation = (value: string) => {
     setSelectedPreferredLocations((prev) => {
       const isCurrentlySelected = prev.includes(value);
-      const newLocations = isCurrentlySelected 
+      const newLocations = isCurrentlySelected
         ? prev.filter((v) => v !== value)
         : [...prev, value];
-      
+
       // Show visa questions when a new location is added (if not already completed for this location)
       if (!isCurrentlySelected && newLocations.length > 0 && !visaDetailsByLocation[value]) {
         setCurrentLocationForVisa(value);
@@ -135,11 +124,11 @@ export default function SalaryExpectationPage() {
         });
         resetVisaQuestions();
       }
-      
+
       return newLocations;
     });
   };
-  
+
   const removeLocation = (value: string) => {
     setSelectedPreferredLocations((prev) => {
       const newLocations = prev.filter((v) => v !== value);
@@ -155,7 +144,7 @@ export default function SalaryExpectationPage() {
       return newLocations;
     });
   };
-  
+
   const handleLocationEnterKey = (value: string) => {
     if (value.trim() && !selectedPreferredLocations.includes(value.trim())) {
       const newLocations = [value.trim(), ...selectedPreferredLocations];
@@ -174,7 +163,7 @@ export default function SalaryExpectationPage() {
       }
     }
   };
-  
+
   // Get visa summary text for a specific location
   const getVisaSummaryForLocation = (location: string) => {
     const details = visaDetailsByLocation[location];
@@ -194,12 +183,12 @@ export default function SalaryExpectationPage() {
     }
     return "";
   };
-  
+
   const handleVisaNext = (hasVisaValue?: string, visaStatusValue?: string, sponsorshipValue?: string) => {
     const currentHasVisa = hasVisaValue !== undefined ? hasVisaValue : hasVisa;
     const currentVisaStatus = visaStatusValue !== undefined ? visaStatusValue : visaStatus;
     const currentSponsorship = sponsorshipValue !== undefined ? sponsorshipValue : visaSponsorshipRequired;
-    
+
     if (visaQuestionStep === 0) {
       if (currentHasVisa === "yes") {
         setVisaQuestionStep(1); // Yes → Visa Status
@@ -254,27 +243,27 @@ export default function SalaryExpectationPage() {
     setVisaSponsorshipRequired("");
     setCurrentLocationForVisa("");
   };
-  
+
   const handleVisaBack = () => {
     if (visaQuestionStep > 0) {
       setVisaQuestionStep(visaQuestionStep - 1);
     }
   };
-  
-  const requiresSponsorship = selectedPreferredLocations.some(loc => 
+
+  const requiresSponsorship = selectedPreferredLocations.some(loc =>
     locationsRequiringSponsorship.includes(loc)
   );
-  
+
   const toggleRole = (value: string) => {
     setSelectedPreferredRoles((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
   };
-  
+
   const removeRole = (value: string) => {
     setSelectedPreferredRoles((prev) => prev.filter((v) => v !== value));
   };
-  
+
   const handleRoleEnterKey = (value: string) => {
     if (value.trim() && !selectedPreferredRoles.includes(value.trim())) {
       setSelectedPreferredRoles((prev) => [value.trim(), ...prev]);
@@ -297,8 +286,8 @@ export default function SalaryExpectationPage() {
   const labelColor = (focused: boolean, hasValue: boolean) =>
     focused || hasValue
       ? {
-          color: "#239CD2",
-        }
+        color: "#239CD2",
+      }
       : undefined;
 
   return (
@@ -350,25 +339,24 @@ export default function SalaryExpectationPage() {
             return (
               <div key={step.number} className="relative z-10 flex flex-col items-center" style={{ flex: 1 }}>
                 <div
-                  className={`relative flex items-center justify-center rounded-full border-2 text-sm font-semibold ${
-                    step.active
-                      ? "text-white border-transparent"
-                      : isCompleted
+                  className={`relative flex items-center justify-center rounded-full border-2 text-sm font-semibold ${step.active
+                    ? "text-white border-transparent"
+                    : isCompleted
                       ? "text-white border-transparent cursor-pointer"
                       : "h-12 w-12 border-slate-300 bg-white text-slate-400"
-                  }`}
+                    }`}
                   style={
                     step.active
                       ? {
-                          height: "80px",
-                          width: "80px",
-                          backgroundImage: "url('/ornage_stage.png')",
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                          backgroundRepeat: "no-repeat",
-                        }
+                        height: "80px",
+                        width: "80px",
+                        backgroundImage: "url('/ornage_stage.png')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                      }
                       : isCompleted
-                      ? {
+                        ? {
                           height: "80px",
                           width: "80px",
                           backgroundImage: "url('/blue_2.png')",
@@ -376,7 +364,7 @@ export default function SalaryExpectationPage() {
                           backgroundPosition: "center",
                           backgroundRepeat: "no-repeat",
                         }
-                      : {
+                        : {
                           marginTop: "16px",
                         }
                   }
@@ -384,31 +372,30 @@ export default function SalaryExpectationPage() {
                     isCompleted && step.number === 1
                       ? () => router.push("/personal-details")
                       : isCompleted && step.number === 2
-                      ? () => router.push("/edu-details")
-                      : isCompleted && step.number === 3
-                      ? () => router.push("/skills")
-                      : isCompleted && step.number === 4
-                      ? () => router.push("/work-exp")
-                      : undefined
+                        ? () => router.push("/edu-details")
+                        : isCompleted && step.number === 3
+                          ? () => router.push("/skills")
+                          : isCompleted && step.number === 4
+                            ? () => router.push("/work-exp")
+                            : undefined
                   }
                 >
                   {step.number}
                 </div>
                 <p
-                  className={`mt-2 text-xs ${
-                    step.active || isCompleted ? "font-semibold text-slate-900" : "text-slate-500"
-                  } ${isCompleted ? "cursor-pointer hover:text-sky-600" : ""}`}
+                  className={`mt-2 text-xs ${step.active || isCompleted ? "font-semibold text-slate-900" : "text-slate-500"
+                    } ${isCompleted ? "cursor-pointer hover:text-sky-600" : ""}`}
                   style={{ maxWidth: "120px", textAlign: "center", lineHeight: "1.3" }}
                   onClick={
                     isCompleted && step.number === 1
                       ? () => router.push("/personal-details")
                       : isCompleted && step.number === 2
-                      ? () => router.push("/edu-details")
-                      : isCompleted && step.number === 3
-                      ? () => router.push("/skills")
-                      : isCompleted && step.number === 4
-                      ? () => router.push("/work-exp")
-                      : undefined
+                        ? () => router.push("/edu-details")
+                        : isCompleted && step.number === 3
+                          ? () => router.push("/skills")
+                          : isCompleted && step.number === 4
+                            ? () => router.push("/work-exp")
+                            : undefined
                   }
                 >
                   {step.label}
@@ -493,9 +480,8 @@ export default function SalaryExpectationPage() {
                         onChange={(e) => setCurrentCurrency(e.target.value)}
                         onFocus={() => setCurrentCurrencyFocused(true)}
                         onBlur={() => setCurrentCurrencyFocused(false)}
-                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                          currentCurrencyFocused || currentCurrency ? "pt-5" : "pt-3"
-                        }`}
+                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentCurrencyFocused || currentCurrency ? "pt-5" : "pt-3"
+                          }`}
                         style={{
                           width: "100%",
                           ...fieldStyle,
@@ -530,9 +516,8 @@ export default function SalaryExpectationPage() {
                         onChange={(e) => setCurrentSalaryType(e.target.value)}
                         onFocus={() => setCurrentSalaryTypeFocused(true)}
                         onBlur={() => setCurrentSalaryTypeFocused(false)}
-                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                          currentSalaryTypeFocused || currentSalaryType ? "pt-5" : "pt-3"
-                        }`}
+                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryTypeFocused || currentSalaryType ? "pt-5" : "pt-3"
+                          }`}
                         style={{
                           width: "100%",
                           ...fieldStyle,
@@ -569,9 +554,8 @@ export default function SalaryExpectationPage() {
                       onChange={(e) => setCurrentSalary(e.target.value)}
                       onFocus={() => setCurrentSalaryFocused(true)}
                       onBlur={() => setCurrentSalaryFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        currentSalaryFocused || currentSalary ? "pt-5" : "pt-3"
-                      }`}
+                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryFocused || currentSalary ? "pt-5" : "pt-3"
+                        }`}
                       style={{
                         width: "100%",
                         ...fieldStyle,
@@ -594,9 +578,8 @@ export default function SalaryExpectationPage() {
                       onChange={(e) => setCurrentLocation(e.target.value)}
                       onFocus={() => setCurrentLocationFocused(true)}
                       onBlur={() => setCurrentLocationFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        currentLocationFocused || currentLocation ? "pt-5" : "pt-3"
-                      }`}
+                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentLocationFocused || currentLocation ? "pt-5" : "pt-3"
+                        }`}
                       style={{
                         width: "100%",
                         ...fieldStyle,
@@ -615,7 +598,7 @@ export default function SalaryExpectationPage() {
                   <label className="block text-sm font-medium text-slate-700 mb-3" style={{ color: "#239CD2" }}>
                     Benefits
                   </label>
-                  <div className="space-y-2.5" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  <div className="space-y-2.5" style={{ maxHeight: "400px", overflowY: "auto" }}>
                     {benefitOptions.map((benefit) => (
                       <div key={benefit} className="flex items-center gap-2">
                         <input
@@ -643,85 +626,84 @@ export default function SalaryExpectationPage() {
                       </div>
                     ))}
                   </div>
-                    {showAddBenefit ? (
-                      <div className="flex items-center gap-2 mt-3">
-                        <div className="relative flex-1">
-                          <input
-                            type="text"
-                            value={newBenefit}
-                            onChange={(e) => setNewBenefit(e.target.value)}
-                            onFocus={() => {}}
-                            onBlur={() => {}}
-                            className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                              newBenefit ? "pt-5" : "pt-3"
+                  {showAddBenefit ? (
+                    <div className="flex items-center gap-2 mt-3">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={newBenefit}
+                          onChange={(e) => setNewBenefit(e.target.value)}
+                          onFocus={() => { }}
+                          onBlur={() => { }}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
                             }`}
-                            style={{
-                              width: "100%",
-                              ...fieldStyle,
-                            }}
-                            onKeyPress={(e) => {
-                              if (e.key === "Enter" && newBenefit.trim()) {
-                                setBenefitOptions([...benefitOptions, newBenefit.trim()]);
-                                setSelectedBenefits([...selectedBenefits, newBenefit.trim()]);
-                                setNewBenefit("");
-                                setShowAddBenefit(false);
-                              }
-                            }}
-                          />
-                          <label
-                            className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(!!newBenefit, !!newBenefit)}`}
-                            style={labelColor(!!newBenefit, !!newBenefit)}
-                          >
-                            Enter new benefit
-                          </label>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (newBenefit.trim()) {
+                          style={{
+                            width: "100%",
+                            ...fieldStyle,
+                          }}
+                          onKeyPress={(e) => {
+                            if (e.key === "Enter" && newBenefit.trim()) {
                               setBenefitOptions([...benefitOptions, newBenefit.trim()]);
                               setSelectedBenefits([...selectedBenefits, newBenefit.trim()]);
                               setNewBenefit("");
                               setShowAddBenefit(false);
                             }
                           }}
-                          className="px-4 py-2 text-sm bg-sky-600 text-white rounded hover:bg-sky-700 transition"
-                          style={{
-                            height: "48.19px",
-                            borderRadius: "5.02px",
-                            whiteSpace: "nowrap",
-                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(!!newBenefit, !!newBenefit)}`}
+                          style={labelColor(!!newBenefit, !!newBenefit)}
                         >
-                          Add
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowAddBenefit(false);
-                            setNewBenefit("");
-                          }}
-                          className="px-4 py-2 text-sm border border-gray-300 rounded hover:bg-gray-50 transition text-slate-700"
-                          style={{
-                            height: "48.19px",
-                            borderRadius: "5.02px",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          Cancel
-                        </button>
+                          Enter new benefit
+                        </label>
                       </div>
-                    ) : (
                       <button
                         type="button"
-                        onClick={() => setShowAddBenefit(true)}
-                        className="mt-3 flex items-center gap-2 text-sm text-sky-600 hover:text-sky-700 font-medium transition"
+                        onClick={() => {
+                          if (newBenefit.trim()) {
+                            setBenefitOptions([...benefitOptions, newBenefit.trim()]);
+                            setSelectedBenefits([...selectedBenefits, newBenefit.trim()]);
+                            setNewBenefit("");
+                            setShowAddBenefit(false);
+                          }
+                        }}
+                        className="px-4 py-2 text-sm bg-sky-600 text-white rounded hover:bg-sky-700 transition"
+                        style={{
+                          height: "48.19px",
+                          borderRadius: "5.02px",
+                          whiteSpace: "nowrap",
+                        }}
                       >
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                        Add Other
+                        Add
                       </button>
-                    )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowAddBenefit(false);
+                          setNewBenefit("");
+                        }}
+                        className="px-4 py-2 text-sm border border-gray-300 rounded hover:bg-gray-50 transition text-slate-700"
+                        style={{
+                          height: "48.19px",
+                          borderRadius: "5.02px",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setShowAddBenefit(true)}
+                      className="mt-3 flex items-center gap-2 text-sm text-sky-600 hover:text-sky-700 font-medium transition"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                      Add Other
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -743,9 +725,8 @@ export default function SalaryExpectationPage() {
                         onChange={(e) => setExpectedCurrency(e.target.value)}
                         onFocus={() => setExpectedCurrencyFocused(true)}
                         onBlur={() => setExpectedCurrencyFocused(false)}
-                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                          expectedCurrencyFocused || expectedCurrency ? "pt-5" : "pt-3"
-                        }`}
+                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedCurrencyFocused || expectedCurrency ? "pt-5" : "pt-3"
+                          }`}
                         style={{
                           width: "100%",
                           ...fieldStyle,
@@ -780,9 +761,8 @@ export default function SalaryExpectationPage() {
                         onChange={(e) => setExpectedSalaryType(e.target.value)}
                         onFocus={() => setExpectedSalaryTypeFocused(true)}
                         onBlur={() => setExpectedSalaryTypeFocused(false)}
-                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                          expectedSalaryTypeFocused || expectedSalaryType ? "pt-5" : "pt-3"
-                        }`}
+                        className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedSalaryTypeFocused || expectedSalaryType ? "pt-5" : "pt-3"
+                          }`}
                         style={{
                           width: "100%",
                           ...fieldStyle,
@@ -819,9 +799,8 @@ export default function SalaryExpectationPage() {
                       onChange={(e) => setPreferredSalary(e.target.value)}
                       onFocus={() => setPreferredSalaryFocused(true)}
                       onBlur={() => setPreferredSalaryFocused(false)}
-                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        preferredSalaryFocused || preferredSalary ? "pt-5" : "pt-3"
-                      }`}
+                      className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredSalaryFocused || preferredSalary ? "pt-5" : "pt-3"
+                        }`}
                       style={{
                         width: "100%",
                         ...fieldStyle,
@@ -855,7 +834,7 @@ export default function SalaryExpectationPage() {
                     visaDetailsByLocation={visaDetailsByLocation}
                     getVisaSummaryForLocation={getVisaSummaryForLocation}
                   />
-                  
+
                   {/* Visa Questions - Rendered directly below locations */}
                   {showVisaQuestions && (
                     <div className="mt-4 space-y-4">
@@ -863,98 +842,95 @@ export default function SalaryExpectationPage() {
                       {visaQuestionStep === 0 && (
                         <div>
                           <h3 className="text-sm font-semibold text-gray-900 mb-3">Do you have a visa?</h3>
-                            <div className="flex gap-2">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setHasVisa("yes");
-                                  setVisaStatus("");
-                                  setVisaStartDate("");
-                                  setVisaEndDate("");
-                                  setVisaSponsorshipRequired("");
-                                  handleVisaNext("yes");
-                                }}
-                                className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                  hasVisa === "yes"
-                                    ? "bg-sky-600 border-sky-600 text-white"
-                                    : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setHasVisa("yes");
+                                setVisaStatus("");
+                                setVisaStartDate("");
+                                setVisaEndDate("");
+                                setVisaSponsorshipRequired("");
+                                handleVisaNext("yes");
+                              }}
+                              className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${hasVisa === "yes"
+                                ? "bg-sky-600 border-sky-600 text-white"
+                                : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
                                 }`}
-                              >
-                                Yes
-                              </button>
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  setHasVisa("no");
-                                  setVisaStatus("");
-                                  setVisaStartDate("");
-                                  setVisaEndDate("");
-                                  setVisaSponsorshipRequired("");
-                                  handleVisaNext("no");
-                                }}
-                                className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                  hasVisa === "no"
-                                    ? "bg-sky-600 border-sky-600 text-white"
-                                    : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                            >
+                              Yes
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setHasVisa("no");
+                                setVisaStatus("");
+                                setVisaStartDate("");
+                                setVisaEndDate("");
+                                setVisaSponsorshipRequired("");
+                                handleVisaNext("no");
+                              }}
+                              className={`flex-1 px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${hasVisa === "no"
+                                ? "bg-sky-600 border-sky-600 text-white"
+                                : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
                                 }`}
-                              >
-                                No
-                              </button>
-                            </div>
+                            >
+                              No
+                            </button>
                           </div>
-                        )}
+                        </div>
+                      )}
 
-                        {/* Step 1: Visa Status (if Yes) */}
-                        {visaQuestionStep === 1 && (
-                          <div>
-                            <div className="flex items-center justify-between mb-3">
-                              <h3 className="text-sm font-semibold text-gray-900">Visa Status</h3>
-                              <button
-                                onClick={handleVisaBack}
-                                className="text-sky-600 hover:text-sky-700 text-sm font-medium"
-                              >
-                                ← Back
-                              </button>
-                            </div>
-                            <div className="relative">
-                              <select
-                                value={visaStatus}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  setVisaStatus(value);
-                                  if (value) {
-                                    handleVisaNext(undefined, value);
-                                  }
-                                }}
-                                onFocus={() => setVisaStatusFocused(true)}
-                                onBlur={() => setVisaStatusFocused(false)}
-                                className={`w-full px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                  visaStatusFocused || visaStatus ? "pt-5" : "pt-3"
+                      {/* Step 1: Visa Status (if Yes) */}
+                      {visaQuestionStep === 1 && (
+                        <div>
+                          <div className="flex items-center justify-between mb-3">
+                            <h3 className="text-sm font-semibold text-gray-900">Visa Status</h3>
+                            <button
+                              onClick={handleVisaBack}
+                              className="text-sky-600 hover:text-sky-700 text-sm font-medium"
+                            >
+                              ← Back
+                            </button>
+                          </div>
+                          <div className="relative">
+                            <select
+                              value={visaStatus}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                setVisaStatus(value);
+                                if (value) {
+                                  handleVisaNext(undefined, value);
+                                }
+                              }}
+                              onFocus={() => setVisaStatusFocused(true)}
+                              onBlur={() => setVisaStatusFocused(false)}
+                              className={`w-full px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStatusFocused || visaStatus ? "pt-5" : "pt-3"
                                 }`}
-                                style={{
-                                  ...fieldStyle,
-                                  appearance: "none",
-                                }}
-                              >
-                                <option value="" disabled hidden>Select visa status</option>
-                                {visaStatusOptions.map((status) => (
-                                  <option key={status} value={status}>
-                                    {status}
-                                  </option>
-                                ))}
-                              </select>
-                              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M3 4.5L6 7.5L9 4.5" stroke="#99A1AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                              </div>
+                              style={{
+                                ...fieldStyle,
+                                appearance: "none",
+                              }}
+                            >
+                              <option value="" disabled hidden>Select visa status</option>
+                              {visaStatusOptions.map((status) => (
+                                <option key={status} value={status}>
+                                  {status}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 4.5L6 7.5L9 4.5" stroke="#99A1AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
                             </div>
                           </div>
-                        )}
+                        </div>
+                      )}
 
                       {/* Step 2: Visa Dates (if Work/Student/Tourist/Other visa) */}
                       {visaQuestionStep === 2 && (
@@ -969,83 +945,81 @@ export default function SalaryExpectationPage() {
                               ← Back
                             </button>
                           </div>
-                            <div className="space-y-3">
-                              <div className="relative">
-                                <input
-                                  type="date"
-                                  value={visaStartDate}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
-                                    setVisaStartDate(value);
-                                    // Check if end date is already filled
-                                    if (value && visaEndDate) {
-                                      requestAnimationFrame(() => {
-                                        handleVisaNext();
-                                      });
-                                    }
-                                  }}
-                                  onFocus={() => setVisaStartDateFocused(true)}
-                                  onBlur={() => {
-                                    setVisaStartDateFocused(false);
-                                    // Also check on blur in case end date was filled after start date
-                                    if (visaStartDate && visaEndDate) {
-                                      requestAnimationFrame(() => {
-                                        handleVisaNext();
-                                      });
-                                    }
-                                  }}
-                                  className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    visaStartDateFocused || visaStartDate ? "pt-5" : "pt-3"
+                          <div className="space-y-3">
+                            <div className="relative">
+                              <input
+                                type="date"
+                                value={visaStartDate}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  setVisaStartDate(value);
+                                  // Check if end date is already filled
+                                  if (value && visaEndDate) {
+                                    requestAnimationFrame(() => {
+                                      handleVisaNext();
+                                    });
+                                  }
+                                }}
+                                onFocus={() => setVisaStartDateFocused(true)}
+                                onBlur={() => {
+                                  setVisaStartDateFocused(false);
+                                  // Also check on blur in case end date was filled after start date
+                                  if (visaStartDate && visaEndDate) {
+                                    requestAnimationFrame(() => {
+                                      handleVisaNext();
+                                    });
+                                  }
+                                }}
+                                className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStartDateFocused || visaStartDate ? "pt-5" : "pt-3"
                                   }`}
-                                  style={fieldStyle}
-                                />
-                                <label
-                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(visaStartDateFocused, !!visaStartDate)}`}
-                                  style={labelColor(visaStartDateFocused, !!visaStartDate)}
-                                >
-                                  Start Date
-                                </label>
-                              </div>
-                              <div className="relative">
-                                <input
-                                  type="date"
-                                  value={visaEndDate}
-                                  onChange={(e) => {
-                                    const value = e.target.value;
+                                style={fieldStyle}
+                              />
+                              <label
+                                className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(visaStartDateFocused, !!visaStartDate)}`}
+                                style={labelColor(visaStartDateFocused, !!visaStartDate)}
+                              >
+                                Start Date
+                              </label>
+                            </div>
+                            <div className="relative">
+                              <input
+                                type="date"
+                                value={visaEndDate}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  setVisaEndDate(value);
+                                  // Complete process immediately when end date is selected from calendar
+                                  if (value && currentLocationForVisa) {
+                                    // Save immediately with the selected date value
+                                    saveVisaDetailsForCurrentLocation(value);
+                                    resetVisaQuestions();
+                                  }
+                                }}
+                                onInput={(e) => {
+                                  // Handle input event for immediate response
+                                  const value = (e.target as HTMLInputElement).value;
+                                  if (value && currentLocationForVisa) {
                                     setVisaEndDate(value);
-                                    // Complete process immediately when end date is selected from calendar
-                                    if (value && currentLocationForVisa) {
-                                      // Save immediately with the selected date value
-                                      saveVisaDetailsForCurrentLocation(value);
-                                      resetVisaQuestions();
-                                    }
-                                  }}
-                                  onInput={(e) => {
-                                    // Handle input event for immediate response
-                                    const value = (e.target as HTMLInputElement).value;
-                                    if (value && currentLocationForVisa) {
-                                      setVisaEndDate(value);
-                                      saveVisaDetailsForCurrentLocation(value);
-                                      resetVisaQuestions();
-                                    }
-                                  }}
-                                  onFocus={() => setVisaEndDateFocused(true)}
-                                  onBlur={() => setVisaEndDateFocused(false)}
-                                  className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                                    visaEndDateFocused || visaEndDate ? "pt-5" : "pt-3"
+                                    saveVisaDetailsForCurrentLocation(value);
+                                    resetVisaQuestions();
+                                  }
+                                }}
+                                onFocus={() => setVisaEndDateFocused(true)}
+                                onBlur={() => setVisaEndDateFocused(false)}
+                                className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaEndDateFocused || visaEndDate ? "pt-5" : "pt-3"
                                   }`}
-                                  style={fieldStyle}
-                                />
-                                <label
-                                  className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(visaEndDateFocused, !!visaEndDate)}`}
-                                  style={labelColor(visaEndDateFocused, !!visaEndDate)}
-                                >
-                                  End Date
-                                </label>
-                              </div>
+                                style={fieldStyle}
+                              />
+                              <label
+                                className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(visaEndDateFocused, !!visaEndDate)}`}
+                                style={labelColor(visaEndDateFocused, !!visaEndDate)}
+                              >
+                                End Date
+                              </label>
                             </div>
                           </div>
-                        )}
+                        </div>
+                      )}
 
                       {/* Step 3: Visa Sponsorship (if No) */}
                       {visaQuestionStep === 3 && (
@@ -1060,61 +1034,58 @@ export default function SalaryExpectationPage() {
                               ← Back
                             </button>
                           </div>
-                            <div className="mb-3">
-                              <p className="text-xs italic text-gray-600 mb-3">
-                                Sponsorship means the employer must apply for or support your legal work authorization.
-                              </p>
-                              <div className="flex flex-wrap gap-2">
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    setVisaSponsorshipRequired("yes");
-                                    handleVisaNext(undefined, undefined, "yes");
-                                  }}
-                                  className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                    visaSponsorshipRequired === "yes"
-                                      ? "bg-sky-600 border-sky-600 text-white"
-                                      : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                          <div className="mb-3">
+                            <p className="text-xs italic text-gray-600 mb-3">
+                              Sponsorship means the employer must apply for or support your legal work authorization.
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setVisaSponsorshipRequired("yes");
+                                  handleVisaNext(undefined, undefined, "yes");
+                                }}
+                                className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${visaSponsorshipRequired === "yes"
+                                  ? "bg-sky-600 border-sky-600 text-white"
+                                  : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
                                   }`}
-                                >
-                                  Yes
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    setVisaSponsorshipRequired("no");
-                                    handleVisaNext(undefined, undefined, "no");
-                                  }}
-                                  className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                    visaSponsorshipRequired === "no"
-                                      ? "bg-sky-600 border-sky-600 text-white"
-                                      : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                              >
+                                Yes
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setVisaSponsorshipRequired("no");
+                                  handleVisaNext(undefined, undefined, "no");
+                                }}
+                                className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${visaSponsorshipRequired === "no"
+                                  ? "bg-sky-600 border-sky-600 text-white"
+                                  : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
                                   }`}
-                                >
-                                  No
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    setVisaSponsorshipRequired("not sure");
-                                    handleVisaNext(undefined, undefined, "not sure");
-                                  }}
-                                  className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${
-                                    visaSponsorshipRequired === "not sure"
-                                      ? "bg-sky-600 border-sky-600 text-white"
-                                      : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
+                              >
+                                No
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  setVisaSponsorshipRequired("not sure");
+                                  handleVisaNext(undefined, undefined, "not sure");
+                                }}
+                                className={`px-4 py-2 text-sm rounded-lg border-2 font-medium transition ${visaSponsorshipRequired === "not sure"
+                                  ? "bg-sky-600 border-sky-600 text-white"
+                                  : "bg-white border-gray-300 text-gray-700 hover:border-sky-300"
                                   }`}
-                                >
-                                  Not sure
-                                </button>
-                              </div>
+                              >
+                                Not sure
+                              </button>
                             </div>
+                          </div>
                           {requiresSponsorship && (
                             <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg mt-3">
                               <p className="text-xs text-blue-800">
@@ -1126,7 +1097,7 @@ export default function SalaryExpectationPage() {
                       )}
                     </div>
                   )}
-                  
+
                 </div>
                 {/* Preferred Role */}
                 <PreferredRoleFieldBlock
@@ -1153,9 +1124,8 @@ export default function SalaryExpectationPage() {
                       onChange={(e) => setPreferredWorkMode(e.target.value)}
                       onFocus={() => setPreferredWorkModeFocused(true)}
                       onBlur={() => setPreferredWorkModeFocused(false)}
-                      className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                        preferredWorkModeFocused || preferredWorkMode ? "pt-5" : "pt-3"
-                      }`}
+                      className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredWorkModeFocused || preferredWorkMode ? "pt-5" : "pt-3"
+                        }`}
                       style={{
                         width: "100%",
                         ...fieldStyle,
@@ -1187,7 +1157,7 @@ export default function SalaryExpectationPage() {
                   <label className="block text-sm font-medium text-slate-700 mb-3" style={{ color: "#239CD2" }}>
                     Benefits
                   </label>
-                  <div className="space-y-2.5" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  <div className="space-y-2.5" style={{ maxHeight: "400px", overflowY: "auto" }}>
                     {benefitOptions.map((benefit) => (
                       <div key={benefit} className="flex items-center gap-2">
                         <input
@@ -1215,85 +1185,84 @@ export default function SalaryExpectationPage() {
                       </div>
                     ))}
                   </div>
-                    {showAddBenefit ? (
-                      <div className="flex items-center gap-2 mt-3">
-                        <div className="relative flex-1">
-                          <input
-                            type="text"
-                            value={newBenefit}
-                            onChange={(e) => setNewBenefit(e.target.value)}
-                            onFocus={() => {}}
-                            onBlur={() => {}}
-                            className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-                              newBenefit ? "pt-5" : "pt-3"
+                  {showAddBenefit ? (
+                    <div className="flex items-center gap-2 mt-3">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={newBenefit}
+                          onChange={(e) => setNewBenefit(e.target.value)}
+                          onFocus={() => { }}
+                          onBlur={() => { }}
+                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
                             }`}
-                            style={{
-                              width: "100%",
-                              ...fieldStyle,
-                            }}
-                            onKeyPress={(e) => {
-                              if (e.key === "Enter" && newBenefit.trim()) {
-                                setBenefitOptions([...benefitOptions, newBenefit.trim()]);
-                                setExpectedSelectedBenefits([...expectedSelectedBenefits, newBenefit.trim()]);
-                                setNewBenefit("");
-                                setShowAddBenefit(false);
-                              }
-                            }}
-                          />
-                          <label
-                            className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(!!newBenefit, !!newBenefit)}`}
-                            style={labelColor(!!newBenefit, !!newBenefit)}
-                          >
-                            Enter new benefit
-                          </label>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (newBenefit.trim()) {
+                          style={{
+                            width: "100%",
+                            ...fieldStyle,
+                          }}
+                          onKeyPress={(e) => {
+                            if (e.key === "Enter" && newBenefit.trim()) {
                               setBenefitOptions([...benefitOptions, newBenefit.trim()]);
                               setExpectedSelectedBenefits([...expectedSelectedBenefits, newBenefit.trim()]);
                               setNewBenefit("");
                               setShowAddBenefit(false);
                             }
                           }}
-                          className="px-4 py-2 text-sm bg-sky-600 text-white rounded hover:bg-sky-700 transition"
-                          style={{
-                            height: "48.19px",
-                            borderRadius: "5.02px",
-                            whiteSpace: "nowrap",
-                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(!!newBenefit, !!newBenefit)}`}
+                          style={labelColor(!!newBenefit, !!newBenefit)}
                         >
-                          Add
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowAddBenefit(false);
-                            setNewBenefit("");
-                          }}
-                          className="px-4 py-2 text-sm border border-gray-300 rounded hover:bg-gray-50 transition text-slate-700"
-                          style={{
-                            height: "48.19px",
-                            borderRadius: "5.02px",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          Cancel
-                        </button>
+                          Enter new benefit
+                        </label>
                       </div>
-                    ) : (
                       <button
                         type="button"
-                        onClick={() => setShowAddBenefit(true)}
-                        className="mt-3 flex items-center gap-2 text-sm text-sky-600 hover:text-sky-700 font-medium transition"
+                        onClick={() => {
+                          if (newBenefit.trim()) {
+                            setBenefitOptions([...benefitOptions, newBenefit.trim()]);
+                            setExpectedSelectedBenefits([...expectedSelectedBenefits, newBenefit.trim()]);
+                            setNewBenefit("");
+                            setShowAddBenefit(false);
+                          }
+                        }}
+                        className="px-4 py-2 text-sm bg-sky-600 text-white rounded hover:bg-sky-700 transition"
+                        style={{
+                          height: "48.19px",
+                          borderRadius: "5.02px",
+                          whiteSpace: "nowrap",
+                        }}
                       >
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                        Add Other
+                        Add
                       </button>
-                    )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowAddBenefit(false);
+                          setNewBenefit("");
+                        }}
+                        className="px-4 py-2 text-sm border border-gray-300 rounded hover:bg-gray-50 transition text-slate-700"
+                        style={{
+                          height: "48.19px",
+                          borderRadius: "5.02px",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setShowAddBenefit(true)}
+                      className="mt-3 flex items-center gap-2 text-sm text-sky-600 hover:text-sky-700 font-medium transition"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 3V13M3 8H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                      Add Other
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -1416,9 +1385,8 @@ function PreferredLocationFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-            focused || value ? "pt-5" : "pt-3"
-          }`}
+          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+            }`}
           style={fieldStyle}
           placeholder=""
         />
@@ -1487,27 +1455,7 @@ function PreferredLocationFieldBlock({
           );
         })}
       </div>
-      {/* Show unselected chips as clickable buttons */}
-      <div className="flex flex-wrap gap-2 mt-2">
-        {chips
-          .filter((chip) => !selectedChips.includes(chip))
-          .map((chip) => (
-            <button
-              key={chip}
-              type="button"
-              onClick={() => onToggle(chip)}
-              className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium transition hover:bg-slate-50"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "12px",
-                borderColor: "#E5E7EB",
-                color: "#374151",
-              }}
-            >
-              <span>{chip}</span>
-            </button>
-          ))}
-      </div>
+      {/* Suggestions removed as per user request */}
     </div>
   );
 }
@@ -1562,9 +1510,8 @@ function PreferredRoleFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${
-            focused || value ? "pt-5" : "pt-3"
-          }`}
+          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+            }`}
           style={fieldStyle}
           placeholder=""
         />
@@ -1618,25 +1565,7 @@ function PreferredRoleFieldBlock({
             </button>
           </div>
         ))}
-        {/* Show unselected chips as clickable buttons */}
-        {chips
-          .filter((chip) => !selectedChips.includes(chip))
-          .map((chip) => (
-            <button
-              key={chip}
-              type="button"
-              onClick={() => onToggle(chip)}
-              className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium transition hover:bg-slate-50"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "12px",
-                borderColor: "#E5E7EB",
-                color: "#374151",
-              }}
-            >
-              <span>{chip}</span>
-            </button>
-          ))}
+        {/* Suggestions removed as per user request */}
       </div>
     </div>
   );

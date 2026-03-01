@@ -5,6 +5,24 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../../components/common/Header";
 
+// Form types
+interface LanguageEntry {
+  name: string;
+  proficiency: string;
+  speak: boolean;
+  read: boolean;
+  write: boolean;
+}
+
+interface Education {
+  id: number;
+  degree: string;
+  institution: string;
+  specialization: string;
+  startYear: string;
+  endYear: string;
+}
+
 export default function PersonalDetailsPage() {
   const router = useRouter();
   const [fullNameFocused, setFullNameFocused] = useState(false);
@@ -43,14 +61,6 @@ export default function PersonalDetailsPage() {
   const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
   // Education form state
-  interface Education {
-    id: number;
-    degree: string;
-    institution: string;
-    specialization: string;
-    startYear: string;
-    endYear: string;
-  }
   const [educations, setEducations] = useState<Education[]>([
     {
       id: 1,
@@ -161,11 +171,9 @@ export default function PersonalDetailsPage() {
   ]);
   const [skillInput, setSkillInput] = useState("");
   const [skillInputFocused, setSkillInputFocused] = useState(false);
-  const [languages, setLanguages] = useState("");
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>(["English"]);
-  const [languageProficiencies, setLanguageProficiencies] = useState<{ [key: string]: string }>({
-    English: "Fluent",
-  });
+  const [languageEntries, setLanguageEntries] = useState<LanguageEntry[]>([
+    { name: "English", proficiency: "Fluent", speak: true, read: true, write: true },
+  ]);
 
   const aiSuggestedSkills = [
     "Machine Learning",
@@ -202,46 +210,14 @@ export default function PersonalDetailsPage() {
     }
   };
 
-  const toggleLanguage = (value: string) => {
-    setSelectedLanguages((prev) => {
-      if (prev.includes(value)) {
-        setLanguageProficiencies((profs) => {
-          const newProfs = { ...profs };
-          delete newProfs[value];
-          return newProfs;
-        });
-        return prev.filter((v) => v !== value);
-      } else {
-        setLanguageProficiencies((profs) => ({
-          ...profs,
-          [value]: "Basic",
-        }));
-        return [...prev, value];
-      }
-    });
-  };
-
-  const removeLanguage = (value: string) => {
-    setSelectedLanguages((prev) => prev.filter((v) => v !== value));
-    setLanguageProficiencies((profs) => {
-      const newProfs = { ...profs };
-      delete newProfs[value];
-      return newProfs;
-    });
-  };
-
-  const handleLanguageEnterKey = (value: string) => {
-    const trimmedValue = value.trim();
-    if (trimmedValue) {
-      if (!selectedLanguages.includes(trimmedValue)) {
-        setSelectedLanguages((prev) => [trimmedValue, ...prev]);
-        setLanguageProficiencies((profs) => ({
-          ...profs,
-          [trimmedValue]: "Basic",
-        }));
-        setLanguages("");
-      }
+  const addLanguageEntry = (entry: LanguageEntry) => {
+    if (entry.name && !languageEntries.find(e => e.name === entry.name)) {
+      setLanguageEntries([...languageEntries, entry]);
     }
+  };
+
+  const removeLanguageEntry = (name: string) => {
+    setLanguageEntries(languageEntries.filter((e) => e.name !== name));
   };
 
   const fieldStyle = {
@@ -406,26 +382,15 @@ export default function PersonalDetailsPage() {
   const [currentLocationFocused, setCurrentLocationFocused] = useState(false);
   const [selectedBenefits, setSelectedBenefits] = useState<string[]>([]);
   const [benefitOptions, setBenefitOptions] = useState<string[]>([
-    "Health Insurance",
-    "Dental Insurance",
-    "Vision Insurance",
-    "401(k) Matching",
-    "Paid Time Off",
-    "Remote Work",
-    "Stock Options",
-    "Gym Membership",
-    "Life Insurance",
-    "Disability Insurance",
-    "Flexible Spending Account",
-    "Health Savings Account",
-    "Tuition Reimbursement",
-    "Professional Development",
-    "Commuter Benefits",
-    "Childcare Assistance",
-    "Wellness Programs",
-    "Free Meals",
-    "Company Car",
-    "Relocation Assistance",
+    "Family Accommodation",
+    "Bachelor Accommodation",
+    "Food Allowance",
+    "Car Allowance",
+    "Fuel and Driver",
+    "Medical",
+    "Visa",
+    "Travel and Tickets",
+    "Additional Benefits",
   ]);
   const [newBenefit, setNewBenefit] = useState("");
   const [showAddBenefit, setShowAddBenefit] = useState(false);
@@ -956,7 +921,7 @@ export default function PersonalDetailsPage() {
                       pointerEvents: activeForm === 'personal' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-20 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -989,7 +954,7 @@ export default function PersonalDetailsPage() {
                           onChange={(e) => setFullNameValue(e.target.value)}
                           onFocus={() => setFullNameFocused(true)}
                           onBlur={() => setFullNameFocused(false)}
-                          className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${fullNameFocused || fullNameValue.length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 pl-12 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${fullNameFocused || fullNameValue.length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1021,7 +986,7 @@ export default function PersonalDetailsPage() {
                           onChange={(e) => setEmailValue(e.target.value)}
                           onFocus={() => setEmailFocused(true)}
                           onBlur={() => setEmailFocused(false)}
-                          className={`px-4 pb-2 pl-12 pr-28 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${emailFocused || emailValue.length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 pl-12 pr-28 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${emailFocused || emailValue.length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1068,7 +1033,7 @@ export default function PersonalDetailsPage() {
                           onChange={(e) => setPhoneValue(e.target.value)}
                           onFocus={() => setPhoneFocused(true)}
                           onBlur={() => setPhoneFocused(false)}
-                          className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${phoneFocused || phoneValue.length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 pl-12 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${phoneFocused || phoneValue.length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1112,7 +1077,7 @@ export default function PersonalDetailsPage() {
                             newFocused[0] = false;
                             setAlternateNumberFocused(newFocused);
                           }}
-                          className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${alternateNumberFocused[0] || alternateNumbers[0].length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 pl-12 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${alternateNumberFocused[0] || alternateNumbers[0].length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1322,7 +1287,7 @@ export default function PersonalDetailsPage() {
                           onFocus={() => setDobFocused(true)}
                           onBlur={() => setDobFocused(false)}
                           onClick={() => dateInputRef.current?.showPicker()}
-                          className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${dobFocused || dobValue.length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 pl-12 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${dobFocused || dobValue.length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1351,7 +1316,7 @@ export default function PersonalDetailsPage() {
                           onChange={(e) => setMaritalStatusValue(e.target.value)}
                           onFocus={() => setMaritalStatusFocused(true)}
                           onBlur={() => setMaritalStatusFocused(false)}
-                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${maritalStatusFocused || maritalStatusValue.length > 0 ? "pt-5" : "py-3"
+                          className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${maritalStatusFocused || maritalStatusValue.length > 0 ? "pt-5" : "py-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1389,69 +1354,6 @@ export default function PersonalDetailsPage() {
                       </div>
                     </div>
 
-                    {/* Country / City */}
-                    <div className="flex w-full" style={{ gap: "24px" }}>
-                      <div className="relative flex-1">
-                        <input
-                          type="text"
-                          value={countryValue}
-                          onChange={(e) => setCountryValue(e.target.value)}
-                          onFocus={() => setCountryFocused(true)}
-                          onBlur={() => setCountryFocused(false)}
-                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${countryFocused || countryValue.length > 0 ? "pt-5" : "pt-3"
-                            }`}
-                          style={{
-                            width: "calc(100% - 24px)",
-                            marginLeft: "12px",
-                            marginRight: "12px",
-                            height: "50px",
-                            borderRadius: "8px",
-                            border: "1px solid #F3F4F6",
-                            backgroundColor: "#F9FAFB",
-                          }}
-                        />
-                        <label
-                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${countryFocused || countryValue.length > 0
-                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                            }`}
-                          style={countryFocused || countryValue.length > 0 ? { color: "#239CD2" } : undefined}
-                        >
-                          Country
-                        </label>
-                      </div>
-                      <div className="relative flex-1">
-                        <input
-                          type="text"
-                          value={cityValue}
-                          onChange={(e) => setCityValue(e.target.value)}
-                          onFocus={() => setCityFocused(true)}
-                          onBlur={() => setCityFocused(false)}
-                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${cityFocused || cityValue.length > 0 ? "pt-5" : "pt-3"
-                            }`}
-                          style={{
-                            width: "calc(100% - 24px)",
-                            marginLeft: "12px",
-                            marginRight: "12px",
-                            height: "50px",
-                            borderRadius: "8px",
-                            border: "1px solid #F3F4F6",
-                            backgroundColor: "#F9FAFB",
-                            boxShadow: undefined,
-                          }}
-                        />
-                        <label
-                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${cityFocused || cityValue.length > 0
-                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
-                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
-                            }`}
-                          style={cityFocused || cityValue.length > 0 ? { color: "#239CD2" } : undefined}
-                        >
-                          City
-                        </label>
-                      </div>
-                    </div>
-
                     {/* Address */}
                     <div className="relative w-full">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 z-10">
@@ -1463,7 +1365,7 @@ export default function PersonalDetailsPage() {
                         onChange={(e) => setAddressValue(e.target.value)}
                         onFocus={() => setAddressFocused(true)}
                         onBlur={() => setAddressFocused(false)}
-                        className={`px-4 pb-2 pl-12 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${addressFocused || addressValue.length > 0 ? "pt-5" : "pt-3"
+                        className={`px-4 pb-2 pl-12 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${addressFocused || addressValue.length > 0 ? "pt-5" : "pt-3"
                           }`}
                         style={{
                           width: "calc(100% - 24px)",
@@ -1487,6 +1389,69 @@ export default function PersonalDetailsPage() {
                       </label>
                     </div>
 
+                    {/* City / Country */}
+                    <div className="flex w-full" style={{ gap: "24px" }}>
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={cityValue}
+                          onChange={(e) => setCityValue(e.target.value)}
+                          onFocus={() => setCityFocused(true)}
+                          onBlur={() => setCityFocused(false)}
+                          className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${cityFocused || cityValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                            boxShadow: undefined,
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${cityFocused || cityValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={cityFocused || cityValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          City
+                        </label>
+                      </div>
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={countryValue}
+                          onChange={(e) => setCountryValue(e.target.value)}
+                          onFocus={() => setCountryFocused(true)}
+                          onBlur={() => setCountryFocused(false)}
+                          className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${countryFocused || countryValue.length > 0 ? "pt-5" : "pt-3"
+                            }`}
+                          style={{
+                            width: "calc(100% - 24px)",
+                            marginLeft: "12px",
+                            marginRight: "12px",
+                            height: "50px",
+                            borderRadius: "8px",
+                            border: "1px solid #F3F4F6",
+                            backgroundColor: "#F9FAFB",
+                          }}
+                        />
+                        <label
+                          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${countryFocused || countryValue.length > 0
+                            ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
+                            : "left-6 top-1/2 -translate-y-1/2 text-sm"
+                            }`}
+                          style={countryFocused || countryValue.length > 0 ? { color: "#239CD2" } : undefined}
+                        >
+                          Country
+                        </label>
+                      </div>
+                    </div>
+
                     {/* Nationality / Passport */}
                     <div className="flex w-full" style={{ gap: "24px" }}>
                       <div className="relative flex-1">
@@ -1496,7 +1461,7 @@ export default function PersonalDetailsPage() {
                           onChange={(e) => setNationalityValue(e.target.value)}
                           onFocus={() => setNationalityFocused(true)}
                           onBlur={() => setNationalityFocused(false)}
-                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${nationalityFocused || nationalityValue.length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${nationalityFocused || nationalityValue.length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1526,7 +1491,7 @@ export default function PersonalDetailsPage() {
                           onChange={(e) => setPassportValue(e.target.value)}
                           onFocus={() => setPassportFocused(true)}
                           onBlur={() => setPassportFocused(false)}
-                          className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${passportFocused || passportValue.length > 0 ? "pt-5" : "pt-3"
+                          className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${passportFocused || passportValue.length > 0 ? "pt-5" : "pt-3"
                             }`}
                           style={{
                             width: "calc(100% - 24px)",
@@ -1559,7 +1524,7 @@ export default function PersonalDetailsPage() {
                         onChange={(e) => setLinkedinValue(e.target.value)}
                         onFocus={() => setLinkedinFocused(true)}
                         onBlur={() => setLinkedinFocused(false)}
-                        className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${linkedinFocused || linkedinValue.length > 0 ? "pt-5" : "pt-3"
+                        className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${linkedinFocused || linkedinValue.length > 0 ? "pt-5" : "pt-3"
                           }`}
                         style={{
                           width: "calc(100% - 24px)",
@@ -1593,14 +1558,15 @@ export default function PersonalDetailsPage() {
                           height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
-                          border: "1.5px solid #0A65CC",
+                          borderWidth: "1.5px",
                           borderStyle: "solid",
+                          borderColor: "#239CD2",
                           fontFamily: "Inter, sans-serif",
                           fontWeight: "500",
                           fontSize: "14px",
                           lineHeight: "22px",
                           letterSpacing: "0%",
-                          color: "#0A65CC",
+                          color: "#239CD2",
                         }}
                       >
                         Discard Changes
@@ -1648,7 +1614,7 @@ export default function PersonalDetailsPage() {
                       pointerEvents: activeForm === 'education' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-20 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -1723,7 +1689,7 @@ export default function PersonalDetailsPage() {
                               }}
                               onFocus={() => setDegreeFocused({ ...degreeFocused, [edu.id]: true })}
                               onBlur={() => setDegreeFocused({ ...degreeFocused, [edu.id]: false })}
-                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree) ? "pt-5" : "pt-3"
+                              className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${degreeFocused[edu.id] || (degreeValue[edu.id] || edu.degree) ? "pt-5" : "pt-3"
                                 }`}
                               style={{
                                 width: "calc(100% - 24px)",
@@ -1778,7 +1744,7 @@ export default function PersonalDetailsPage() {
                               }}
                               onFocus={() => setInstitutionFocused({ ...institutionFocused, [edu.id]: true })}
                               onBlur={() => setInstitutionFocused({ ...institutionFocused, [edu.id]: false })}
-                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution) ? "pt-5" : "pt-3"
+                              className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${institutionFocused[edu.id] || (institutionValue[edu.id] || edu.institution) ? "pt-5" : "pt-3"
                                 }`}
                               style={{
                                 width: "calc(100% - 24px)",
@@ -1833,7 +1799,7 @@ export default function PersonalDetailsPage() {
                               }}
                               onFocus={() => setSpecializationFocused({ ...specializationFocused, [edu.id]: true })}
                               onBlur={() => setSpecializationFocused({ ...specializationFocused, [edu.id]: false })}
-                              className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization) ? "pt-5" : "pt-3"
+                              className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${specializationFocused[edu.id] || (specializationValue[edu.id] || edu.specialization) ? "pt-5" : "pt-3"
                                 }`}
                               style={{
                                 width: "calc(100% - 24px)",
@@ -1900,7 +1866,7 @@ export default function PersonalDetailsPage() {
                                 onFocus={() => setStartYearFocused({ ...startYearFocused, [edu.id]: true })}
                                 onBlur={() => setStartYearFocused({ ...startYearFocused, [edu.id]: false })}
                                 onClick={() => startYearInputRefs.current[edu.id]?.showPicker()}
-                                className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear) ? "pt-5" : "pt-3"
+                                className={`px-4 pb-2 pl-12 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${startYearFocused[edu.id] || (startYearValue[edu.id] || edu.startYear) ? "pt-5" : "pt-3"
                                   }`}
                                 style={{
                                   width: "calc(100% - 24px)",
@@ -1952,7 +1918,7 @@ export default function PersonalDetailsPage() {
                                 onFocus={() => setEndYearFocused({ ...endYearFocused, [edu.id]: true })}
                                 onBlur={() => setEndYearFocused({ ...endYearFocused, [edu.id]: false })}
                                 onClick={() => endYearInputRefs.current[edu.id]?.showPicker()}
-                                className={`px-4 pb-2 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear) ? "pt-5" : "pt-3"
+                                className={`px-4 pb-2 pl-12 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${endYearFocused[edu.id] || (endYearValue[edu.id] || edu.endYear) ? "pt-5" : "pt-3"
                                   }`}
                                 style={{
                                   width: "calc(100% - 24px)",
@@ -1985,26 +1951,20 @@ export default function PersonalDetailsPage() {
                       </div>
                     ))}
 
-                    {/* Add More Button */}
-                    <div className="flex items-center gap-3" style={{ width: "100%" }}>
+
+
+                    {/* Actions */}
+                    <div className="flex justify-end gap-3 items-center" style={{ marginRight: "48px" }}>
                       <button
                         type="button"
                         onClick={addEducation}
-                        className="flex items-center justify-center gap-2 rounded-lg border-2 border-sky-500 bg-white px-4 py-3 font-medium text-sky-600 transition hover:bg-sky-50"
-                        style={{
-                          width: "38%",
-                          height: "48.19px",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "16px",
-                        }}
+                        className="flex items-center justify-center transition hover:opacity-70 px-2"
+                        title="Add More Education"
                       >
-                        <Image src="/plus-icopn.png" alt="Add" width={20} height={20} className="h-5 w-5" />
-                        Add More
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 6V18M6 12H18" stroke="#239CD2" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </button>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex justify-end gap-3" style={{ marginRight: "48px" }}>
                       <button
                         type="button"
                         onClick={() => {
@@ -2017,14 +1977,15 @@ export default function PersonalDetailsPage() {
                           height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
-                          border: "1.5px solid #0A65CC",
+                          borderWidth: "1.5px",
                           borderStyle: "solid",
+                          borderColor: "#239CD2",
                           fontFamily: "Inter, sans-serif",
                           fontWeight: "500",
                           fontSize: "14px",
                           lineHeight: "22px",
                           letterSpacing: "0%",
-                          color: "#0A65CC",
+                          color: "#239CD2",
                         }}
                       >
                         Discard Changes
@@ -2072,7 +2033,7 @@ export default function PersonalDetailsPage() {
                       pointerEvents: activeForm === 'skills' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-20 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -2105,7 +2066,7 @@ export default function PersonalDetailsPage() {
                             onFocus={() => setSkillInputFocused(true)}
                             onBlur={() => setSkillInputFocused(false)}
                             onKeyPress={handleKeyPress}
-                            className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${skillInputFocused || skillInput.length > 0 ? "pt-5" : "pt-3"
+                            className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${skillInputFocused || skillInput.length > 0 ? "pt-5" : "pt-3"
                               }`}
                             style={{
                               width: "calc(100% - 24px)",
@@ -2153,7 +2114,7 @@ export default function PersonalDetailsPage() {
                         {userSkills.map((skill) => (
                           <div
                             key={skill}
-                            className="flex items-center gap-2 rounded-full border bg-white px-4 py-2 font-medium"
+                            className="flex items-center gap-2 rounded-full border bg-[#F3F4F6] px-4 py-2 font-medium"
                             style={{
                               fontFamily: "Inter, sans-serif",
                               fontSize: "14px",
@@ -2207,7 +2168,7 @@ export default function PersonalDetailsPage() {
                         {aiSuggestedSkills.map((skill) => (
                           <div
                             key={skill}
-                            className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 font-medium text-slate-700"
+                            className="flex items-center gap-2 rounded-full border border-slate-200 bg-[#F3F4F6] px-4 py-2 font-medium text-slate-700"
                             style={{
                               fontFamily: "Inter, sans-serif",
                               fontSize: "14px",
@@ -2252,26 +2213,10 @@ export default function PersonalDetailsPage() {
 
                     {/* Languages Known Section */}
                     <div className="w-full" style={{ marginTop: "32px" }}>
-                      <LanguageFieldBlock
-                        label="Languages Known"
-                        placeholder="Enter the names of the languages you know"
-                        value={languages}
-                        onChange={setLanguages}
-                        onEnterKey={handleLanguageEnterKey}
-                        chips={languageChips}
-                        selectedChips={selectedLanguages}
-                        onToggle={toggleLanguage}
-                        onRemove={removeLanguage}
-                        proficiencies={languageProficiencies}
-                        onProficiencyChange={(language, proficiency) => {
-                          setLanguageProficiencies((profs) => ({
-                            ...profs,
-                            [language]: proficiency,
-                          }));
-                        }}
-                        fieldStyle={fieldStyle}
-                        labelFloating={labelFloating}
-                        labelColor={labelColor}
+                      <LanguageProficiencyTable
+                        entries={languageEntries}
+                        onAddEntry={addLanguageEntry}
+                        onRemoveEntry={removeLanguageEntry}
                       />
                     </div>
 
@@ -2289,14 +2234,15 @@ export default function PersonalDetailsPage() {
                           height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
-                          border: "1.5px solid #0A65CC",
+                          borderWidth: "1.5px",
                           borderStyle: "solid",
+                          borderColor: "#239CD2",
                           fontFamily: "Inter, sans-serif",
                           fontWeight: "500",
                           fontSize: "14px",
                           lineHeight: "22px",
                           letterSpacing: "0%",
-                          color: "#0A65CC",
+                          color: "#239CD2",
                         }}
                       >
                         Discard Changes
@@ -2344,7 +2290,7 @@ export default function PersonalDetailsPage() {
                       pointerEvents: activeForm === 'work-exp' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-20 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -2463,17 +2409,23 @@ export default function PersonalDetailsPage() {
                             {/* Job Title */}
                             <div className="relative">
                               <div className="relative">
-                                <select
+                                <input
+                                  type="text"
                                   value={jobTitleValue[exp.id] || exp.jobTitle}
                                   onChange={(event) => {
-                                    setJobTitleValue({ ...jobTitleValue, [exp.id]: event.target.value });
+                                    const newValue = event.target.value;
+                                    setJobTitleValue({ ...jobTitleValue, [exp.id]: newValue });
                                     setExperiences((prev) =>
-                                      prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, jobTitle: event.target.value } : expItem))
+                                      prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, jobTitle: newValue } : expItem))
                                     );
                                   }}
                                   onFocus={() => setJobTitleFocused({ ...jobTitleFocused, [exp.id]: true })}
-                                  onBlur={() => setJobTitleFocused({ ...jobTitleFocused, [exp.id]: false })}
-                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                  onBlur={() => {
+                                    setTimeout(() => {
+                                      setJobTitleFocused((prev) => ({ ...prev, [exp.id]: false }));
+                                    }, 200);
+                                  }}
+                                  className={`px-4 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle) ? "pt-5 pb-1" : "pt-3 pb-3"
                                     }`}
                                   style={{
                                     width: "calc(100% - 24px)",
@@ -2483,18 +2435,9 @@ export default function PersonalDetailsPage() {
                                     borderRadius: "8px",
                                     border: "1px solid #F3F4F6",
                                     backgroundColor: "#F9FAFB",
-                                    appearance: "none",
-                                    boxShadow: undefined,
                                     lineHeight: "1.5",
                                   }}
-                                >
-                                  <option value="" disabled hidden></option>
-                                  {jobTitles.map((title) => (
-                                    <option key={title} value={title}>
-                                      {title}
-                                    </option>
-                                  ))}
-                                </select>
+                                />
                                 <label
                                   className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${jobTitleFocused[exp.id] || (jobTitleValue[exp.id] || exp.jobTitle)
                                     ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
@@ -2506,7 +2449,7 @@ export default function PersonalDetailsPage() {
                                       : undefined
                                   }
                                 >
-                                  Job Title eg. Web Developer
+                                  Job Title
                                 </label>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                                   <svg
@@ -2525,23 +2468,52 @@ export default function PersonalDetailsPage() {
                                     />
                                   </svg>
                                 </div>
+                                {/* Suggestions Dropdown */}
+                                {jobTitleFocused[exp.id] && (
+                                  <div className="absolute z-[100] w-[calc(100%-24px)] ml-[12px] bg-white border border-slate-200 rounded-md shadow-lg max-h-[200px] overflow-y-auto mt-1" style={{ scrollbarWidth: 'none' }}>
+                                    {jobTitles
+                                      .filter(t => t.toLowerCase().includes((jobTitleValue[exp.id] || exp.jobTitle || "").toLowerCase()))
+                                      .map((title) => (
+                                        <div
+                                          key={title}
+                                          className="px-4 py-2 hover:bg-slate-100 cursor-pointer text-sm text-slate-700"
+                                          onMouseDown={(e) => {
+                                            e.preventDefault();
+                                            setJobTitleValue({ ...jobTitleValue, [exp.id]: title });
+                                            setExperiences((prev) =>
+                                              prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, jobTitle: title } : expItem))
+                                            );
+                                            setJobTitleFocused((prev) => ({ ...prev, [exp.id]: false }));
+                                          }}
+                                        >
+                                          {title}
+                                        </div>
+                                      ))}
+                                  </div>
+                                )}
                               </div>
                             </div>
 
                             {/* Company */}
                             <div className="relative">
                               <div className="relative">
-                                <select
+                                <input
+                                  type="text"
                                   value={companyValue[exp.id] || exp.company}
                                   onChange={(event) => {
-                                    setCompanyValue({ ...companyValue, [exp.id]: event.target.value });
+                                    const newValue = event.target.value;
+                                    setCompanyValue({ ...companyValue, [exp.id]: newValue });
                                     setExperiences((prev) =>
-                                      prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, company: event.target.value } : expItem))
+                                      prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, company: newValue } : expItem))
                                     );
                                   }}
                                   onFocus={() => setCompanyFocused({ ...companyFocused, [exp.id]: true })}
-                                  onBlur={() => setCompanyFocused({ ...companyFocused, [exp.id]: false })}
-                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${companyFocused[exp.id] || (companyValue[exp.id] || exp.company) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                  onBlur={() => {
+                                    setTimeout(() => {
+                                      setCompanyFocused((prev) => ({ ...prev, [exp.id]: false }));
+                                    }, 200);
+                                  }}
+                                  className={`px-4 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${companyFocused[exp.id] || (companyValue[exp.id] || exp.company) ? "pt-5 pb-1" : "pt-3 pb-3"
                                     }`}
                                   style={{
                                     width: "calc(100% - 24px)",
@@ -2551,18 +2523,9 @@ export default function PersonalDetailsPage() {
                                     borderRadius: "8px",
                                     border: "1px solid #F3F4F6",
                                     backgroundColor: "#F9FAFB",
-                                    appearance: "none",
-                                    boxShadow: undefined,
                                     lineHeight: "1.5",
                                   }}
-                                >
-                                  <option value="" disabled hidden></option>
-                                  {companies.map((company) => (
-                                    <option key={company} value={company}>
-                                      {company}
-                                    </option>
-                                  ))}
-                                </select>
+                                />
                                 <label
                                   className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${companyFocused[exp.id] || (companyValue[exp.id] || exp.company)
                                     ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
@@ -2574,7 +2537,7 @@ export default function PersonalDetailsPage() {
                                       : undefined
                                   }
                                 >
-                                  Company eg. Wipro
+                                  Company
                                 </label>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                                   <svg
@@ -2593,23 +2556,52 @@ export default function PersonalDetailsPage() {
                                     />
                                   </svg>
                                 </div>
+                                {/* Suggestions Dropdown */}
+                                {companyFocused[exp.id] && (
+                                  <div className="absolute z-[100] w-[calc(100%-24px)] ml-[12px] bg-white border border-slate-200 rounded-md shadow-lg max-h-[200px] overflow-y-auto mt-1" style={{ scrollbarWidth: 'none' }}>
+                                    {companies
+                                      .filter(c => c.toLowerCase().includes((companyValue[exp.id] || exp.company || "").toLowerCase()))
+                                      .map((company) => (
+                                        <div
+                                          key={company}
+                                          className="px-4 py-2 hover:bg-slate-100 cursor-pointer text-sm text-slate-700"
+                                          onMouseDown={(e) => {
+                                            e.preventDefault();
+                                            setCompanyValue({ ...companyValue, [exp.id]: company });
+                                            setExperiences((prev) =>
+                                              prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, company: company } : expItem))
+                                            );
+                                            setCompanyFocused((prev) => ({ ...prev, [exp.id]: false }));
+                                          }}
+                                        >
+                                          {company}
+                                        </div>
+                                      ))}
+                                  </div>
+                                )}
                               </div>
                             </div>
 
                             {/* Work Location */}
                             <div className="relative">
                               <div className="relative">
-                                <select
+                                <input
+                                  type="text"
                                   value={workLocationValue[exp.id] || exp.workLocation}
                                   onChange={(event) => {
-                                    setWorkLocationValue({ ...workLocationValue, [exp.id]: event.target.value });
+                                    const newValue = event.target.value;
+                                    setWorkLocationValue({ ...workLocationValue, [exp.id]: newValue });
                                     setExperiences((prev) =>
-                                      prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, workLocation: event.target.value } : expItem))
+                                      prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, workLocation: newValue } : expItem))
                                     );
                                   }}
                                   onFocus={() => setWorkLocationFocused({ ...workLocationFocused, [exp.id]: true })}
-                                  onBlur={() => setWorkLocationFocused({ ...workLocationFocused, [exp.id]: false })}
-                                  className={`px-4 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                  onBlur={() => {
+                                    setTimeout(() => {
+                                      setWorkLocationFocused((prev) => ({ ...prev, [exp.id]: false }));
+                                    }, 200);
+                                  }}
+                                  className={`px-4 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation) ? "pt-5 pb-1" : "pt-3 pb-3"
                                     }`}
                                   style={{
                                     width: "calc(100% - 24px)",
@@ -2619,18 +2611,9 @@ export default function PersonalDetailsPage() {
                                     borderRadius: "8px",
                                     border: "1px solid #F3F4F6",
                                     backgroundColor: "#F9FAFB",
-                                    appearance: "none",
-                                    boxShadow: undefined,
                                     lineHeight: "1.5",
                                   }}
-                                >
-                                  <option value="" disabled hidden></option>
-                                  {workLocations.map((location) => (
-                                    <option key={location} value={location}>
-                                      {location}
-                                    </option>
-                                  ))}
-                                </select>
+                                />
                                 <label
                                   className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${workLocationFocused[exp.id] || (workLocationValue[exp.id] || exp.workLocation)
                                     ? "left-6 -top-2.5 text-xs font-medium bg-white px-1"
@@ -2661,6 +2644,29 @@ export default function PersonalDetailsPage() {
                                     />
                                   </svg>
                                 </div>
+                                {/* Suggestions Dropdown */}
+                                {workLocationFocused[exp.id] && (
+                                  <div className="absolute z-[100] w-[calc(100%-24px)] ml-[12px] bg-white border border-slate-200 rounded-md shadow-lg max-h-[200px] overflow-y-auto mt-1" style={{ scrollbarWidth: 'none' }}>
+                                    {workLocations
+                                      .filter(l => l.toLowerCase().includes((workLocationValue[exp.id] || exp.workLocation || "").toLowerCase()))
+                                      .map((location) => (
+                                        <div
+                                          key={location}
+                                          className="px-4 py-2 hover:bg-slate-100 cursor-pointer text-sm text-slate-700"
+                                          onMouseDown={(e) => {
+                                            e.preventDefault();
+                                            setWorkLocationValue({ ...workLocationValue, [exp.id]: location });
+                                            setExperiences((prev) =>
+                                              prev.map((expItem) => (expItem.id === exp.id ? { ...expItem, workLocation: location } : expItem))
+                                            );
+                                            setWorkLocationFocused((prev) => ({ ...prev, [exp.id]: false }));
+                                          }}
+                                        >
+                                          {location}
+                                        </div>
+                                      ))}
+                                  </div>
+                                )}
                               </div>
                             </div>
 
@@ -2695,7 +2701,7 @@ export default function PersonalDetailsPage() {
                                     onFocus={() => setStartDateFocused({ ...startDateFocused, [exp.id]: true })}
                                     onBlur={() => setStartDateFocused({ ...startDateFocused, [exp.id]: false })}
                                     onClick={() => startDateInputRefs.current[exp.id]?.showPicker()}
-                                    className={`px-4 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                    className={`px-4 pl-12 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${startDateFocused[exp.id] || (startDateValue[exp.id] || exp.startDate) ? "pt-4 pb-1" : "pt-3 pb-1"
                                       }`}
                                     style={{
                                       width: "calc(100% - 24px)",
@@ -2755,7 +2761,7 @@ export default function PersonalDetailsPage() {
                                     onBlur={() => setEndDateFocused({ ...endDateFocused, [exp.id]: false })}
                                     onClick={() => endDateInputRefs.current[exp.id]?.showPicker()}
                                     disabled={exp.isCurrent}
-                                    className={`px-4 pl-12 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate) ? "pt-4 pb-1" : "pt-3 pb-1"
+                                    className={`px-4 pl-12 text-sm shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${endDateFocused[exp.id] || (endDateValue[exp.id] || exp.endDate) ? "pt-4 pb-1" : "pt-3 pb-1"
                                       } ${exp.isCurrent ? "opacity-50 cursor-not-allowed" : ""}`}
                                     style={{
                                       width: "calc(100% - 24px)",
@@ -2862,31 +2868,20 @@ export default function PersonalDetailsPage() {
                       </div>
                     ))}
 
-                    {/* Add More Experience Button */}
-                    <div className="w-full">
+
+
+                    {/* Actions */}
+                    <div className="flex justify-end gap-3 items-center" style={{ marginRight: "48px" }}>
                       <button
                         type="button"
                         onClick={addExperience}
-                        className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-sky-500 bg-white px-4 py-3 font-medium text-sky-600 transition hover:bg-sky-50"
-                        style={{
-                          height: "48.19px",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "16px",
-                        }}
+                        className="flex items-center justify-center transition hover:opacity-70 px-2"
+                        title="Add More Experience"
                       >
-                        <Image
-                          src="/plus-icopn.png"
-                          alt="Add"
-                          width={20}
-                          height={20}
-                          className="h-5 w-5"
-                        />
-                        Add More Experience
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 6V18M6 12H18" stroke="#239CD2" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </button>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex justify-end gap-3" style={{ marginRight: "48px" }}>
                       <button
                         type="button"
                         onClick={() => {
@@ -2899,14 +2894,15 @@ export default function PersonalDetailsPage() {
                           height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
-                          border: "1.5px solid #0A65CC",
+                          borderWidth: "1.5px",
                           borderStyle: "solid",
+                          borderColor: "#239CD2",
                           fontFamily: "Inter, sans-serif",
                           fontWeight: "500",
                           fontSize: "14px",
                           lineHeight: "22px",
                           letterSpacing: "0%",
-                          color: "#0A65CC",
+                          color: "#239CD2",
                         }}
                       >
                         Discard Changes
@@ -2948,13 +2944,13 @@ export default function PersonalDetailsPage() {
                       top: 0,
                       left: 0,
                       maxHeight: '600px',
-                      overflowY: 'auto',
+                      overflowY: 'hidden',
                       paddingRight: '12px',
                       opacity: activeForm === 'salary-exp' ? 1 : 0,
                       pointerEvents: activeForm === 'salary-exp' ? 'auto' : 'none',
                     }}
                   >
-                    <div className="flex items-center justify-between sticky top-0 bg-white z-10 pb-4">
+                    <div className="flex items-center justify-between sticky top-0 bg-white z-20 pb-4">
                       <h2
                         className="font-medium text-slate-900"
                         style={{
@@ -2976,10 +2972,11 @@ export default function PersonalDetailsPage() {
                     </div>
 
                     {/* Two Column Section: Current Salary and Expected Salary */}
-                    <div className="w-full flex items-start justify-center" style={{ width: "700px", gap: "0px" }}>
+                    <div className="w-full flex items-stretch justify-center" style={{ width: "700px", gap: "0px", flex: 1, minHeight: 0 }}>
                       {/* Current Salary Section - Left Column */}
-                      <div className="flex-1 pr-6" style={{ maxWidth: "50%" }}>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Current</h3>
+                      <style>{`.career-col::-webkit-scrollbar { display: none; }`}</style>
+                      <div className="flex-1 pr-6 overflow-y-auto career-col" style={{ maxWidth: "50%", maxHeight: "480px", scrollbarWidth: 'none' } as React.CSSProperties}>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4 sticky top-0 bg-white z-10 pb-1">Current</h3>
                         <div className="space-y-4">
                           {/* Currency and Salary Type in one row */}
                           <div className="flex items-center gap-2">
@@ -2991,7 +2988,7 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setCurrentCurrency(e.target.value)}
                                   onFocus={() => setCurrentCurrencyFocused(true)}
                                   onBlur={() => setCurrentCurrencyFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentCurrencyFocused || currentCurrency ? "pt-5" : "pt-3"
+                                  className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentCurrencyFocused || currentCurrency ? "pt-5" : "pt-3"
                                     }`}
                                   style={{
                                     width: "100%",
@@ -3027,7 +3024,7 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setCurrentSalaryType(e.target.value)}
                                   onFocus={() => setCurrentSalaryTypeFocused(true)}
                                   onBlur={() => setCurrentSalaryTypeFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryTypeFocused || currentSalaryType ? "pt-5" : "pt-3"
+                                  className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryTypeFocused || currentSalaryType ? "pt-5" : "pt-3"
                                     }`}
                                   style={{
                                     width: "100%",
@@ -3065,7 +3062,7 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setCurrentSalary(e.target.value)}
                                 onFocus={() => setCurrentSalaryFocused(true)}
                                 onBlur={() => setCurrentSalaryFocused(false)}
-                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryFocused || currentSalary ? "pt-5" : "pt-3"
+                                className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentSalaryFocused || currentSalary ? "pt-5" : "pt-3"
                                   }`}
                                 style={{
                                   width: "100%",
@@ -3089,7 +3086,7 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setCurrentLocation(e.target.value)}
                                 onFocus={() => setCurrentLocationFocused(true)}
                                 onBlur={() => setCurrentLocationFocused(false)}
-                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentLocationFocused || currentLocation ? "pt-5" : "pt-3"
+                                className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${currentLocationFocused || currentLocation ? "pt-5" : "pt-3"
                                   }`}
                                 style={{
                                   width: "100%",
@@ -3109,7 +3106,7 @@ export default function PersonalDetailsPage() {
                             <label className="block text-sm font-medium text-slate-700 mb-3" style={{ color: "#239CD2" }}>
                               Benefits
                             </label>
-                            <div className="space-y-2.5" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                            <div className="space-y-2.5 career-col" style={{ maxHeight: "400px", overflowY: "auto", scrollbarWidth: 'none' } as React.CSSProperties}>
                               {benefitOptions.map((benefit) => (
                                 <div key={benefit} className="flex items-center gap-2">
                                   <input
@@ -3146,7 +3143,7 @@ export default function PersonalDetailsPage() {
                                     onChange={(e) => setNewBenefit(e.target.value)}
                                     onFocus={() => { }}
                                     onBlur={() => { }}
-                                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
+                                    className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
                                       }`}
                                     style={{
                                       width: "100%",
@@ -3220,11 +3217,11 @@ export default function PersonalDetailsPage() {
                       </div>
 
                       {/* Vertical Divider Line */}
-                      <div className="w-px bg-gray-300 h-full shrink-0" style={{ minHeight: "200px" }}></div>
+                      <div className="w-px bg-gray-300 shrink-0 self-stretch" style={{ minHeight: "480px" }}></div>
 
                       {/* Expected Salary Section - Right Column */}
-                      <div className="flex-1 pl-6" style={{ maxWidth: "50%" }}>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Preferred</h3>
+                      <div className="flex-1 pl-6 overflow-y-auto career-col" style={{ maxWidth: "50%", maxHeight: "480px", scrollbarWidth: 'none' } as React.CSSProperties}>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4 sticky top-0 bg-white z-10 pb-1">Preferred</h3>
                         <div className="space-y-4">
                           {/* Currency and Salary Type in one row */}
                           <div className="flex items-center gap-2">
@@ -3236,7 +3233,7 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setExpectedCurrency(e.target.value)}
                                   onFocus={() => setExpectedCurrencyFocused(true)}
                                   onBlur={() => setExpectedCurrencyFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedCurrencyFocused || expectedCurrency ? "pt-5" : "pt-3"
+                                  className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedCurrencyFocused || expectedCurrency ? "pt-5" : "pt-3"
                                     }`}
                                   style={{
                                     width: "100%",
@@ -3272,7 +3269,7 @@ export default function PersonalDetailsPage() {
                                   onChange={(e) => setExpectedSalaryType(e.target.value)}
                                   onFocus={() => setExpectedSalaryTypeFocused(true)}
                                   onBlur={() => setExpectedSalaryTypeFocused(false)}
-                                  className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedSalaryTypeFocused || expectedSalaryType ? "pt-5" : "pt-3"
+                                  className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${expectedSalaryTypeFocused || expectedSalaryType ? "pt-5" : "pt-3"
                                     }`}
                                   style={{
                                     width: "100%",
@@ -3310,7 +3307,7 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setPreferredSalary(e.target.value)}
                                 onFocus={() => setPreferredSalaryFocused(true)}
                                 onBlur={() => setPreferredSalaryFocused(false)}
-                                className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredSalaryFocused || preferredSalary ? "pt-5" : "pt-3"
+                                className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredSalaryFocused || preferredSalary ? "pt-5" : "pt-3"
                                   }`}
                                 style={{
                                   width: "100%",
@@ -3420,7 +3417,7 @@ export default function PersonalDetailsPage() {
                                         }}
                                         onFocus={() => setVisaStatusFocused(true)}
                                         onBlur={() => setVisaStatusFocused(false)}
-                                        className={`w-full px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStatusFocused || visaStatus ? "pt-5" : "pt-3"
+                                        className={`w-full px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStatusFocused || visaStatus ? "pt-5" : "pt-3"
                                           }`}
                                         style={{
                                           ...salaryFieldStyle,
@@ -3479,7 +3476,7 @@ export default function PersonalDetailsPage() {
                                               });
                                             }
                                           }}
-                                          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStartDateFocused || visaStartDate ? "pt-5" : "pt-3"
+                                          className={`w-full px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaStartDateFocused || visaStartDate ? "pt-5" : "pt-3"
                                             }`}
                                           style={salaryFieldStyle}
                                         />
@@ -3512,7 +3509,7 @@ export default function PersonalDetailsPage() {
                                           }}
                                           onFocus={() => setVisaEndDateFocused(true)}
                                           onBlur={() => setVisaEndDateFocused(false)}
-                                          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaEndDateFocused || visaEndDate ? "pt-5" : "pt-3"
+                                          className={`w-full px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${visaEndDateFocused || visaEndDate ? "pt-5" : "pt-3"
                                             }`}
                                           style={salaryFieldStyle}
                                         />
@@ -3629,7 +3626,7 @@ export default function PersonalDetailsPage() {
                                 onChange={(e) => setPreferredWorkMode(e.target.value)}
                                 onFocus={() => setPreferredWorkModeFocused(true)}
                                 onBlur={() => setPreferredWorkModeFocused(false)}
-                                className={`px-4 pb-2 pr-10 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredWorkModeFocused || preferredWorkMode ? "pt-5" : "pt-3"
+                                className={`px-4 pb-2 pr-10 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${preferredWorkModeFocused || preferredWorkMode ? "pt-5" : "pt-3"
                                   }`}
                                 style={{
                                   width: "100%",
@@ -3662,7 +3659,7 @@ export default function PersonalDetailsPage() {
                             <label className="block text-sm font-medium text-slate-700 mb-3" style={{ color: "#239CD2" }}>
                               Benefits
                             </label>
-                            <div className="space-y-2.5" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                            <div className="space-y-2.5 career-col" style={{ maxHeight: "400px", overflowY: "auto", scrollbarWidth: 'none' } as React.CSSProperties}>
                               {benefitOptions.map((benefit) => (
                                 <div key={benefit} className="flex items-center gap-2">
                                   <input
@@ -3699,7 +3696,7 @@ export default function PersonalDetailsPage() {
                                     onChange={(e) => setNewBenefit(e.target.value)}
                                     onFocus={() => { }}
                                     onBlur={() => { }}
-                                    className={`px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
+                                    className={`px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${newBenefit ? "pt-5" : "pt-3"
                                       }`}
                                     style={{
                                       width: "100%",
@@ -3787,14 +3784,15 @@ export default function PersonalDetailsPage() {
                           height: "50px",
                           borderRadius: "8px",
                           backgroundColor: "#FFFFFF",
-                          border: "1.5px solid #0A65CC",
+                          borderWidth: "1.5px",
                           borderStyle: "solid",
+                          borderColor: "#239CD2",
                           fontFamily: "Inter, sans-serif",
                           fontWeight: "500",
                           fontSize: "14px",
                           lineHeight: "22px",
                           letterSpacing: "0%",
-                          color: "#0A65CC",
+                          color: "#239CD2",
                         }}
                       >
                         Discard Changes
@@ -3832,189 +3830,158 @@ export default function PersonalDetailsPage() {
   );
 }
 
-// LanguageFieldBlock component (from skills page)
-interface LanguageFieldBlockProps {
-  label: string;
-  placeholder: string;
-  value: string;
-  onChange: (val: string) => void;
-  onEnterKey: (val: string) => void;
-  chips: string[];
-  selectedChips: string[];
-  onToggle: (value: string) => void;
-  onRemove: (value: string) => void;
-  proficiencies: { [key: string]: string };
-  onProficiencyChange: (language: string, proficiency: string) => void;
-  fieldStyle: Record<string, string | number>;
-  labelFloating: (focused: boolean, hasValue: boolean) => string;
-  labelColor: (focused: boolean, hasValue: boolean) => Record<string, string> | undefined;
+// LanguageProficiencyTable component
+interface LanguageProficiencyTableProps {
+  entries: LanguageEntry[];
+  onAddEntry: (entry: LanguageEntry) => void;
+  onRemoveEntry: (name: string) => void;
 }
 
-function LanguageFieldBlock({
-  label,
-  placeholder,
-  value,
-  onChange,
-  onEnterKey,
-  chips,
-  selectedChips,
-  onToggle,
-  onRemove,
-  proficiencies,
-  onProficiencyChange,
-  fieldStyle,
-  labelFloating,
-  labelColor,
-}: LanguageFieldBlockProps) {
-  const [focused, setFocused] = useState(false);
-  const proficiencyLevels = ["Basic", "Conversational", "Professional", "Fluent"];
+function LanguageProficiencyTable({
+  entries,
+  onAddEntry,
+  onRemoveEntry,
+}: LanguageProficiencyTableProps) {
+  const [newName, setNewName] = useState("");
+  const [newProficiency, setNewProficiency] = useState("");
+  const [newSpeak, setNewSpeak] = useState(false);
+  const [newRead, setNewRead] = useState(false);
+  const [newWrite, setNewWrite] = useState(false);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onEnterKey(value);
+  const proficiencyLevels = ["Basic", "Conversational", "Professional", "Fluent"];
+  const languages = ["English", "Spanish", "Chinese", "Hindi", "Arabic", "French", "Portuguese", "German", "Japanese", "Russian"];
+
+  const handleAdd = () => {
+    if (newName && newProficiency) {
+      onAddEntry({
+        name: newName,
+        proficiency: newProficiency,
+        speak: newSpeak,
+        read: newRead,
+        write: newWrite,
+      });
+      setNewName("");
+      setNewProficiency("");
+      setNewSpeak(false);
+      setNewRead(false);
+      setNewWrite(false);
     }
   };
 
   return (
     <div className="w-full">
-      <div className="relative mb-3">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyPress={handleKeyPress}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
-            }`}
-          style={fieldStyle}
-          placeholder=""
-        />
-        <label
-          className={`pointer-events-none absolute text-slate-500 transition-all duration-200 ${labelFloating(focused, !!value)}`}
-          style={labelColor(focused, !!value)}
-        >
-          {label}
-        </label>
-      </div>
-      <div className="flex flex-col gap-3">
-        {/* Show selected languages with proficiency selector */}
-        {selectedChips.map((chip) => (
-          <div key={chip} className="flex flex-col gap-2.5 rounded-lg border bg-white p-3" style={{ borderColor: "#E5E7EB" }}>
-            <div className="flex items-center justify-between">
-              <div
-                className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
-                  borderColor: "#239CD2",
-                  color: "#374151",
-                }}
-              >
-                <span>{chip}</span>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left" style={{ borderCollapse: "separate", borderSpacing: "0 12px" }}>
+          <thead>
+            <tr className="text-slate-600 font-semibold" style={{ fontSize: "14px", fontFamily: "Inter, sans-serif" }}>
+              <th className="pb-2 px-2">Language Name</th>
+              <th className="pb-2 px-2">Proficiency</th>
+              <th className="pb-2 px-2 text-center">Speak</th>
+              <th className="pb-2 px-2 text-center">Read</th>
+              <th className="pb-2 px-2 text-center">Write</th>
+              <th className="pb-2 px-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-white">
+              <td className="px-2">
+                <input
+                  list="language-suggestions"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="Type or select language"
+                  className="w-full h-[40px] px-3 rounded-md border border-[#E5E7EB] text-sm text-slate-700 bg-white focus:outline-none focus:ring-1 focus:ring-sky-500"
+                />
+                <datalist id="language-suggestions">
+                  {languages.map(l => <option key={l} value={l} />)}
+                </datalist>
+              </td>
+              <td className="px-2">
+                <select
+                  value={newProficiency}
+                  onChange={(e) => setNewProficiency(e.target.value)}
+                  className="w-full h-[40px] px-3 rounded-md border border-[#E5E7EB] text-sm text-slate-700 bg-white focus:outline-none focus:ring-1 focus:ring-sky-500"
+                >
+                  <option value="" disabled>Select proficiency level</option>
+                  {proficiencyLevels.map(p => <option key={p} value={p}>{p}</option>)}
+                </select>
+              </td>
+              <td className="px-2 text-center">
+                <input
+                  type="checkbox"
+                  checked={newSpeak}
+                  onChange={(e) => setNewSpeak(e.target.checked)}
+                  className="w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                />
+              </td>
+              <td className="px-2 text-center">
+                <input
+                  type="checkbox"
+                  checked={newRead}
+                  onChange={(e) => setNewRead(e.target.checked)}
+                  className="w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                />
+              </td>
+              <td className="px-2 text-center">
+                <input
+                  type="checkbox"
+                  checked={newWrite}
+                  onChange={(e) => setNewWrite(e.target.checked)}
+                  className="w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                />
+              </td>
+              <td className="px-2 text-center">
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onRemove(chip);
-                  }}
-                  className="text-slate-600 hover:text-slate-800 transition"
-                  aria-label={`Remove ${chip}`}
-                  style={{
-                    color: "#374151",
-                  }}
+                  onClick={handleAdd}
+                  disabled={!newName || !newProficiency}
+                  className={`px-4 py-1.5 rounded-md text-sm font-semibold transition ${newName && newProficiency ? "bg-[#D1D5DB] text-slate-700 hover:bg-slate-300" : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                    }`}
+                  style={{ backgroundColor: newName && newProficiency ? "#E2E8F0" : "#F3F4F6" }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M18 6L6 18" />
-                    <path d="M6 6l12 12" />
-                  </svg>
+                  Add
                 </button>
-              </div>
-            </div>
-            {/* Proficiency Level Selector */}
-            <div className="flex items-center gap-3 rounded-md bg-slate-50 px-3 py-2.5" style={{ backgroundColor: "#F9FAFB" }}>
-              <span
-                className="font-semibold whitespace-nowrap"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
-                  color: "#374151",
-                }}
-              >
-                Proficiency Level:
-              </span>
-              <div className="flex items-center gap-2 flex-wrap">
-                {proficiencyLevels.map((level) => (
+              </td>
+            </tr>
+
+            {entries.map((entry) => (
+              <tr key={entry.name} className="bg-slate-50 border-t border-slate-100">
+                <td className="py-3 px-2 text-sm text-slate-900 font-medium">{entry.name}</td>
+                <td className="py-3 px-2 text-sm text-slate-600">{entry.proficiency}</td>
+                <td className="py-3 px-2 text-center">
+                  <div className={`mx-auto w-4 h-4 rounded ${entry.speak ? "bg-sky-500" : "border border-slate-300"}`} />
+                </td>
+                <td className="py-3 px-2 text-center">
+                  <div className={`mx-auto w-4 h-4 rounded ${entry.read ? "bg-sky-500" : "border border-slate-300"}`} />
+                </td>
+                <td className="py-3 px-2 text-center">
+                  <div className={`mx-auto w-4 h-4 rounded ${entry.write ? "bg-sky-500" : "border border-slate-300"}`} />
+                </td>
+                <td className="py-3 px-2 text-center">
                   <button
-                    key={level}
                     type="button"
-                    onClick={() => onProficiencyChange(chip, level)}
-                    className="rounded-md px-3 py-1.5 transition-all duration-200 font-medium"
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "12px",
-                      backgroundColor: proficiencies[chip] === level ? "#239CD2" : "#FFFFFF",
-                      color: proficiencies[chip] === level ? "#FFFFFF" : "#6B7280",
-                      border: proficiencies[chip] === level ? "1px solid #239CD2" : "1px solid #E5E7EB",
-                      fontWeight: proficiencies[chip] === level ? "600" : "500",
-                      boxShadow: proficiencies[chip] === level
-                        ? "0 2px 4px rgba(35, 156, 210, 0.25)"
-                        : "0 1px 2px rgba(0, 0, 0, 0.05)",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (proficiencies[chip] !== level) {
-                        e.currentTarget.style.backgroundColor = "#F3F4F6";
-                        e.currentTarget.style.borderColor = "#D1D5DB";
-                        e.currentTarget.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (proficiencies[chip] !== level) {
-                        e.currentTarget.style.backgroundColor = "#FFFFFF";
-                        e.currentTarget.style.borderColor = "#E5E7EB";
-                        e.currentTarget.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.05)";
-                      }
-                    }}
+                    onClick={() => onRemoveEntry(entry.name)}
+                    className="p-1 text-slate-400 hover:text-red-500 transition"
                   >
-                    {level}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
                   </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-        {/* Show unselected chips as clickable buttons */}
-        <div className="flex flex-wrap gap-2">
-          {chips
-            .filter((chip) => !selectedChips.includes(chip))
-            .map((chip) => (
-              <button
-                key={chip}
-                type="button"
-                onClick={() => onToggle(chip)}
-                className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium transition hover:bg-slate-50"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
-                  borderColor: "#E5E7EB",
-                  color: "#374151",
-                }}
-              >
-                <span>{chip}</span>
-              </button>
+                </td>
+              </tr>
             ))}
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -4081,7 +4048,7 @@ function PreferredLocationFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+          className={`w-full px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
             }`}
           style={fieldStyle}
           placeholder=""
@@ -4093,14 +4060,13 @@ function PreferredLocationFieldBlock({
           {label}
         </label>
       </div>
-      {/* Show selected locations with visa details - one row per location */}
       <div className="space-y-2">
         {selectedChips.map((chip) => {
           const visaSummary = getVisaSummaryForLocation(chip);
           return (
             <div key={chip} className="flex items-center gap-2 flex-wrap">
               <div
-                className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium"
+                className="flex items-center gap-1.5 rounded-full border bg-[#F3F4F6] px-3 py-1 font-medium"
                 style={{
                   fontFamily: "Inter, sans-serif",
                   fontSize: "12px",
@@ -4138,39 +4104,13 @@ function PreferredLocationFieldBlock({
                 </button>
               </div>
               {visaSummary && (
-                <span
-                  className="text-xs text-gray-600 font-medium"
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
+                <span className="text-xs text-gray-600 font-medium" style={{ fontFamily: "Inter, sans-serif" }}>
                   {visaSummary}
                 </span>
               )}
             </div>
           );
         })}
-      </div>
-      {/* Show unselected chips as clickable buttons */}
-      <div className="flex flex-wrap gap-2 mt-2">
-        {chips
-          .filter((chip) => !selectedChips.includes(chip))
-          .map((chip) => (
-            <button
-              key={chip}
-              type="button"
-              onClick={() => onToggle(chip)}
-              className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium transition hover:bg-slate-50"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "12px",
-                borderColor: "#E5E7EB",
-                color: "#374151",
-              }}
-            >
-              <span>{chip}</span>
-            </button>
-          ))}
       </div>
     </div>
   );
@@ -4227,7 +4167,7 @@ function PreferredRoleFieldBlock({
           onKeyPress={handleKeyPress}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className={`w-full px-4 pb-2 text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
+          className={`w-full px-4 pb-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-100 ${focused || value ? "pt-5" : "pt-3"
             }`}
           style={fieldStyle}
           placeholder=""
@@ -4240,7 +4180,6 @@ function PreferredRoleFieldBlock({
         </label>
       </div>
       <div className="flex flex-wrap gap-2">
-        {/* Show selected chips first with remove button */}
         {selectedChips.map((chip) => (
           <div
             key={chip}
@@ -4282,25 +4221,6 @@ function PreferredRoleFieldBlock({
             </button>
           </div>
         ))}
-        {/* Show unselected chips as clickable buttons */}
-        {chips
-          .filter((chip) => !selectedChips.includes(chip))
-          .map((chip) => (
-            <button
-              key={chip}
-              type="button"
-              onClick={() => onToggle(chip)}
-              className="flex items-center gap-1.5 rounded-full border bg-white px-3 py-1 font-medium transition hover:bg-slate-50"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "12px",
-                borderColor: "#E5E7EB",
-                color: "#374151",
-              }}
-            >
-              <span>{chip}</span>
-            </button>
-          ))}
       </div>
     </div>
   );

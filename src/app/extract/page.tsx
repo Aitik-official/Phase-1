@@ -98,7 +98,7 @@ export default function ExtractPage() {
               letterSpacing: "0px",
             }}
           >
-            Analyzing your CV using SAASA AI...
+            Analyzing your CV using SAASA B2E AI...
           </h1>
 
           {/* Descriptive text */}
