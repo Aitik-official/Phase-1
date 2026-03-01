@@ -499,7 +499,7 @@ export default function CandidateDashboardPage() {
                     e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
                 >
-                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 shrink-0">
                     <svg
                       width="20"
                       height="20"
@@ -547,7 +547,7 @@ export default function CandidateDashboardPage() {
                     e.currentTarget.style.backgroundColor = "#1F2937";
                   }}
                 >
-                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 shrink-0">
                     <svg
                       width="20"
                       height="20"
@@ -585,7 +585,7 @@ export default function CandidateDashboardPage() {
                   }}
                   onClick={() => router.push("/applications")}
                 >
-                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 shrink-0">
                     <svg
                       width="20"
                       height="20"
@@ -625,7 +625,7 @@ export default function CandidateDashboardPage() {
                   }}
                   onClick={() => router.push("/courses")}
                 >
-                  <div className="flex items-center justify-center w-12 h-12 flex-shrink-0">
+                  <div className="flex items-center justify-center w-12 h-12 shrink-0">
                     <svg
                       width="20"
                       height="20"
@@ -704,7 +704,7 @@ export default function CandidateDashboardPage() {
           {/* First Row: Three Columns - Profile, Application Status, Notifications */}
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left Column: Profile Card */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div
                 className="bg-white rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                 style={{
@@ -786,9 +786,9 @@ export default function CandidateDashboardPage() {
             </div>
 
             {/* Middle Column: Application Status */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div
-                className="flex-shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
+                className="shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "580px",
                   height: "378px",
@@ -813,7 +813,7 @@ export default function CandidateDashboardPage() {
                 </h2>
                 <div className="flex items-start gap-6" style={{ marginLeft: "10px", marginTop: "37.68px" }}>
                   <div
-                    className="relative flex-shrink-0"
+                    className="relative shrink-0"
                     style={{
                       width: "280px",
                       height: "280px",
@@ -1002,8 +1002,8 @@ export default function CandidateDashboardPage() {
               </div>
             </div>
 
-            {/* Right Column: Notifications */}
-            <div className="flex-shrink-0">
+            {/* Right Column: Notifications card */}
+            <div className="shrink-0">
               <div
                 className="bg-white overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full mx-auto h-full"
                 style={{
@@ -1042,7 +1042,7 @@ export default function CandidateDashboardPage() {
                     >
                       {/* Left: Icon Box */}
                       <div
-                        className="flex-shrink-0 flex items-center justify-center rounded-xl"
+                        className="shrink-0 flex items-center justify-center rounded-xl"
                         style={{
                           width: "44px",
                           height: "44px",
@@ -1079,7 +1079,7 @@ export default function CandidateDashboardPage() {
                       </div>
 
                       {/* Right: Status/Time Stack */}
-                      <div className="flex flex-col items-end flex-shrink-0" style={{ gap: "4px" }}>
+                      <div className="flex flex-col items-end shrink-0" style={{ gap: "4px" }}>
                         <span
                           className="px-3 py-1 rounded-full text-center"
                           style={{
@@ -1112,9 +1112,9 @@ export default function CandidateDashboardPage() {
           {/* Second Row: Application Tasks and CV Score Tracker */}
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left: Hiring Signals Card */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div
-                className="flex-shrink-0 bg-[#333333] transition-all duration-300 hover:scale-[1.01]"
+                className="shrink-0 bg-[#333333] transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "960px",
                   height: "229px",
@@ -1255,9 +1255,9 @@ export default function CandidateDashboardPage() {
             </div>
 
             {/* Right: CV Score Card */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div
-                className="flex-shrink-0 bg-[#FFF9F2] transition-all duration-300 hover:scale-[1.01]"
+                className="shrink-0 bg-[#FFF9F2] transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   width: "430px",
                   height: "229px",
@@ -1343,7 +1343,7 @@ export default function CandidateDashboardPage() {
           <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
             {/* Left: Job Matches Card */}
             <div
-              className="flex-shrink-0 flex flex-col bg-white"
+              className="shrink-0 flex flex-col bg-white"
               style={{
                 width: "960px",
                 height: "526px",
@@ -1435,7 +1435,7 @@ export default function CandidateDashboardPage() {
                     }}
                   >
                     {/* Icon */}
-                    <div className="flex-shrink-0 transition-colors duration-300">
+                    <div className="shrink-0 transition-colors duration-300">
                       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black group-hover:text-blue-600">
                         <rect x="4" y="5" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
                         <rect x="4" y="10" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
@@ -1529,7 +1529,7 @@ export default function CandidateDashboardPage() {
 
             {/* Right: Recommended Courses Card */}
             <div
-              className="flex-shrink-0 flex flex-col bg-white"
+              className="shrink-0 flex flex-col bg-white"
               style={{
                 width: "430px",
                 height: "526px",
