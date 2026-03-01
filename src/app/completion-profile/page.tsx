@@ -11,161 +11,170 @@ export default function CompletionProfilePage() {
     <div
       className="min-h-screen"
       style={{
-        backgroundColor: "#E5E7EA",
+        backgroundColor: "#F8FAFC",
       }}
     >
       {/* Header */}
-      <Header />
+      <Header showNav={false} />
 
       {/* Main Content */}
-      <main className="mx-auto max-w-4xl px-6" style={{ paddingTop: "0px", paddingBottom: "32px" }}>
-        <div className="mx-auto flex max-w-2xl flex-col items-center">
+      <main className="mx-auto max-w-4xl px-6 min-h-[calc(100vh-140px)] flex items-center justify-center" style={{ paddingBottom: "64px" }}>
+        <div className="mx-auto flex w-full flex-col items-center">
           {/* Completion Card - matches provided design */}
           <div
-            className="w-full rounded-lg bg-white"
+            className="w-full bg-white shadow-[0_4px_20px_rgb(0,0,0,0.02)] overflow-hidden"
             style={{
-              width: "538.07px",
-              border: "1px solid #38BDF8",
-              padding: "24px 32px",
+              width: "1000px",
+              border: "1.5px solid #38BDF8",
+              borderRadius: "20px",
+              padding: "24px 40px",
             }}
           >
-            {/* Title and subtitle */}
-            <h1
-              className="text-center text-slate-900"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "24px",
-                lineHeight: "32px",
-                fontWeight: 600,
-              }}
-            >
-              Profile Completion Summary
-            </h1>
-            <p
-              className="mt-2 text-center"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "13px",
-                lineHeight: "20px",
-                color: "#6B7280",
-              }}
-            >
-              Congratulations, John! Your profile is almost complete.
-            </p>
-
-            {/* Illustration */}
-            <div className="mt-5 flex justify-center">
-              <Image
-                src="/profile%20completionnn.jpg"
-                alt="Profile completion illustration"
-                width={360}
-                height={220}
-                className="h-auto w-auto"
-              />
-            </div>
-
-            {/* Progress label and bar */}
-            <div className="mt-5 flex items-center justify-between">
-              <span
+            {/* Header Section - Minimal */}
+            <div className="mb-4">
+              <h1
+                className="text-slate-900"
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
-                  color: "#4B5563",
+                  fontSize: "24px",
+                  lineHeight: "28px",
+                  fontWeight: 800,
+                  letterSpacing: "-0.02em"
                 }}
               >
-                Profile Completion
-              </span>
-              <span
+                Profile Completion Summary
+              </h1>
+              <p
+                className="mt-0.5"
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
-                  color: "#4B5563",
+                  fontSize: "13px",
+                  color: "#64748b",
+                  fontWeight: 500
                 }}
               >
-                88%
-              </span>
-            </div>
-            <div className="mt-2 h-2 w-full rounded-full bg-slate-200">
-              <div
-                className="h-2 rounded-full"
-                style={{
-                  width: "88%",
-                  backgroundColor: "#0EA5E9",
-                }}
-              />
+                Congratulations, John! Your profile is almost complete.
+              </p>
             </div>
 
-            {/* Your Progress list */}
-            <h2
-              className="mt-6"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: 600,
-                color: "#111827",
-              }}
-            >
-              Your Progress
-            </h2>
-
-            <div className="mt-3">
-              {[
-                "WhatsApp Number Verification",
-                "Personal Details",
-                "Education",
-                "Work Experience",
-                "Skills",
-                "Career Preferences",
-                "Salary Details",
-                "Onboarding: Work Locations & Eligibility",
-                "Additional Details",
-              ].map((item, idx) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3"
-                  style={{
-                    paddingTop: idx === 0 ? "8px" : "10px",
-                    paddingBottom: "10px",
-                    borderTop: idx === 0 ? "none" : "1px solid #E5E7EB",
-                  }}
-                >
+            <div className="flex gap-8 items-center">
+              {/* Left Side: Illustration - Scaled Down */}
+              <div className="w-[32%] shrink-0">
+                <div className="relative bg-slate-50/20 rounded-xl p-2.5 border border-slate-100">
                   <Image
-                    src="/circle-check-big.svg"
-                    alt="Completed"
-                    width={18}
-                    height={18}
-                    className="h-5 w-5"
+                    src="/profile%20completionnn.jpg"
+                    alt="Profile completion illustration"
+                    width={320}
+                    height={230}
+                    className="h-auto w-full rounded-lg mix-blend-multiply"
                   />
-                  <span
+                </div>
+              </div>
+
+              {/* Right Side: Progress and Checklist */}
+              <div className="flex-1">
+                {/* Progress Bar Section - Ultra Compact */}
+                <div className="bg-slate-50/40 rounded-xl p-4 border border-slate-100 mb-4">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span
+                      className="font-bold uppercase tracking-wider"
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "10px",
+                        color: "#64748b",
+                      }}
+                    >
+                      Overall Completion
+                    </span>
+                    <span
+                      className="font-black text-sky-600"
+                      style={{
+                        fontFamily: "Inter, sans-serif",
+                        fontSize: "15px",
+                      }}
+                    >
+                      88%
+                    </span>
+                  </div>
+                  <div className="h-2 w-full rounded-full bg-slate-200/40">
+                    <div
+                      className="h-2 rounded-full bg-gradient-to-r from-sky-400 to-sky-600 shadow-sm relative"
+                      style={{
+                        width: "88%",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Milestones Checklist - Tight Grid */}
+                <div>
+                  <h2
+                    className="mb-2"
                     style={{
                       fontFamily: "Inter, sans-serif",
                       fontSize: "14px",
-                      color: "#111827",
+                      fontWeight: 700,
+                      color: "#0f172a",
                     }}
                   >
-                    {item}
-                  </span>
+                    Your Milestones
+                  </h2>
+
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-0">
+                    {[
+                      "WhatsApp Verification",
+                      "Personal Details",
+                      "Education History",
+                      "Work Experience",
+                      "Skill Identification",
+                      "Career Preferences",
+                      "Salary Expectations",
+                      "Location & Eligibility",
+                      "Additional Details",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-slate-50 group"
+                      >
+                        <Image
+                          src="/circle-check-big.svg"
+                          alt="Completed"
+                          width={14}
+                          height={14}
+                          className="h-3.5 w-3.5 text-emerald-500 group-hover:text-sky-500 shrink-0"
+                        />
+                        <span
+                          className="flex-1 text-slate-600 group-hover:text-slate-900 font-medium"
+                          style={{
+                            fontFamily: "Inter, sans-serif",
+                            fontSize: "12px",
+                          }}
+                        >
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
 
-            {/* Footer text inside card */}
-            <p
-              className="mt-4 text-center"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "12px",
-                lineHeight: "18px",
-                color: "#6B7280",
-              }}
-            >
-              You&apos;re all set! Now explore job opportunities and more on your dashboard.
-            </p>
-            <div className="mt-4 flex justify-center">
+            {/* Footer text and Action - Minimal Height */}
+            <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <p
+                style={{
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "13px",
+                  color: "#64748b",
+                  fontWeight: 500
+                }}
+              >
+                You&apos;re all set! Explore job opportunities on your dashboard.
+              </p>
               <button
                 type="button"
                 onClick={() => router.push("/candidate-dashboard")}
-                className="inline-flex items-center justify-center rounded-full bg-sky-600 px-5 py-2 text-sm font-semibold text-white hover:bg-sky-700"
+                className="inline-flex items-center justify-center rounded-lg bg-sky-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-slate-800 transition-all shadow-md shadow-sky-600/5"
                 style={{ fontFamily: "Inter, sans-serif" }}
               >
                 Go To Dashboard

@@ -74,7 +74,7 @@ export default function ResumeModal({
 
   const handleFileSelect = (files: FileList | null) => {
     if (!files || files.length === 0) return;
-    
+
     const file = files[0];
     // Check file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
@@ -87,7 +87,7 @@ export default function ResumeModal({
       alert('Please upload a PDF, DOC, or DOCX file');
       return;
     }
-    
+
     setResumeFile(file);
     setUploadedResume({
       name: file.name,
@@ -154,7 +154,7 @@ export default function ResumeModal({
     e.stopPropagation();
     setIsDragging(false);
     dragCounter.current = 0;
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       handleFileSelect(e.dataTransfer.files);
     }
@@ -217,11 +217,10 @@ export default function ResumeModal({
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
                 onClick={() => !uploadedResume && fileInputRef.current?.click()}
-                className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
-                  isDragging
+                className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${isDragging
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-300 bg-gray-50 hover:border-blue-400 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 <input
                   ref={fileInputRef}
@@ -369,7 +368,7 @@ export default function ResumeModal({
                         d="M13 10V3L4 14h7v7l9-11h-7z"
                       />
                     </svg>
-                    Powered by SAASA AI
+                    Powered by SAASA B2E AI
                   </span>
                 </div>
                 <ul className="space-y-2">

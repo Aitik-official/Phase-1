@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 
-export default function Header() {
+export default function Header({ showNav = true }: { showNav?: boolean }) {
     const router = useRouter();
     const pathname = usePathname();
     const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
@@ -99,11 +99,12 @@ export default function Header() {
     ];
 
     return (
-        <header className="bg-transparent px-4 sm:px-6 py-4">
+        <header className="bg-transparent px-4 sm:px-6 py-5">
             <div className="mx-auto flex max-w-7xl items-center justify-between">
                 {/* Left: Logo and Hamburger */}
                 <div className="flex items-center gap-4">
                     {/* Hamburger Button - Mobile only */}
+                    {showNav && (
                     <button
                         type="button"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -127,6 +128,7 @@ export default function Header() {
                             )}
                         </svg>
                     </button>
+                    )}
 
                     <Image
                         src="/SAASA%20Logo.png"
@@ -139,6 +141,7 @@ export default function Header() {
                 </div>
 
                 {/* Navigation Container - Desktop only */}
+                {showNav && (
                 <nav
                     className="relative hidden lg:flex items-center gap-1 px-1.5 py-1.5 rounded-full"
                     style={{
@@ -181,10 +184,11 @@ export default function Header() {
                         );
                     })}
                 </nav>
+                )}
 
                 {/* Mobile Menu Overlay */}
-                {isMobileMenuOpen && (
-                    <div className="mobile-menu fixed inset-0 z-[10002] lg:hidden">
+                {showNav && isMobileMenuOpen && (
+                    <div className="mobile-menu fixed inset-0 z-10002 lg:hidden">
                         {/* Backdrop */}
                         <div
                             className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"

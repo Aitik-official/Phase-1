@@ -12,17 +12,16 @@ export default function CandidateDashboardPage() {
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
   const [notifications, setNotifications] = useState([
     { id: 1, text: "New Job Alert: Senior UX Designer at Google", time: "2m ago", type: "New" },
-    { id: 2, text: "Your application at Amazon was viewed", time: "1h ago", type: "Viewed" },
-    { id: 3, text: "Interview invitation: Meta Frontend Role", time: "3h ago", type: "Invite" },
-    { id: 4, text: "Skill assessment: 85th percentile in React", time: "5h ago", type: "Result" },
-    { id: 5, text: "New message from HR: Microsoft", time: "1d ago", type: "Message" },
+    { id: 2, text: "Application viewed by recruiter at Meta", time: "1h ago", type: "Update" },
+    { id: 3, text: "Interview scheduled for next week", time: "3h ago", type: "New" },
+    { id: 4, text: "Profile completeness: 85%", time: "5h ago", type: "Reminder" },
+    { id: 5, text: "New match: Product Manager at Amazon", time: "1d ago", type: "New" },
   ]);
   const [isRotating, setIsRotating] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsRotating(true);
-      // Wait for exit animation to complete
       setTimeout(() => {
         setNotifications((prev) => {
           const next = [...prev];
@@ -31,9 +30,8 @@ export default function CandidateDashboardPage() {
           return next;
         });
         setIsRotating(false);
-      }, 500); // Animation duration
-    }, 5000); // Interval between rotations
-
+      }, 500);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -699,10 +697,10 @@ export default function CandidateDashboardPage() {
             </div>
           </div>
 
-          {/* ROW 1: Profile, Application Status, Notifications */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[360px_1fr] xl:grid-cols-[360px_1fr_400px] gap-4 md:gap-5 lg:gap-8 mb-6 lg:mb-8">
-            {/* Profile Card */}
-            <div className="w-full flex justify-center xl:justify-start min-w-0">
+          {/* First Row: Three Columns - Profile, Application Status, Notifications */}
+          <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
+            {/* Left Column: Profile Card */}
+            <div className="shrink-0">
               <div
                 className="bg-white overflow-hidden transition-all duration-500 ease-out hover:scale-[1.05] cursor-pointer w-full max-w-full group"
                 style={{
@@ -769,10 +767,10 @@ export default function CandidateDashboardPage() {
               </div>
             </div>
 
-            {/* Application Status Card */}
-            <div className="w-full flex justify-center lg:justify-start min-w-0">
+            {/* Middle Column: Application Status */}
+            <div className="shrink-0">
               <div
-                className={`bg-white overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full p-4 sm:p-6 aspect-[356/377] lg:aspect-auto max-w-[356px] lg:max-w-full`}
+                className="shrink-0 bg-white transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
@@ -787,8 +785,14 @@ export default function CandidateDashboardPage() {
                 <h2 className="mb-4 text-sm sm:text-base lg:text-lg font-semibold text-gray-900 wrap-break-word" style={{ fontFamily: "Inter, sans-serif" }}>
                   Application Status
                 </h2>
-                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start h-full lg:h-auto pb-8 lg:pb-0 gap-4 lg:gap-6">
-                  <div className="relative shrink-0 w-full aspect-square overflow-hidden" style={{ maxWidth: "min(100%, 280px)" }}>
+                <div className="flex items-start gap-6" style={{ marginLeft: "10px", marginTop: "37.68px" }}>
+                  <div
+                    className="relative shrink-0"
+                    style={{
+                      width: "280px",
+                      height: "280px",
+                    }}
+                  >
                     <svg
                       viewBox="0 0 36 36"
                       style={{
@@ -976,10 +980,10 @@ export default function CandidateDashboardPage() {
               </div>
             </div>
 
-            {/* Right Column: Notifications */}
-            <div className="w-full min-w-0 hidden lg:block">
+            {/* Right Column: Notifications card */}
+            <div className="shrink-0">
               <div
-                className="bg-white overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full mx-auto"
+                className="bg-white overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full mx-auto h-full"
                 style={{
                   maxWidth: "min(100%, 400px)",
                   borderRadius: "6px",
@@ -997,12 +1001,12 @@ export default function CandidateDashboardPage() {
                 >
                   Notifications
                 </h2>
-                <div className="flex flex-col items-center overflow-hidden max-h-[320px]" style={{ gap: "4px" }}>
+                <div className="flex flex-col items-center overflow-hidden" style={{ gap: "4px", height: "300px" }}>
                   {notifications.map((item, index) => (
                     <div
                       key={item.id}
-                      className={`flex items-center gap-2 sm:gap-4 transition-all duration-500 rounded-lg cursor-pointer w-full min-w-0 ${index === 0 && isRotating ? "opacity-0 -translate-y-4 scale-95" : "opacity-100 translate-y-0 scale-100"
-                        } ${index === notifications.length - 1 && !isRotating ? "animate-notification-in" : ""
+                      className={`flex items-center gap-2 sm:gap-4 transition-all duration-500 rounded-lg cursor-pointer w-full min-w-0 ${index === notifications.length - 1 && isRotating ? "animate-notification-out" : ""
+                        } ${index === 0 && !isRotating ? "animate-notification-in" : ""
                         } hover:bg-gray-50`}
                       style={{
                         padding: "8px 12px",
@@ -1079,12 +1083,12 @@ export default function CandidateDashboardPage() {
             </div>
           </div>
 
-          {/* ROW 2: Hiring Signals, CV Score */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-[360px_1fr_400px] gap-4 md:gap-5 lg:gap-8 mb-6 lg:mb-8">
-            {/* Hiring Signals Card */}
-            <div className="lg:col-span-2 xl:col-span-2 w-full min-w-0">
+          {/* Second Row: Application Tasks and CV Score Tracker */}
+          <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
+            {/* Left: Hiring Signals Card */}
+            <div className="shrink-0">
               <div
-                className="bg-[#333333] overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full p-4 sm:p-5 lg:p-6 h-full"
+                className="shrink-0 bg-[#333333] transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   borderRadius: "6px",
                   boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
@@ -1203,9 +1207,9 @@ export default function CandidateDashboardPage() {
             </div>
 
             {/* Right: CV Score Card */}
-            <div className="w-full min-w-0">
+            <div className="shrink-0">
               <div
-                className="bg-[#FFF9F2] overflow-hidden transition-all duration-300 hover:scale-[1.01] w-full max-w-full mx-auto h-full"
+                className="shrink-0 bg-[#FFF9F2] transition-all duration-300 hover:scale-[1.01]"
                 style={{
                   maxWidth: "min(100%, 430px)",
                   borderRadius: "6px",
@@ -1282,250 +1286,267 @@ export default function CandidateDashboardPage() {
             </div>
           </div>
 
-          {/* ROW 3: Job Matches, Recommended Courses */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-[360px_1fr_400px] gap-4 md:gap-5 lg:gap-8 mb-6 lg:mb-8">
-            {/* Job Matches Card */}
-            <div className="lg:col-span-2 xl:col-span-2 w-full min-w-0">
-              <div
-                className="flex flex-col bg-white overflow-hidden w-full max-w-full p-4 sm:p-5 lg:p-6 xl:p-8"
-                style={{
-                  borderRadius: "6px",
-                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
-                }}
-              >
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8 min-w-0">
-                  <h2 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-normal text-gray-900 wrap-break-word flex-1 min-w-0" style={{ fontFamily: "Inter, sans-serif" }}>
-                    Job Matches
-                  </h2>
-                  <button
-                    className="text-xs sm:text-sm lg:text-base font-medium text-gray-900 bg-transparent border-none cursor-pointer px-2 py-1 hover:text-blue-600 transition-colors whitespace-nowrap shrink-0"
-                    style={{ fontFamily: "Inter, sans-serif" }}
-                    onClick={() => router.push("/explore-jobs")}
-                  >
-                    View All Jobs
-                  </button>
-                </div>
-
-                {/* Job List */}
-                <div className="flex flex-col gap-3 sm:gap-4 min-w-0">
-                  {[
-                    {
-                      title: "Frontend Developer",
-                      company: "Tech Solutions Inc.",
-                      location: "New York, USA",
-                      skills: ["React", "TypeScript", "UI/UX"],
-                      match: "92% Match",
-                    },
-                    {
-                      title: "Backend Engineer",
-                      company: "Global Innovations",
-                      location: "San Francisco, USA",
-                      skills: ["Nodejs", "Python", "AWS"],
-                      match: "88% Match",
-                    },
-                    {
-                      title: "Data Analyst",
-                      company: "Analytics Corp.",
-                      location: "Boston, USA",
-                      skills: ["SQL", "Python", "Tableau"],
-                      match: "85% Match",
-                    },
-                    {
-                      title: "Product Designer",
-                      company: "Creative Studio",
-                      location: "London, UK",
-                      skills: ["Figma", "UI/UX", "User Research"],
-                      match: "90% Match",
-                    },
-                  ].map((job, index) => (
-                    <div
-                      key={index}
-                      className="group flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] cursor-pointer overflow-hidden relative p-4 border border-gray-200 bg-white w-full min-w-0"
-                      style={{
-                        borderRadius: "6px",
-                        flexShrink: 0,
-                        backgroundImage: "linear-gradient(to right, #F0F9FF 50%, #FFFFFF 50%)",
-                        backgroundSize: "200% 100%",
-                        backgroundPosition: "right bottom",
-                        boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundPosition = "left bottom";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundPosition = "right bottom";
-                      }}
-                    >
-                      {/* Icon */}
-                      <div className="shrink-0 transition-colors duration-300">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black group-hover:text-blue-600">
-                          <rect x="4" y="5" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
-                          <rect x="4" y="10" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
-                          <rect x="4" y="15" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
-                          <circle cx="18" cy="7" r="0.5" fill="currentColor" />
-                          <circle cx="18" cy="12" r="0.5" fill="currentColor" />
-                          <circle cx="18" cy="17" r="0.5" fill="currentColor" />
-                        </svg>
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0 transition-colors duration-300">
-                        <h3 className="group-hover:text-blue-900 transition-colors duration-300 text-xs sm:text-sm lg:text-base font-semibold text-gray-900 mb-1 wrap-break-word line-clamp-2" style={{ fontFamily: "Inter, sans-serif" }}>
-                          {job.title}
-                        </h3>
-                        <p className="group-hover:text-blue-700 transition-colors duration-300 text-[10px] sm:text-xs lg:text-sm text-gray-600 mb-2 wrap-break-word line-clamp-1" style={{ fontFamily: "Inter, sans-serif" }}>
-                          {job.company} • {job.location}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {job.skills.map((skill) => (
-                            <span
-                              key={skill}
-                              className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs transition-all duration-300 group-hover:bg-blue-100 group-hover:text-blue-800 bg-gray-100 text-gray-600 shrink-0"
-                              style={{ fontFamily: "Inter, sans-serif" }}
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Right Column */}
-                      <div className="flex flex-col items-end gap-2 z-10 shrink-0 min-w-0">
-                        <span className="transition-colors duration-300 group-hover:text-blue-600 font-semibold text-[10px] sm:text-xs lg:text-sm text-blue-600 whitespace-nowrap" style={{ fontFamily: "Inter, sans-serif" }}>
-                          {job.match}
-                        </span>
-                        <button
-                          className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 rounded-lg text-[10px] sm:text-xs lg:text-sm font-medium transition-all duration-300 hover:scale-105 active:scale-95 bg-orange-500 text-white border-none cursor-pointer shadow-sm whitespace-nowrap"
-                          style={{ fontFamily: "Inter, sans-serif" }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            router.push("/explore-jobs");
-                          }}
-                        >
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+          {/* Third Row: Job Matches and Recommended Courses */}
+          <div className="flex items-start justify-center mb-6" style={{ gap: "24px" }}>
+            {/* Left: Job Matches Card */}
+            <div
+              className="shrink-0 flex flex-col bg-white"
+              style={{
+                width: "960px",
+                height: "526px",
+                borderRadius: "6px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                padding: "32px",
+              }}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-8">
+                <h2
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "24px",
+                    fontWeight: 400,
+                    color: "#111827",
+                  }}
+                >
+                  Job Matches
+                </h2>
+                <button
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    color: "#111827",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                  }}
+                  onClick={() => router.push("/explore-jobs")}
+                >
+                  View All Jobs
+                </button>
               </div>
-            </div>
 
-            {/* Recommended Courses Card */}
-            <div className="w-full flex justify-center lg:justify-end min-w-0">
-              <div
-                className="flex flex-col bg-white overflow-hidden w-full max-w-full mx-auto lg:mx-0 p-4 sm:p-5 lg:p-6"
-                style={{
-                  borderRadius: "6px",
-                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
-                  maxWidth: "min(100%, 430px)",
-                }}
-              >
-                {/* Header */}
-                <div className="flex justify-between items-center mb-4 sm:mb-5 min-w-0">
-                  <h2 className="text-sm sm:text-base lg:text-lg xl:text-xl font-medium text-gray-900 wrap-break-word flex-1 min-w-0" style={{ fontFamily: "Inter, sans-serif" }}>
-                    Recommended Courses
-                  </h2>
-                </div>
+              {/* Job List */}
+              <div className="flex flex-col gap-4 pt-2 pb-2 px-1" style={{ overflowY: "auto", flex: 1 }}>
+                {[
+                  {
+                    title: "Frontend Developer",
+                    company: "Tech Solutions Inc.",
+                    location: "New York, USA",
+                    skills: ["React", "TypeScript", "UI/UX"],
+                    match: "92% Match",
+                  },
+                  {
+                    title: "Backend Engineer",
+                    company: "Global Innovations",
+                    location: "San Francisco, USA",
+                    skills: ["Nodejs", "Python", "AWS"],
+                    match: "88% Match",
+                  },
+                  {
+                    title: "Data Analyst",
+                    company: "Analytics Corp.",
+                    location: "Boston, USA",
+                    skills: ["SQL", "Python", "Tableau"],
+                    match: "85% Match",
+                  },
+                  {
+                    title: "Product Designer",
+                    company: "Creative Studio",
+                    location: "London, UK",
+                    skills: ["Figma", "UI/UX", "User Research"],
+                    match: "90% Match",
+                  },
+                ].map((job, index) => (
+                  <div
+                    key={index}
+                    className="group flex items-center gap-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)] cursor-pointer overflow-hidden relative"
+                    style={{
+                      width: "100%",
+                      height: "85px",
+                      flexShrink: 0,
+                      padding: "0 20px",
+                      border: "1px solid #E5E7EB",
+                      borderRadius: "8px",
+                      backgroundImage: "linear-gradient(to right, #F0F9FF 50%, #FFFFFF 50%)",
+                      backgroundSize: "200% 100%",
+                      backgroundPosition: "right bottom",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundPosition = "left bottom";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundPosition = "right bottom";
+                    }}
+                  >
+                    {/* Icon */}
+                    <div className="shrink-0 transition-colors duration-300">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-black group-hover:text-blue-600">
+                        <rect x="4" y="5" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <rect x="4" y="10" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <rect x="4" y="15" width="16" height="4" rx="1" stroke="currentColor" strokeWidth="2" />
+                        <circle cx="18" cy="7" r="0.5" fill="currentColor" />
+                        <circle cx="18" cy="12" r="0.5" fill="currentColor" />
+                        <circle cx="18" cy="17" r="0.5" fill="currentColor" />
+                      </svg>
+                    </div>
 
-                {/* Course List */}
-                <div className="flex flex-col gap-4 sm:gap-5 min-w-0">
-                  {[
-                    {
-                      title: "Effective Communication in Tech",
-                      duration: "2h 15m",
-                      code: "ending\",r={state:function(){return n},always:promise)?e.promise().done(n.resolve).fail(n.re dd(function(){n=s},t[1^e][2].disable,t[2][2]. 0,n=h.call(arguments),r=n.length,i=1!==r||e& r),l=Array(r);r>t;t++)n[t]&&b.isFunction(n[t >><table></table><a href='/a'>a</a><in typ TagName(\"input\")[0],r.style.cssText=\"top:1px test(r.getAttribute(\"style\")),hrefNormalized:",
-                    },
-                    {
-                      title: "Advanced React Patterns",
-                      duration: "3h 30m",
-                      code: "const [state, disp] = useRed(red, init); export default function App() { return React.createElement('div', { className: 'app-container' }, React.createElement(Header, { title: 'Dashboard' }), React.createElement(MainLayout, null, React.createElement(Sidebar), React.createElement(ContentArea))); }",
-                    },
-                  ].map((course, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col overflow-hidden border border-gray-100 w-full min-w-0"
-                      style={{
-                        borderRadius: "6px",
-                        backgroundColor: "#FFFFFF",
-                        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.05)",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      {/* Banner with Play Icon */}
-                      <div
-                        className="relative h-[100px] w-full flex items-center justify-center overflow-hidden"
+                    {/* Content */}
+                    <div className="flex-1 min-w-0 transition-colors duration-300">
+                      <h3
+                        className="group-hover:text-blue-900 transition-colors duration-300"
                         style={{
-                          backgroundColor: "#1F2937",
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: "16px",
+                          fontWeight: 600,
+                          color: "#111827",
+                          marginBottom: "2px",
                         }}
                       >
-                        {/* Code Background Overlay */}
-                        <div
-                          className="absolute inset-0 opacity-40 p-2 overflow-hidden"
-                          style={{
-                            fontFamily: "Monaco, 'Courier New', monospace",
-                            fontSize: "8px",
-                            color: "#E5E7EB",
-                            wordBreak: "break-all",
-                            lineHeight: "1.2",
-                            userSelect: "none",
-                          }}
-                        >
-                          {course.code}
-                        </div>
-                        {/* Play Icon */}
-                        <div className="relative z-10 shrink-0">
-                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 5V19L19 12L8 5Z" fill="white" />
-                          </svg>
-                        </div>
-                      </div>
-
-                      {/* Course Info */}
-                      <div className="p-3 sm:p-3.5 flex flex-col gap-3 min-w-0">
-                        <div className="flex justify-between items-start gap-2 min-w-0">
-                          <h3
-                            className="wrap-break-word line-clamp-2 flex-1 min-w-0 text-sm sm:text-base"
-                            style={{
-                              fontFamily: "Inter, sans-serif",
-                              fontSize: "clamp(14px, 2vw, 16px)",
-                              fontWeight: 600,
-                              color: "#111827",
-                            }}
-                          >
-                            {course.title}
-                          </h3>
+                        {job.title}
+                      </h3>
+                      <p
+                        className="group-hover:text-blue-700 transition-colors duration-300"
+                        style={{
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: "12px",
+                          color: "#4B5563",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {job.company} • {job.location}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {job.skills.map((skill) => (
                           <span
-                            className="shrink-0 whitespace-nowrap text-xs sm:text-sm"
+                            key={skill}
+                            className="px-3 py-1 rounded-full transition-all duration-300 group-hover:bg-blue-100 group-hover:text-blue-800"
                             style={{
+                              fontSize: "10px",
+                              backgroundColor: "#F3F4F6",
+                              color: "#6B7280",
                               fontFamily: "Inter, sans-serif",
-                              fontSize: "clamp(12px, 2vw, 14px)",
-                              color: "#111827",
                             }}
                           >
-                            {course.duration}
+                            {skill}
                           </span>
-                        </div>
-                        <button
-                          className="w-full py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-colors"
-                          style={{
-                            backgroundColor: "#38B6FF",
-                            color: "#FFFFFF",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => router.push("/courses")}
-                        >
-                          View Course
-                        </button>
+                        ))}
                       </div>
                     </div>
-                  ))}
+
+                    {/* Right Column */}
+                    <div className="flex flex-col items-end gap-1 z-10">
+                      <span
+                        className="transition-colors duration-300 group-hover:text-blue-600 font-semibold"
+                        style={{
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          color: "#3B82F6",
+                        }}
+                      >
+                        {job.match}
+                      </span>
+                      <button
+                        className="px-4 py-1.5 rounded-lg font-medium transition-all duration-300 hover:scale-105 active:scale-95"
+                        style={{
+                          backgroundColor: "#F97316",
+                          color: "#FFFFFF",
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: "11px",
+                          border: "none",
+                          cursor: "pointer",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push("/explore-jobs");
+                        }}
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Recommended Courses Card */}
+            <div
+              className="shrink-0 flex flex-col bg-white"
+              style={{
+                width: "430px",
+                height: "526px",
+                borderRadius: "6px",
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.08)",
+                padding: "24px",
+              }}
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center mb-5">
+                <h2
+                  style={{
+                    fontFamily: "Inter, sans-serif",
+                    fontSize: "20px",
+                    fontWeight: 500,
+                    color: "#111827",
+                  }}
+                >
+                  Recommended Courses
+                </h2>
+              </div>
+
+              {/* Course List */}
+              <div className="flex flex-col gap-5" style={{ overflow: "hidden", flex: 1 }}>
+                {[
+                  {
+                    title: "Effective Communication in Tech",
+                    duration: "2h 15m",
+                    code: "ending\",r={state:function(){return n},always:promise)?e.promise().done(n.resolve).fail(n.re dd(function(){n=s},t[1^e][2].disable,t[2][2]. 0,n=h.call(arguments),r=n.length,i=1!==r||e& r),l=Array(r);r>t;t++)n[t]&&b.isFunction(n[t >><table></table><a href='/a'>a</a><in typ TagName(\"input\")[0],r.style.cssText=\"top:1px test(r.getAttribute(\"style\")),hrefNormalized:",
+                  },
+                  {
+                    title: "Advanced React Patterns",
+                    duration: "3h 30m",
+                    code: "const [state, disp] = useRed(red, init); export default function App() { return <div className=\"app-container\"> <Header title=\"Dashboard\" /> <MainLayout> <Sidebar /> <ContentArea /> </MainLayout> </div>; }",
+                  },
+                ].map((course, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col rounded-xl overflow-hidden border border-gray-100"
+                    style={{
+                      width: "100%",
+                      height: "204px",
+                      flexShrink: 0,
+                      backgroundColor: "#FFFFFF",
+                      boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.05)",
+                    }}
+                  >
+                    {/* Banner with Play Icon */}
+                    <div
+                      key={index}
+                      className="flex flex-col p-4"
+                      style={{ fontFamily: "Inter, sans-serif" }}
+                    >
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2">{course.title}</h3>
+                      <p className="text-xs text-gray-600 mb-2">{course.duration}</p>
+                      <button
+                        className="text-xs font-medium text-blue-600 hover:text-blue-700"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push("/courses");
+                        }}
+                      >
+                        View Course
+                      </button>
+                    </div>
+                  </div>
+                ))}
                 </div>
               </div>
             </div>
-          </div>
         </DashboardContainer>
       </main>
 

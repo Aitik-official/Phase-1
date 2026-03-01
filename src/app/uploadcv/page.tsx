@@ -61,7 +61,7 @@ export default function UploadCV() {
                 letterSpacing: "0px",
               }}
             >
-              SAASA will analyze your CV and auto-fill your profile using AI.
+              SAASA B2E will analyze your CV and auto-fill your profile using AI.
               <br />
               This saves time and boosts accuracy.
             </p>
