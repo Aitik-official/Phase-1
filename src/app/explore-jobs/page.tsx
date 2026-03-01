@@ -724,7 +724,7 @@ const DashboardPage = () => {
       <Header />
 
       <main className="w-full grow overflow-x-hidden">
-        <DashboardContainer className="py-4 sm:py-5 md:py-6 lg:py-7 xl:py-8">
+        <div className="mx-auto max-w-[1414px] px-6 py-4 sm:py-5 md:py-6 lg:py-7 xl:py-8">
           {/* CSS for placeholder text wrapping prevention */}
           <style dangerouslySetInnerHTML={{
             __html: `

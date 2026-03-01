@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Header from '../../components/common/Header';
 import Footer from '../../components/common/Footer';
 import Image from 'next/image';
-import DashboardContainer from '../../components/layout/DashboardContainer';
 
 interface Application {
   id: string;
@@ -223,7 +222,7 @@ export default function ApplicationsPage() {
       <Header />
 
       <main className="w-full grow overflow-x-hidden">
-        <DashboardContainer className="py-6 sm:py-8 lg:py-10">
+        <div className="mx-auto max-w-[1414px] px-6 py-6 sm:py-8 lg:py-10">
           {/* Page Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div className="min-w-0">
@@ -367,7 +366,7 @@ export default function ApplicationsPage() {
               <p className="text-gray-500 max-w-sm mx-auto">We couldn't find any applications matching your search or filters.</p>
             </div>
           )}
-        </DashboardContainer>
+        </div>
       </main>
 
       <Footer />
