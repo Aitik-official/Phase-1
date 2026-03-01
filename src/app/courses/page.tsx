@@ -746,7 +746,7 @@ export default function CoursesPage() {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
           >
-            Explore Alll Courses
+            Explore All Courses
           </button>
         </div>
       </main>

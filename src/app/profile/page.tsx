@@ -196,8 +196,7 @@ export default function ProfilePage() {
     {
       category: 'PREFERENCES',
       items: [
-        { name: 'Career Preferences', status: 'Completed', hasInfo: true },
-        { name: 'Employment Details', status: 'Partially Completed', hasInfo: true }
+        { name: 'Career Preferences', status: 'Completed', hasInfo: true }
       ]
     },
     {

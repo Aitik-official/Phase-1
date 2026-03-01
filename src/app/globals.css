@@ -54,6 +54,7 @@ input[type="date"]::-moz-calendar-picker-indicator {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -64,9 +65,11 @@ input[type="date"]::-moz-calendar-picker-indicator {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -129,6 +132,7 @@ input[type="range"]::-moz-range-thumb {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -136,4 +140,92 @@ input[type="range"]::-moz-range-thumb {
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
+}
+
+/* Notification animations */
+@keyframes notification-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes notification-slide-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+    max-height: 0;
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 100px;
+    min-height: 56px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+@keyframes notification-slide-out-bottom {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 100px;
+    min-height: 56px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    overflow: hidden;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    max-height: 0;
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.animate-notification-in {
+  animation: notification-slide-in-top 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-notification-out {
+  animation: notification-slide-out-bottom 0.5s ease-in forwards;
+}
+
+@layer base {
+  ::placeholder {
+    color: #9095A1 !important;
+    opacity: 1;
+    /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    color: #9095A1 !important;
+  }
+
+  ::-ms-input-placeholder {
+    color: #9095A1 !important;
+  }
+
+  select {
+    color: #9095A1 !important;
+  }
+
+  select option {
+    color: #111827;
+    /* Standard dark color for options */
+  }
 }
